@@ -1,26 +1,285 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   OffPay Design System
+   ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+   Custom properties
+   --------------------------------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Palette */
+  --color-bg:        #050507;
+  --color-bg-subtle: #0c0c10;
+  --color-bg-card:   rgba(255, 255, 255, 0.03);
+  --color-surface:   rgba(255, 255, 255, 0.05);
+  --color-border:    rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.15);
+
+  --color-text:       #f0f0f5;
+  --color-text-muted: #8a8a9a;
+  --color-text-dim:   #55556a;
+
+  /* Accent — violet/indigo */
+  --color-accent:       #7c3aed;
+  --color-accent-light: #a78bfa;
+  --color-accent-glow:  rgba(124, 58, 237, 0.25);
+
+  /* Accent gradient */
+  --gradient-accent: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #06b6d4 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #8b5cf6 0%, #818cf8 50%, #22d3ee 100%);
+
+  /* Spacing */
+  --section-py: clamp(4rem, 8vw, 8rem);
+  --section-px: clamp(1.25rem, 4vw, 2rem);
+  --container-max: 1200px;
+  --container-narrow: 800px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.15s;
+  --duration-base: 0.3s;
+  --duration-slow: 0.5s;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------------------------------------------------------------------------
+   Reset & base
+   --------------------------------------------------------------------------- */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;          /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none;                  /* Chrome, Safari, Edge */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Reusable utility classes
+   --------------------------------------------------------------------------- */
+
+/* Container */
+.section-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--section-px);
+  padding-right: var(--section-px);
+}
+
+.section-container--narrow {
+  max-width: var(--container-narrow);
+}
+
+/* Section vertical spacing */
+.section-spacing {
+  padding-top: var(--section-py);
+  padding-bottom: var(--section-py);
+}
+
+/* Glass card — NO backdrop-filter to avoid stacking GPU blur layers */
+.glass-card {
+  background: rgba(12, 12, 18, 0.7);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-full);
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out),
+    opacity var(--duration-fast);
+  text-decoration: none;
+  border: none;
+  line-height: 1;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--color-accent-glow);
+}
+
+.btn-primary:hover {
+  background: var(--gradient-accent-hover);
+  box-shadow: 0 6px 28px rgba(124, 58, 237, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-accent-light);
+  color: var(--color-accent-light);
+}
+
+.btn-sm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+}
+
+/* Section header */
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+  color: var(--color-text);
+}
+
+.section-header p {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--color-text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Badge / pill */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-accent-light);
+  letter-spacing: 0.01em;
+}
+
+/* ---------------------------------------------------------------------------
+   Marquee animation (BrandLogoStrip)
+   --------------------------------------------------------------------------- */
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+
+.marquee-container {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+   Accordion transitions (FAQ)
+   --------------------------------------------------------------------------- */
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-base) var(--ease-out);
+}
+
+.accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel-inner {
+  overflow: hidden;
+}
+
+.accordion-chevron {
+  transition: transform var(--duration-base) var(--ease-out);
+  display: inline-flex;
+  font-size: 1.15rem;
+}
+
+.accordion-chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
 }
