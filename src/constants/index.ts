@@ -22,10 +22,9 @@ export const SITE_URL = "https://offpay.com" as const;
 // ---------------------------------------------------------------------------
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Dashboard", href: "#dashboard" },
   { label: "Features", href: "#features" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Security", href: "#security" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -33,47 +32,35 @@ export const NAV_LINKS: NavLink[] = [
 // Hero
 // ---------------------------------------------------------------------------
 
-export const HERO_EYEBROW = "Now in public beta" as const;
-export const HERO_HEADLINE_LINE1 = "Payments that" as const;
-export const HERO_HEADLINE_LINE2 = "just work." as const;
+export const HERO_HEADLINE_LINE1 = "Solana's first dual-mode," as const;
+export const HERO_HEADLINE_LINE2 = "privacy-first wallet." as const;
 export const HERO_SUBHEADLINE =
-  "Build seamless payment experiences. One integration, endless possibilities. No headaches, no hidden fees." as const;
-export const HERO_CTA_PRIMARY = "Get started free" as const;
-export const HERO_CTA_SECONDARY = "View documentation" as const;
-
-// ---------------------------------------------------------------------------
-// Stats
-// ---------------------------------------------------------------------------
-
-export const STATS = [
-  { value: "99.9%", label: "Uptime SLA" },
-  { value: "$2B+", label: "Processed" },
-  { value: "150+", label: "Countries" },
-] as const;
+  "Transact on Solana without getting traced. Pay offline, settle on-chain — with zero-knowledge privacy and full self-custody." as const;
+export const HERO_CTA_PRIMARY = "Join the waitlist" as const;
 
 // ---------------------------------------------------------------------------
 // Features
 // ---------------------------------------------------------------------------
 
-export const FEATURES_HEADLINE = "Everything you need to ship faster" as const;
+export const FEATURES_HEADLINE = "Five layers. One wallet." as const;
 export const FEATURES_SUBHEADLINE =
-  "A complete payments platform with everything built in." as const;
+  "Every feature is free, forever. No subscriptions. No premium tiers." as const;
 
 // ---------------------------------------------------------------------------
-// Pricing
+// How It Works
 // ---------------------------------------------------------------------------
 
-export const PRICING_HEADLINE = "Simple, transparent pricing" as const;
-export const PRICING_SUBHEADLINE =
-  "No surprise fees. No lock-in. Cancel anytime." as const;
+export const HOW_IT_WORKS_HEADLINE = "How offline payments work" as const;
+export const HOW_IT_WORKS_SUBHEADLINE =
+  "Cryptographically secure P2P payments with zero internet — powered by Solana durable nonces." as const;
 
 // ---------------------------------------------------------------------------
-// Testimonials
+// Security
 // ---------------------------------------------------------------------------
 
-export const TESTIMONIALS_HEADLINE = "Loved by builders worldwide" as const;
-export const TESTIMONIALS_SUBHEADLINE =
-  "Join thousands of companies already using OffPay." as const;
+export const SECURITY_HEADLINE = "Self-custody. Zero knowledge. Zero trust." as const;
+export const SECURITY_SUBHEADLINE =
+  "Your keys never leave your device. Your transactions are invisible on-chain. OffPay holds nothing." as const;
 
 // ---------------------------------------------------------------------------
 // FAQ
@@ -83,29 +70,34 @@ export const FAQ_HEADLINE = "Frequently asked questions" as const;
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "How quickly can I integrate OffPay?",
+    question: "Do I need to sign up or create an account?",
     answer:
-      "Most teams are up and running in under an hour. Our SDK ships with typed wrappers and drop-in UI components.",
+      "No. Connect an existing Solana wallet (Phantom, Solflare) or create one in-app. No email, no phone — your wallet address is your identity.",
   },
   {
-    question: "What currencies and payment methods are supported?",
+    question: "Is OffPay free?",
     answer:
-      "OffPay supports 135+ currencies and 50+ payment methods including cards, wallets, and local payment schemes.",
+      "Yes. All features are permanently free. No subscriptions, no premium tiers, no feature gates. On-chain transactions incur standard Solana network fees (~$0.00025).",
   },
   {
-    question: "Is there a free tier?",
+    question: "Does my phone need internet to make an offline payment?",
     answer:
-      "Yes. The Free plan includes up to 1 000 transactions per month with no monthly fee — just standard per-transaction pricing.",
+      "No. After a one-time setup (requires internet to create the nonce account, ~0.0015 SOL once), all offline payments require zero internet.",
   },
   {
-    question: "How does OffPay handle compliance and security?",
+    question: "Can anyone see my private balance?",
     answer:
-      "OffPay is PCI DSS Level 1 certified. We handle all compliance so you never have to touch raw card data.",
+      "No. Private balances are stored in encrypted Solana PDAs. Only your device decrypts them locally using your wallet key. No on-chain observer — including OffPay — sees a number.",
   },
   {
-    question: "Can I migrate from my current payment provider?",
+    question: "Who holds my funds?",
     answer:
-      "Yes. We provide migration tooling and a dedicated onboarding engineer for Pro and Enterprise plans.",
+      "You do. USDC lives in your on-chain token account controlled exclusively by your private key. Shielded USDC lives in Umbra's encrypted PDAs. OffPay holds nothing.",
+  },
+  {
+    question: "Can the same offline payment be spent twice?",
+    answer:
+      "No. The durable nonce mechanism makes this architecturally impossible. Once the nonce advances on first broadcast, any second transaction using the same nonce is rejected by the Solana network.",
   },
 ];
 
@@ -114,8 +106,8 @@ export const FAQ_ITEMS: FaqItem[] = [
 // ---------------------------------------------------------------------------
 
 export const FOOTER_TAGLINE =
-  "The payments infrastructure for the modern web." as const;
-export const FOOTER_COPYRIGHT_YEAR = 2025 as const;
+  "Privacy-first payments on Solana. Offline-native. Non-custodial." as const;
+export const FOOTER_COPYRIGHT_YEAR = 2026 as const;
 
 // ---------------------------------------------------------------------------
 // Animation defaults (consumed by the animation utility — do not use directly)

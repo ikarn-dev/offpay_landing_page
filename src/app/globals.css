@@ -9,9 +9,9 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  /* Palette */
-  --color-bg:        #050507;
-  --color-bg-subtle: #0c0c10;
+  /* Palette — Azure Gradient */
+  --color-bg:        #000000;
+  --color-bg-subtle: #060a14;
   --color-bg-card:   rgba(255, 255, 255, 0.03);
   --color-surface:   rgba(255, 255, 255, 0.05);
   --color-border:    rgba(255, 255, 255, 0.08);
@@ -21,14 +21,14 @@
   --color-text-muted: #8a8a9a;
   --color-text-dim:   #55556a;
 
-  /* Accent — violet/indigo */
-  --color-accent:       #7c3aed;
-  --color-accent-light: #a78bfa;
-  --color-accent-glow:  rgba(124, 58, 237, 0.25);
+  /* Accent — Azure */
+  --color-accent:       #0077CC;
+  --color-accent-light: #00DFFF;
+  --color-accent-glow:  rgba(0, 119, 204, 0.25);
 
   /* Accent gradient */
-  --gradient-accent: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #06b6d4 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #8b5cf6 0%, #818cf8 50%, #22d3ee 100%);
+  --gradient-accent: linear-gradient(135deg, #001A4E 0%, #0077CC 50%, #00DFFF 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #0077CC 0%, #00DFFF 60%, #B0EFFF 100%);
 
   /* Spacing */
   --section-py: clamp(4rem, 8vw, 8rem);
@@ -76,12 +76,6 @@ html::-webkit-scrollbar {
 
 body {
   background-color: var(--color-bg);
-  background-image: 
-    radial-gradient(at 10% 20%, rgba(124, 58, 237, 0.3) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(6, 182, 212, 0.3) 0px, transparent 50%),
-    radial-gradient(at 40% 50%, rgba(236, 72, 153, 0.25) 0px, transparent 50%),
-    radial-gradient(at 90% 80%, rgba(139, 92, 246, 0.3) 0px, transparent 50%);
-  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   line-height: 1.6;
@@ -167,7 +161,7 @@ body {
 
 .btn-primary:hover {
   background: var(--gradient-accent-hover);
-  box-shadow: 0 6px 28px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 6px 28px rgba(0, 119, 204, 0.35);
   transform: translateY(-1px);
 }
 

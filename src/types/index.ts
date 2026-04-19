@@ -17,12 +17,6 @@ export interface NavLink {
 // Common primitives
 // ---------------------------------------------------------------------------
 
-/** A stat displayed in the Hero or Stats section. */
-export interface Stat {
-  value: string;
-  label: string;
-}
-
 /** A single feature card. */
 export interface Feature {
   icon: React.ReactNode;
@@ -30,36 +24,19 @@ export interface Feature {
   description: string;
 }
 
-/** A single pricing tier. */
-export type PricingTier = "free" | "pro" | "enterprise";
-
-export interface PricingPlan {
-  tier: PricingTier;
-  name: string;
-  price: string;
-  billingNote: string;
+/** A single step in the How It Works flow. */
+export interface HowItWorksStep {
+  step: number;
+  title: string;
   description: string;
-  features: string[];
-  ctaLabel: string;
-  highlighted: boolean;
+  icon: React.ReactNode;
 }
 
-/** A single testimonial / social proof item. */
-export interface Testimonial {
-  quote: string;
-  authorName: string;
-  authorRole: string;
-  authorCompany: string;
-  avatarUrl?: string;
-}
-
-/** A logo displayed in the social-proof / marquee strip. */
-export interface BrandLogo {
-  name: string;
-  /** Public-folder path, e.g. "/logos/stripe.svg" */
-  src: string;
-  width: number;
-  height: number;
+/** A single security feature card. */
+export interface SecurityFeature {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
 }
 
 /** A single FAQ item. */
@@ -67,15 +44,6 @@ export interface FaqItem {
   question: string;
   answer: string;
 }
-
-// ---------------------------------------------------------------------------
-// Scroll utility
-// ---------------------------------------------------------------------------
-
-/** Subscriber callback registered via the scroll performance utility. */
-export type ScrollSubscriber = (scrollY: number, direction: ScrollDirection) => void;
-
-export type ScrollDirection = "up" | "down" | "idle";
 
 // ---------------------------------------------------------------------------
 // Animation utility

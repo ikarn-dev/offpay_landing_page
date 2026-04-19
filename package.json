@@ -10,6 +10,7 @@
     "postinstall": "[ \"$(uname)\" = \"Darwin\" ] && find node_modules -name '*.node' -type f -exec codesign --force --sign - {} + || true"
   },
   "dependencies": {
+    "@paper-design/shaders-react": "^0.0.76",
     "framer-motion": "^12.38.0",
     "gsap": "^3.14.2",
     "lucide-react": "^1.8.0",

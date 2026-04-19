@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, FOOTER_TAGLINE, FOOTER_COPYRIGHT_YEAR } from "@/constants";
+import Navbar from "@/components/ui/Navbar";
+import Footer from "@/components/ui/Footer";
+import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, FOOTER_TAGLINE, FOOTER_COPYRIGHT_YEAR, HERO_CTA_PRIMARY } from "@/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,18 +43,17 @@ const FOOTER_COLUMNS_STUB = [
     heading: "Product",
     links: [
       { label: "Features", href: "#features" },
-      { label: "Pricing", href: "#pricing" },
-      { label: "Documentation", href: "#" },
-      { label: "Changelog", href: "#" },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Security", href: "#security" },
+      { label: "FAQ", href: "#faq" },
     ],
   },
   {
-    heading: "Company",
+    heading: "Community",
     links: [
-      { label: "About", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Contact", href: "#" },
+      { label: "GitHub", href: "https://github.com/offpay" },
+      { label: "Twitter / X", href: "https://x.com/offpay" },
+      { label: "Discord", href: "#" },
     ],
   },
   {
@@ -62,7 +61,7 @@ const FOOTER_COLUMNS_STUB = [
     links: [
       { label: "Privacy", href: "#" },
       { label: "Terms", href: "#" },
-      { label: "Security", href: "#" },
+      { label: "Disclaimer", href: "#" },
     ],
   },
 ];
@@ -73,7 +72,25 @@ const SOCIAL_LINKS_STUB = [
 ];
 
 const NAVBAR_CTA_STUB = (
-  <a href="#pricing" className="btn btn-primary btn-sm">Get started</a>
+  <a
+    href="#waitlist"
+    style={{
+      display: "inline-block",
+      padding: "9px 22px",
+      fontSize: "14px",
+      fontWeight: 500,
+      color: "#fff",
+      background: "rgba(255, 255, 255, 0.1)",
+      border: "1px solid rgba(255, 255, 255, 0.2)",
+      borderRadius: "10px",
+      textDecoration: "none",
+      letterSpacing: "-0.005em",
+      whiteSpace: "nowrap",
+      transition: "all 0.2s ease",
+    }}
+  >
+    {HERO_CTA_PRIMARY}
+  </a>
 );
 
 // ---------------------------------------------------------------------------

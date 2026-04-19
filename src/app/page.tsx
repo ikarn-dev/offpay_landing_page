@@ -8,158 +8,149 @@
  * Individual interactive sections declare "use client" in their own files.
  */
 
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import Pricing from "@/components/Pricing";
-import Testimonials from "@/components/Testimonials";
-import Cta from "@/components/Cta";
-import Faq from "@/components/Faq";
-import type { PricingPlan } from "@/types";
-import type { Feature, Testimonial } from "@/types";
+import Hero from "@/components/sections/Hero";
+import Features from "@/components/sections/Features";
+import HowItWorks from "@/components/sections/HowItWorks";
+import Security from "@/components/sections/Security";
+import Cta from "@/components/sections/Cta";
+import Faq from "@/components/sections/Faq";
+import GlowButton from "@/components/ui/GlowButton";
+import type { Feature } from "@/types";
+import type { HowItWorksStep, SecurityFeature } from "@/types";
 
 import {
-  HERO_EYEBROW,
   HERO_HEADLINE_LINE1,
   HERO_HEADLINE_LINE2,
   HERO_SUBHEADLINE,
   HERO_CTA_PRIMARY,
-  HERO_CTA_SECONDARY,
-  STATS,
   FEATURES_HEADLINE,
   FEATURES_SUBHEADLINE,
-  PRICING_HEADLINE,
-  PRICING_SUBHEADLINE,
-  TESTIMONIALS_HEADLINE,
-  TESTIMONIALS_SUBHEADLINE,
+  HOW_IT_WORKS_HEADLINE,
+  HOW_IT_WORKS_SUBHEADLINE,
+  SECURITY_HEADLINE,
+  SECURITY_SUBHEADLINE,
   FAQ_HEADLINE,
   FAQ_ITEMS,
 } from "@/constants";
 
 // ---------------------------------------------------------------------------
-// Feature data
+// Feature data — aligned to PRD core differentiators
 // ---------------------------------------------------------------------------
 
 const FEATURES: Feature[] = [
   {
+    icon: "📡",
+    title: "Offline Payments",
+    description:
+      "Pay anyone within BLE or WiFi Hotspot range — zero internet required. Solana durable nonces make it cryptographically trustless.",
+  },
+  {
+    icon: "🔐",
+    title: "ZK-Shielded Transfers",
+    description:
+      "Umbra Protocol hides sender, receiver, and amount on-chain. On-chain observers see only encrypted bytes.",
+  },
+  {
     icon: "⚡",
-    title: "Lightning Fast Integration",
+    title: "Private Settlement",
     description:
-      "Go from zero to accepting payments in under 15 minutes. Our SDK handles the heavy lifting so you can focus on your product.",
+      "MagicBlock Ephemeral Rollups compress entire offline sessions into a single encrypted on-chain commitment.",
   },
   {
-    icon: "🌍",
-    title: "Global Coverage",
+    icon: "🛡️",
+    title: "Counterparty Safety Badge",
     description:
-      "Accept payments in 135+ currencies with 50+ payment methods. Cards, wallets, bank transfers — all from a single API.",
-  },
-  {
-    icon: "🔒",
-    title: "Bank-Grade Security",
-    description:
-      "PCI DSS Level 1 certified. End-to-end encryption and tokenization keep your customers' data safe without extra effort.",
-  },
-  {
-    icon: "📊",
-    title: "Real-Time Analytics",
-    description:
-      "Monitor revenue, conversion rates, and failed payments in real time. Actionable insights delivered straight to your dashboard.",
+      "Before every payment, see a safety badge derived from wallet age, transaction history, and funding signals via Helius.",
   },
   {
     icon: "🔄",
-    title: "Smart Retry Engine",
+    title: "Best-Price Swaps",
     description:
-      "Automatically retries failed payments with intelligent routing. Recover up to 15% of otherwise-lost revenue.",
+      "Jupiter Swap V2 routes across all Solana DEXs. One-tap Swap & Shield sends output directly into Umbra's private pool.",
   },
   {
-    icon: "🛠️",
-    title: "Developer-First APIs",
+    icon: "💳",
+    title: "Cash-Like UX",
     description:
-      "Typed SDKs for every major language, comprehensive docs, and a sandbox that mirrors production exactly.",
+      "2–5 second P2P handoff with instant cryptographic confirmation. No blockchain knowledge required from users.",
   },
 ];
 
 // ---------------------------------------------------------------------------
-// Pricing data
+// How It Works — offline payment flow from PRD §5.1
 // ---------------------------------------------------------------------------
 
-const PLANS: PricingPlan[] = [
+const STEPS: HowItWorksStep[] = [
   {
-    tier: "free",
-    name: "Free",
-    price: "$0",
-    billingNote: "/month",
-    description: "Perfect for side projects and testing.",
-    features: [
-      "Up to 1,000 transactions/mo",
-      "2.9% + 30¢ per transaction",
-      "Standard checkout",
-      "Email support",
-      "Community access",
-    ],
-    ctaLabel: "Start for free",
-    highlighted: false,
+    step: 1,
+    icon: "🔧",
+    title: "One-time online setup",
+    description:
+      "Create a nonce account on-chain (~0.0015 SOL, once). The nonce value and authority key are cached securely on your device.",
   },
   {
-    tier: "pro",
-    name: "Pro",
-    price: "$49",
-    billingNote: "/month",
-    description: "For growing businesses that need more.",
-    features: [
-      "Unlimited transactions",
-      "2.4% + 25¢ per transaction",
-      "Custom checkout UI",
-      "Priority support",
-      "Webhooks & events",
-      "Advanced analytics",
-    ],
-    ctaLabel: "Start free trial",
-    highlighted: true,
+    step: 2,
+    icon: "✍️",
+    title: "Sign offline",
+    description:
+      "Build and sign a USDC transfer using the cached durable nonce — no internet, no blockhash expiry. Optionally embed a ZK proof for full privacy.",
   },
   {
-    tier: "enterprise",
-    name: "Enterprise",
-    price: "Custom",
-    billingNote: "",
-    description: "For large-scale operations with custom needs.",
-    features: [
-      "Volume discounts",
-      "Dedicated account manager",
-      "Custom integrations",
-      "SLA guarantees",
-      "On-premise option",
-      "24/7 phone support",
-    ],
-    ctaLabel: "Contact sales",
-    highlighted: false,
+    step: 3,
+    icon: "📲",
+    title: "Transmit via BLE or Hotspot",
+    description:
+      "The signed transaction blob (~400 bytes) is sent to the receiver over Bluetooth LE or WiFi Hotspot. Instant Ed25519 verification on their device.",
+  },
+  {
+    step: 4,
+    icon: "✅",
+    title: "Settle privately on reconnect",
+    description:
+      "When internet returns, pending transactions are routed through MagicBlock PER — settling as a single encrypted commitment on-chain.",
   },
 ];
 
 // ---------------------------------------------------------------------------
-// Testimonial data
+// Security features — from PRD §3 and §7
 // ---------------------------------------------------------------------------
 
-const TESTIMONIALS: Testimonial[] = [
+const SECURITY_FEATURES: SecurityFeature[] = [
   {
-    quote:
-      "OffPay cut our payment integration time from weeks to hours. The developer experience is unmatched — it's the Stripe killer we've been waiting for.",
-    authorName: "Sarah Chen",
-    authorRole: "CTO",
-    authorCompany: "Stackflow",
+    icon: "🔑",
+    title: "Non-Custodial",
+    description:
+      "Private keys are stored in Secure Enclave (iOS) or Android Keystore. OffPay never has access to your funds or keys.",
   },
   {
-    quote:
-      "We switched from our legacy provider and saw a 12% increase in successful transactions within the first month. The smart retry engine is magic.",
-    authorName: "Marcus Williams",
-    authorRole: "Head of Engineering",
-    authorCompany: "Meridian",
+    icon: "👁️‍🗨️",
+    title: "Viewing Keys",
+    description:
+      "Selectively disclose transaction history for audits without exposing your full wallet. Share a scoped viewing key, not your secrets.",
   },
   {
-    quote:
-      "The real-time analytics dashboard alone is worth the price. We can finally see exactly where we're losing customers in the checkout flow.",
-    authorName: "Priya Patel",
-    authorRole: "Product Lead",
-    authorCompany: "Craftbase",
+    icon: "🧮",
+    title: "Client-Side ZK Proofs",
+    description:
+      "Zero-knowledge proofs are generated entirely on your device — no RPC call, no server involvement. Works offline.",
+  },
+  {
+    icon: "🚫",
+    title: "No Login. No Data Collection.",
+    description:
+      "No email, no phone, no identity verification. Your wallet address is your identity. OffPay collects nothing.",
+  },
+  {
+    icon: "🧱",
+    title: "Spam Token Filter",
+    description:
+      "Airdropped phishing tokens are auto-hidden using Helius wallet data and Jupiter token verification. Review and restore anytime.",
+  },
+  {
+    icon: "🔒",
+    title: "Encrypted Settlement",
+    description:
+      "On-chain footprint is a single encrypted commitment per session. No amount, no timing, no sequence, no parties visible.",
   },
 ];
 
@@ -171,21 +162,12 @@ export default function Home() {
   return (
     <main>
       <Hero
-        eyebrow={HERO_EYEBROW}
         headlineLine1={HERO_HEADLINE_LINE1}
         headlineLine2={HERO_HEADLINE_LINE2}
         subheadline={HERO_SUBHEADLINE}
         ctaPrimary={
-          <a href="#pricing" className="btn btn-primary">
-            {HERO_CTA_PRIMARY}
-          </a>
+          <GlowButton label={HERO_CTA_PRIMARY} href="#waitlist" variant="primary" />
         }
-        ctaSecondary={
-          <a href="#features" className="btn btn-secondary">
-            {HERO_CTA_SECONDARY}
-          </a>
-        }
-        stats={[...STATS]}
       />
 
       <Features
@@ -194,25 +176,25 @@ export default function Home() {
         features={FEATURES}
       />
 
-      <Pricing
-        headline={PRICING_HEADLINE}
-        subheadline={PRICING_SUBHEADLINE}
-        plans={PLANS}
+      <HowItWorks
+        headline={HOW_IT_WORKS_HEADLINE}
+        subheadline={HOW_IT_WORKS_SUBHEADLINE}
+        steps={STEPS}
       />
 
-      <Testimonials
-        headline={TESTIMONIALS_HEADLINE}
-        subheadline={TESTIMONIALS_SUBHEADLINE}
-        testimonials={TESTIMONIALS}
+      <Security
+        headline={SECURITY_HEADLINE}
+        subheadline={SECURITY_SUBHEADLINE}
+        features={SECURITY_FEATURES}
       />
 
       <Faq headline={FAQ_HEADLINE} items={FAQ_ITEMS} />
 
       <Cta
-        headline="Ready to get started?"
-        supporting="Join thousands of developers building with OffPay. No credit card required."
+        headline="Ready to pay without internet?"
+        supporting="OffPay is in pre-development. Join the waitlist to be first in line for the private beta."
         action={
-          <a href="#pricing" className="btn btn-primary">
+          <a href="#waitlist" className="btn btn-primary">
             {HERO_CTA_PRIMARY}
           </a>
         }

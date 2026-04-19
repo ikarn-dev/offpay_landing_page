@@ -67,7 +67,7 @@ export default function Cta({ headline, supporting, action, background }: CtaPro
           transform: "translate(-50%, -50%)",
           width: "600px",
           height: "400px",
-          background: "radial-gradient(ellipse at center, rgba(124, 58, 237, 0.1) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, rgba(0, 119, 204, 0.1) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
