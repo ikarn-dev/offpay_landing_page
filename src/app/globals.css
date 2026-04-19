@@ -75,7 +75,13 @@ html::-webkit-scrollbar {
 }
 
 body {
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(124, 58, 237, 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(6, 182, 212, 0.3) 0px, transparent 50%),
+    radial-gradient(at 40% 50%, rgba(236, 72, 153, 0.25) 0px, transparent 50%),
+    radial-gradient(at 90% 80%, rgba(139, 92, 246, 0.3) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   line-height: 1.6;

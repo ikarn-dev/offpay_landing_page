@@ -10,7 +10,7 @@ import type { NavLink, FaqItem } from "@/types";
 // Site metadata
 // ---------------------------------------------------------------------------
 
-export const SITE_NAME = "OffPay" as const;
+export const SITE_NAME = "Offpay Wallet" as const;
 export const SITE_TAGLINE = "Payments that just work." as const;
 export const SITE_DESCRIPTION =
   "Build seamless payment experiences. One integration, endless possibilities." as const;
@@ -22,6 +22,7 @@ export const SITE_URL = "https://offpay.com" as const;
 // ---------------------------------------------------------------------------
 
 export const NAV_LINKS: NavLink[] = [
+  { label: "Dashboard", href: "#dashboard" },
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
   { label: "Testimonials", href: "#testimonials" },

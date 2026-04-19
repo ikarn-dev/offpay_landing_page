@@ -32,7 +32,11 @@ export const metadata: Metadata = {
 // Stub logo and footer data — replace in the content pass
 // ---------------------------------------------------------------------------
 
-const LOGO_STUB = <span style={{ fontSize: "1.25rem", fontWeight: 700, letterSpacing: "-0.03em" }}><span className="gradient-text">Off</span>Pay</span>;
+const LOGO_STUB = (
+  <span style={{ fontSize: "1.25rem", fontWeight: 700, letterSpacing: "-0.03em", color: "#fff" }}>
+    Offpay
+  </span>
+);
 
 const FOOTER_COLUMNS_STUB = [
   {
