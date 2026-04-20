@@ -53,7 +53,7 @@ export default function Features({ headline, subheadline, features }: FeaturesPr
       <div className="section-container">
         {/* Section header */}
         <div className="section-header">
-          <h2 id="features-heading" style={{ fontFamily: "var(--font-migra)", fontWeight: "normal" }}>{headline}</h2>
+          <h2 id="features-heading">{headline}</h2>
           <p style={{ fontFamily: "var(--font-body)" }}>{subheadline}</p>
         </div>
 

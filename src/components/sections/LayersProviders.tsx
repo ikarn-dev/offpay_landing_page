@@ -22,7 +22,7 @@ export default function LayersProviders() {
     <section id="layers" style={{ paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}>
       <div className="section-container">
         <div className="section-header" style={{ marginBottom: "2.5rem" }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontWeight: "normal" }}>
+          <h2>
             Powered by the best in Solana
           </h2>
         </div>
