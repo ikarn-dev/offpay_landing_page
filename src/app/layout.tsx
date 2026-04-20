@@ -5,6 +5,8 @@ import Footer from "@/components/ui/Footer";
 import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, FOOTER_TAGLINE, FOOTER_COPYRIGHT_YEAR, HERO_CTA_PRIMARY } from "@/constants";
 import { allFontVariables } from "./fonts";
 
+
+
 export const metadata: Metadata = {
   title: {
     default: SITE_NAME,

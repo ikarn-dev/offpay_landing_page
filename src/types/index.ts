@@ -22,6 +22,8 @@ export interface Feature {
   icon: React.ReactNode;
   title: string;
   description: string;
+  /** Optional path to a visual asset (e.g. 3D render) displayed as the card hero. */
+  image?: string;
 }
 
 /** A single step in the How It Works flow. */

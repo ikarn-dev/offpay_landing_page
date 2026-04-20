@@ -9,6 +9,7 @@
  */
 
 import Hero from "@/components/sections/Hero";
+import LayersProviders from "@/components/sections/LayersProviders";
 import Features from "@/components/sections/Features";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Security from "@/components/sections/Security";
@@ -43,36 +44,21 @@ const FEATURES: Feature[] = [
     title: "Offline Payments",
     description:
       "Pay anyone within BLE or WiFi Hotspot range — zero internet required. Solana durable nonces make it cryptographically trustless.",
+    image: "/3d-assets/no-internet.png",
   },
   {
     icon: "🔐",
     title: "ZK-Shielded Transfers",
     description:
       "Umbra Protocol hides sender, receiver, and amount on-chain. On-chain observers see only encrypted bytes.",
-  },
-  {
-    icon: "⚡",
-    title: "Private Settlement",
-    description:
-      "MagicBlock Ephemeral Rollups compress entire offline sessions into a single encrypted on-chain commitment.",
-  },
-  {
-    icon: "🛡️",
-    title: "Counterparty Safety Badge",
-    description:
-      "Before every payment, see a safety badge derived from wallet age, transaction history, and funding signals via Helius.",
+    image: "/3d-assets/privacy.png",
   },
   {
     icon: "🔄",
     title: "Best-Price Swaps",
     description:
       "Jupiter Swap V2 routes across all Solana DEXs. One-tap Swap & Shield sends output directly into Umbra's private pool.",
-  },
-  {
-    icon: "💳",
-    title: "Cash-Like UX",
-    description:
-      "2–5 second P2P handoff with instant cryptographic confirmation. No blockchain knowledge required from users.",
+    image: "/3d-assets/swap.png",
   },
 ];
 
@@ -169,6 +155,8 @@ export default function Home() {
           <GlowButton label={HERO_CTA_PRIMARY} href="#waitlist" variant="primary" />
         }
       />
+
+      <LayersProviders />
 
       <Features
         headline={FEATURES_HEADLINE}

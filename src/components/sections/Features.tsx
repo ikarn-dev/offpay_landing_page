@@ -1,21 +1,21 @@
 /**
- * Features — section that showcases the product's key capabilities.
+ * Features — redesigned section showcasing the 3 core product pillars.
  *
- * Responsibilities (this pass):
- *   • Renders a section headline + subheadline.
- *   • Renders a grid of FeatureCard components.
- *   • Scroll-triggered stagger animation via the shared animation utility.
+ * Each card includes:
+ *   • Mesh gradient background (same palette as Hero: #000000 → #001A4E → #0077CC)
+ *   • HalftoneDots paper texture (same @paper-design/shaders-react lib + config as Hero)
+ *   • Apple Liquid Glass edge glow (soft luminous border, not a hard outline)
+ *   • 3D asset image from public/3d-assets/ as primary visual
  *
- * Props: all content injected.
- *
- * @product-input  Feature icons, titles, descriptions, and layout preference
- *                 (grid columns, card style).
+ * Props: all content injected from page.tsx.
  */
 
 "use client";
 
 import { useRef, useEffect } from "react";
+import Image from "next/image";
 import { animateScrollStaggerIn } from "@/utils/animation";
+import { HalftoneDots } from "@paper-design/shaders-react";
 import type { Feature } from "@/types";
 
 export interface FeaturesProps {
@@ -35,7 +35,7 @@ export default function Features({ headline, subheadline, features }: FeaturesPr
     const cards = section.querySelectorAll<HTMLElement>("[data-feature-card]");
     tlRef.current = animateScrollStaggerIn(cards, {
       triggerElement: section,
-      stagger: 0.1,
+      stagger: 0.15,
     });
 
     return () => {
@@ -53,62 +53,63 @@ export default function Features({ headline, subheadline, features }: FeaturesPr
       <div className="section-container">
         {/* Section header */}
         <div className="section-header">
-          <h2 id="features-heading">{headline}</h2>
-          <p>{subheadline}</p>
+          <h2 id="features-heading" style={{ fontFamily: "var(--font-migra)", fontWeight: "normal" }}>{headline}</h2>
+          <p style={{ fontFamily: "var(--font-body)" }}>{subheadline}</p>
         </div>
 
         {/* Feature cards grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "1.5rem",
-          }}
-        >
+        <div className="features-grid">
           {features.map((feature, i) => (
             <div
               key={i}
               data-feature-card
-              className="glass-card"
-              style={{ opacity: 0, padding: "2rem" }}
+              className="feature-card"
+              style={{ opacity: 0 }}
             >
-              <div
-                aria-hidden="true"
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "var(--radius-md)",
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.5rem",
-                  marginBottom: "1.25rem",
-                }}
-              >
-                {feature.icon}
+              {/* Layer 1: Mesh gradient background */}
+              <div className="feature-card__gradient" aria-hidden="true" />
+
+              {/* Layer 2: HalftoneDots texture — same lib + config as Hero */}
+              <div className="feature-card__texture" aria-hidden="true">
+                <HalftoneDots
+                  style={{ width: "100%", height: "100%" }}
+                  colorBack="#000000"
+                  colorFront="#0077CC"
+                  originalColors={false}
+                  type="gooey"
+                  grid="hex"
+                  inverted={false}
+                  size={0.4}
+                  radius={1.2}
+                  contrast={0.3}
+                  grainMixer={0.15}
+                  grainOverlay={0.15}
+                  grainSize={0.4}
+                />
               </div>
-              <h3
-                style={{
-                  fontSize: "1.15rem",
-                  fontWeight: 600,
-                  margin: "0 0 0.5rem",
-                  color: "var(--color-text)",
-                }}
-              >
-                {feature.title}
-              </h3>
-              <p
-                style={{
-                  fontSize: "0.95rem",
-                  color: "var(--color-text-muted)",
-                  lineHeight: 1.65,
-                  margin: 0,
-                }}
-              >
-                {feature.description}
-              </p>
+
+              {/* Content */}
+
+              {/* Content */}
+              <div className="feature-card__content">
+                {/* 3D image */}
+                {feature.image && (
+                  <div className="feature-card__image">
+                    <Image
+                      src={feature.image}
+                      alt={feature.title}
+                      width={200}
+                      height={200}
+                      style={{ objectFit: "contain" }}
+                      priority={i === 0}
+                    />
+                  </div>
+                )}
+
+                {/* Text */}
+                <h3 className="feature-card__title">{feature.title}</h3>
+                <p className="feature-card__desc">{feature.description}</p>
+              </div>
             </div>
           ))}
         </div>
