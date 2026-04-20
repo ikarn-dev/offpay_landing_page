@@ -10,7 +10,7 @@ import type { NavLink, FaqItem } from "@/types";
 // Site metadata
 // ---------------------------------------------------------------------------
 
-export const SITE_NAME = "Offpay Wallet" as const;
+export const SITE_NAME = "OffPay Wallet" as const;
 export const SITE_TAGLINE = "Payments that just work." as const;
 export const SITE_DESCRIPTION =
   "Build seamless payment experiences. One integration, endless possibilities." as const;
@@ -35,7 +35,7 @@ export const NAV_LINKS: NavLink[] = [
 export const HERO_HEADLINE_LINE1 = "Solana's first dual-mode," as const;
 export const HERO_HEADLINE_LINE2 = "privacy-first wallet." as const;
 export const HERO_SUBHEADLINE =
-  "Transact on Solana without getting traced. Pay offline, settle on-chain — with zero-knowledge privacy and full self-custody." as const;
+  "Pay offline, settle on-chain with zero-knowledge privacy and full self-custody." as const;
 export const HERO_CTA_PRIMARY = "Join the waitlist" as const;
 
 // ---------------------------------------------------------------------------

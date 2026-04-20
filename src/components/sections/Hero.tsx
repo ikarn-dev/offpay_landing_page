@@ -14,7 +14,7 @@ import MeshGradient from "@/components/ui/MeshGradient";
 export interface HeroProps {
   headlineLine1: string;
   headlineLine2: string;
-  subheadline: string;
+  subheadline: React.ReactNode;
   ctaPrimary: React.ReactNode;
   background?: React.ReactNode;
 }
@@ -83,11 +83,14 @@ export default function Hero({
           style={{
             opacity: 0,
             fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+            fontFamily: "var(--font-display)",
             fontWeight: 800,
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             margin: "0 0 1.5rem",
-            color: "#fff",
+            color: "#dce8f8",
+            textShadow: "0 0 40px rgba(0, 119, 204, 0.25), 0 2px 8px rgba(0, 0, 0, 0.4)",
+            textWrap: "balance",
           }}
         >
           {headlineLine1}
@@ -97,14 +100,22 @@ export default function Hero({
 
         {/* Subheadline */}
         <p
+          className="hero-subheadline"
           data-hero-item
           style={{
             opacity: 0,
-            fontSize: "clamp(1.05rem, 1.8vw, 1.25rem)",
-            color: "#B0EFFF",
-            maxWidth: "660px",
+            fontSize: "clamp(0.85rem, 1.2vw, 0.95rem)",
+            fontFamily: "var(--font-heading)",
+            background: "linear-gradient(135deg, #B0EFFF 0%, #00DFFF 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
             margin: "0 auto 2.5rem",
-            lineHeight: 1.7,
+            lineHeight: 1.4,
+            fontWeight: 700,
+            textAlign: "center",
+            maxWidth: "660px",
+            padding: "0 1rem",
           }}
         >
           {subheadline}

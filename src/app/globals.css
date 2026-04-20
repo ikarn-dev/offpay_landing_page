@@ -53,8 +53,16 @@
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-text);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-tt-commons);
+  --font-mono: var(--font-fraktion);
+
+  /* Semantic font aliases — use these in components */
+  --font-display: var(--font-mondwest);
+  --font-heading: var(--font-migra);
+  --font-body: var(--font-tt-commons);
+  --font-nav: var(--font-schibsted);
+  --font-accent: var(--font-bricolage);
+  --font-geometric: var(--font-modernera);
 }
 
 /* ---------------------------------------------------------------------------
@@ -77,7 +85,7 @@ html::-webkit-scrollbar {
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-family: var(--font-body, var(--font-sans, system-ui, -apple-system, sans-serif));
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -266,6 +274,24 @@ body {
 
 .accordion-chevron[data-open="true"] {
   transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Hero responsive
+   --------------------------------------------------------------------------- */
+
+.hero-subheadline {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .hero-subheadline {
+    white-space: normal !important;
+    font-size: 0.85rem !important;
+    max-width: 320px !important;
+    text-wrap: balance;
+    line-height: 1.5 !important;
+  }
 }
 
 /* ---------------------------------------------------------------------------

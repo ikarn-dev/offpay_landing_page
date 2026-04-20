@@ -103,7 +103,8 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
           width: "min(92vw, 1120px)",
           transform: "translateX(-50%)",
           zIndex: 50,
-          borderRadius: "14px",
+          borderRadius: mobileOpen ? "24px" : "9999px",
+          transition: `border-radius 0s ${mobileOpen ? "0s" : "0.65s"}`,
           backdropFilter: "blur(20px) saturate(180%)",
           WebkitBackdropFilter: "blur(20px) saturate(180%)",
           background: "rgba(255, 255, 255, 0.08)",
@@ -111,7 +112,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
           boxShadow:
             "0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04)",
           fontFamily:
-            "system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif",
+            "var(--font-nav), system-ui, -apple-system, sans-serif",
           overflow: "hidden",
         }}
         aria-label="Main navigation"
@@ -122,7 +123,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "12px 24px",
+            padding: "8px 24px",
           }}
         >
           {/* Logo — left */}
@@ -239,12 +240,13 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   padding: "18px 0",
                   borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                   textDecoration: "none",
                   color: "#fff",
                   fontSize: "14px",
+                  fontFamily: "var(--font-nav)",
                   fontWeight: 600,
                   letterSpacing: "0.06em",
                   textTransform: "uppercase",
@@ -270,12 +272,6 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
               href="#waitlist"
               onClick={() => setMobileOpen(false)}
             />
-            <NavCtaButton
-              label="Read the docs"
-              variant="secondary"
-              href="#how-it-works"
-              onClick={() => setMobileOpen(false)}
-            />
           </div>
         </div>
       </nav>
@@ -296,21 +292,33 @@ function NavTextLink({ href, label }: { href: string; label: string }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
+        position: "relative",
         display: "inline-block",
-        padding: "8px 16px",
+        padding: "8px 12px",
         textDecoration: "none",
         color: hovered ? "#fff" : "rgba(255, 255, 255, 0.65)",
         fontSize: "14px",
-        fontWeight: 450,
-        letterSpacing: "-0.005em",
-        borderRadius: "8px",
-        background: hovered ? "rgba(255, 255, 255, 0.08)" : "transparent",
-        transition: "all 0.2s ease",
+        fontFamily: "var(--font-nav)",
+        fontWeight: 500,
+        transition: "color 0.3s var(--ease-out)",
         cursor: "pointer",
         whiteSpace: "nowrap",
       }}
     >
-      {label}
+      <span style={{ position: "relative", zIndex: 1 }}>{label}</span>
+      <span
+        style={{
+          position: "absolute",
+          left: "12px",
+          right: "12px",
+          bottom: "6px",
+          height: "1px",
+          background: "linear-gradient(90deg, #0077CC, #00DFFF)",
+          transform: hovered ? "scaleX(1)" : "scaleX(0)",
+          transformOrigin: "bottom left",
+          transition: "transform 0.4s var(--ease-out)",
+        }}
+      />
     </a>
   );
 }
