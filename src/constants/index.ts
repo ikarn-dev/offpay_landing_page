@@ -14,7 +14,7 @@ export const SITE_NAME = "OffPay Wallet" as const;
 export const SITE_TAGLINE = "Payments that just work." as const;
 export const SITE_DESCRIPTION =
   "Build seamless payment experiences. One integration, endless possibilities." as const;
-export const SITE_EMAIL = "hello@offpay.com" as const;
+export const SITE_EMAIL = "hello@offpay.app" as const;
 export const SITE_URL = "https://offpay.com" as const;
 
 // ---------------------------------------------------------------------------

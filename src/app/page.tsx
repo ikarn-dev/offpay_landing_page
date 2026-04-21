@@ -162,6 +162,21 @@ export default function Home() {
         headline={FEATURES_HEADLINE}
         subheadline={FEATURES_SUBHEADLINE}
         features={FEATURES}
+        mockupImage="/mockups/mockup.png"
+        ctas={
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <a href="#waitlist" className="btn btn-primary btn-sm">
+              Download app now
+            </a>
+            <a href="#waitlist" className="btn btn-secondary btn-sm">
+              Access from web
+            </a>
+          </div>
+        }
+        ratings={[
+          { value: "4.8", label: "App Store ratings" },
+          { value: "4.7", label: "Google Play ratings" },
+        ]}
       />
 
       <HowItWorks

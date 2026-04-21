@@ -1,6 +1,11 @@
 /**
  * Features — redesigned section showcasing the 3 core product pillars.
  *
+ * Layout:
+ *   • Two-column top row: left = heading + subtext + CTAs + ratings,
+ *     right = mockup image
+ *   • Bottom row: feature cards in a horizontal row (existing grid, unchanged)
+ *
  * Each card includes:
  *   • Mesh gradient background (same palette as Hero: #000000 → #001A4E → #0077CC)
  *   • HalftoneDots paper texture (same @paper-design/shaders-react lib + config as Hero)
@@ -22,9 +27,19 @@ export interface FeaturesProps {
   headline: string;
   subheadline: string;
   features: Feature[];
+  mockupImage?: string;
+  ctas?: React.ReactNode;
+  ratings?: { value: string; label: string }[];
 }
 
-export default function Features({ headline, subheadline, features }: FeaturesProps) {
+export default function Features({
+  headline,
+  subheadline,
+  features,
+  mockupImage,
+  ctas,
+  ratings,
+}: FeaturesProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -51,13 +66,117 @@ export default function Features({ headline, subheadline, features }: FeaturesPr
       className="section-spacing"
     >
       <div className="section-container">
-        {/* Section header */}
-        <div className="section-header">
-          <h2 id="features-heading">{headline}</h2>
-          <p style={{ fontFamily: "var(--font-body)" }}>{subheadline}</p>
+        {/* ── Top row: two columns ─────────────────────────────── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "3rem",
+            alignItems: "center",
+            marginBottom: "4rem",
+          }}
+        >
+          {/* Left column — heading, subtext, CTAs, ratings */}
+          <div>
+            <h2
+              id="features-heading"
+              style={{
+                fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+                fontWeight: 700,
+                letterSpacing: "-0.025em",
+                margin: "0 0 1rem",
+                color: "var(--color-text)",
+                lineHeight: 1.2,
+                textWrap: "balance",
+              }}
+            >
+              {headline}
+            </h2>
+            <p
+              style={{
+                fontSize: "clamp(1rem, 1.5vw, 1.15rem)",
+                color: "var(--color-text-muted)",
+                lineHeight: 1.7,
+                margin: "0 0 2rem",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              {subheadline}
+            </p>
+
+            {ctas && (
+              <div style={{ marginBottom: "2rem" }}>{ctas}</div>
+            )}
+
+            {ratings && ratings.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "2rem",
+                  flexWrap: "wrap",
+                  alignItems: "baseline",
+                }}
+              >
+                {ratings.map((rating, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "1.75rem",
+                        fontWeight: 700,
+                        color: "var(--color-text)",
+                        lineHeight: 1,
+                      }}
+                    >
+                      {rating.value}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "0.875rem",
+                        color: "var(--color-text-muted)",
+                      }}
+                    >
+                      {rating.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Right column — mockup image */}
+          {mockupImage && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                src={mockupImage}
+                alt="App mockup"
+                width={500}
+                height={600}
+                style={{
+                  width: "100%",
+                  maxWidth: "400px",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+                priority
+              />
+            </div>
+          )}
         </div>
 
-        {/* Feature cards grid */}
+        {/* ── Bottom row: feature cards (unchanged) ────────────── */}
         <div className="features-grid">
           {features.map((feature, i) => (
             <div
@@ -87,8 +206,6 @@ export default function Features({ headline, subheadline, features }: FeaturesPr
                   grainSize={0.4}
                 />
               </div>
-
-              {/* Content */}
 
               {/* Content */}
               <div className="feature-card__content">

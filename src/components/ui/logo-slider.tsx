@@ -103,9 +103,9 @@ export const LogoSlider = ({
                     {extendedLogos.map((logo, index) => (
                         <li
                             key={`track1-${index}`}
-                            className="logo-slider__item shrink-0 grid place-items-center"
+                            className="logo-slider__item shrink-0"
                         >
-                            <div className="flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300">
+                            <div className="opacity-80 hover:opacity-100 transition-opacity duration-300">
                                 {logo}
                             </div>
                         </li>
@@ -117,9 +117,9 @@ export const LogoSlider = ({
                     {extendedLogos.map((logo, index) => (
                         <li
                             key={`track2-${index}`}
-                            className="logo-slider__item shrink-0 grid place-items-center"
+                            className="logo-slider__item shrink-0"
                         >
-                            <div className="flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300">
+                            <div className="opacity-80 hover:opacity-100 transition-opacity duration-300">
                                 {logo}
                             </div>
                         </li>
