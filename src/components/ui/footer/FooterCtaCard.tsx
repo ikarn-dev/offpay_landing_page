@@ -16,8 +16,9 @@ import { HalftoneDots } from "@paper-design/shaders-react";
 const btnStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
+  justifyContent: "center",
   gap: "0.4rem",
-  background: "rgba(0, 0, 0, 0.6)",
+  background: "rgba(0, 26, 78, 0.55)",
   backdropFilter: "blur(4px)",
   color: "#fff",
   borderRadius: "var(--radius-sm)",
