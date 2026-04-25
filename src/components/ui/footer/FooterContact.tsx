@@ -5,41 +5,27 @@
  * "OffPay" text logo, and the email address below.
  */
 
-import Image from "next/image";
 import { FOOTER_EMAIL } from "@/constants";
 
 export default function FooterContact() {
   return (
     <div className="footer-contact">
-      {/* Logo + brand text */}
+      {/* Contact title */}
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.6rem",
-          marginBottom: "1.25rem",
-          opacity: 1,
+          marginBottom: "0.75rem",
         }}
       >
-        <Image
-          src="/app-icons/64x64.png"
-          alt="OffPay logo"
-          width={32}
-          height={32}
-          style={{ borderRadius: "6px", flexShrink: 0, display: "block" }}
-        />
         <span
           style={{
-            fontSize: "2rem",
-            fontWeight: 700,
+            fontSize: "1.25rem",
+            fontWeight: 400,
             fontFamily: "var(--font-heading)",
-            color: "var(--color-text)",
             letterSpacing: "-0.02em",
-            lineHeight: 1,
-            display: "block",
+            color: "var(--color-text-muted)",
           }}
         >
-          OffPay
+          contact
         </span>
       </div>
 
