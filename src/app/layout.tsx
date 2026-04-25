@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
-import Footer from "@/components/ui/Footer";
+import Footer from "@/components/sections/Footer";
 import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, HERO_CTA_PRIMARY } from "@/constants";
 import { allFontVariables } from "./fonts";
 

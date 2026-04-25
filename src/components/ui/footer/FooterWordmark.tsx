@@ -12,26 +12,25 @@ export default function FooterWordmark() {
       className="footer-wordmark"
       aria-hidden="true"
       style={{
-        overflow: "hidden",
-        lineHeight: 0.9,
-        padding: "2rem 0 1.5rem",
+        lineHeight: 1.1,
+        padding: "2rem 0 4vw", // Added bottom padding to give the 'y' descender room
+        textAlign: "center",
       }}
     >
       <span
         style={{
           display: "block",
-          fontSize: "clamp(5rem, 22vw, 20rem)",
+          fontSize: "clamp(5rem, 26vw, 30rem)",
           color: "var(--color-text)",
           fontFamily: "var(--font-migra)",
-          letterSpacing: "-0.01em",
-          textAlign: "center",
+          fontWeight: 700, // Make entire text bold
+          letterSpacing: "0.03em", // Small gap between each letter
           whiteSpace: "nowrap",
           userSelect: "none",
           width: "100%",
         }}
       >
-        <span style={{ fontWeight: 400 }}>Off</span>
-        <span style={{ fontWeight: 700 }}>Pay</span>
+        OffPay
       </span>
     </div>
   );

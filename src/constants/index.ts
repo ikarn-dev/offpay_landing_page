@@ -105,26 +105,11 @@ export const FAQ_ITEMS: FaqItem[] = [
 // Footer
 // ---------------------------------------------------------------------------
 
-export const FOOTER_TAGLINE =
-  "Privacy-first payments on Solana. Offline-native. Non-custodial." as const;
 export const FOOTER_COPYRIGHT_YEAR = 2026 as const;
 
 export const FOOTER_EMAIL = "hello@offpay.app" as const;
-export const FOOTER_EMAIL_LABEL = "Reach out to the OffPay team at" as const;
 export const FOOTER_CTA_HEADING = "Download" as const;
 
-export const FOOTER_NAV_LINKS: NavLink[] = [
-  { label: "Features", href: "#features" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Security", href: "#security" },
-  { label: "FAQ", href: "#faq" },
-];
-
-export const FOOTER_OFFICE_HEADING = "Contact" as const;
-export const FOOTER_OFFICE_ADDRESS = [
-  "hello@offpay.app",
-  "offpay.com",
-] as const;
 export const FOOTER_SOCIAL_LABELS = ["Twitter / X", "GitHub"] as const;
 
 // ---------------------------------------------------------------------------

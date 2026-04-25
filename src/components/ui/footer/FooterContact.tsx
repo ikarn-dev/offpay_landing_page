@@ -15,10 +15,10 @@ export default function FooterContact() {
       <div
         style={{
           display: "flex",
-          alignItems: "flex-end",
-          gap: "0.5rem",
+          alignItems: "center",
+          gap: "0.6rem",
           marginBottom: "1.25rem",
-          opacity: 0.8,
+          opacity: 1,
         }}
       >
         <Image
@@ -30,7 +30,7 @@ export default function FooterContact() {
         />
         <span
           style={{
-            fontSize: "1.35rem",
+            fontSize: "2rem",
             fontWeight: 700,
             fontFamily: "var(--font-heading)",
             color: "var(--color-text)",
