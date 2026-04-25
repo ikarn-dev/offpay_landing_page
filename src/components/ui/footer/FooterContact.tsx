@@ -1,54 +1,47 @@
 /**
- * FooterContact — label text + large email address + divider.
+ * FooterContact — app logo + brand text + large email address.
  *
- * Renders the top-left zone of the footer: a small muted label,
- * a prominent email address, and a horizontal divider below.
+ * Renders the top-left zone of the footer: the app icon with
+ * "OffPay" text logo, and the email address below.
  */
 
-import { FOOTER_EMAIL, FOOTER_EMAIL_LABEL } from "@/constants";
+import Image from "next/image";
+import { FOOTER_EMAIL } from "@/constants";
 
 export default function FooterContact() {
   return (
     <div className="footer-contact">
-      {/* Decorative accent dots */}
+      {/* Logo + brand text */}
       <div
-        aria-hidden="true"
         style={{
           display: "flex",
-          gap: "4px",
-          marginBottom: "0.75rem",
+          alignItems: "flex-end",
+          gap: "0.5rem",
+          marginBottom: "1.25rem",
+          opacity: 0.8,
         }}
       >
-        <span
-          style={{
-            width: "8px",
-            height: "8px",
-            borderRadius: "2px",
-            background: "var(--color-accent)",
-          }}
+        <Image
+          src="/app-icons/64x64.png"
+          alt="OffPay logo"
+          width={32}
+          height={32}
+          style={{ borderRadius: "6px", flexShrink: 0, display: "block" }}
         />
         <span
           style={{
-            width: "8px",
-            height: "8px",
-            borderRadius: "2px",
-            background: "var(--color-accent-light)",
+            fontSize: "1.35rem",
+            fontWeight: 700,
+            fontFamily: "var(--font-heading)",
+            color: "var(--color-text)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+            display: "block",
           }}
-        />
+        >
+          OffPay
+        </span>
       </div>
-
-      <p
-        style={{
-          fontSize: "0.85rem",
-          color: "var(--color-text-muted)",
-          margin: "0 0 1.25rem",
-          lineHeight: 1.5,
-          maxWidth: "180px",
-          fontFamily: "var(--font-body)",
-        }}
-      >
-        {FOOTER_EMAIL_LABEL}
-      </p>
 
       <a
         href={`mailto:${FOOTER_EMAIL}`}

@@ -606,11 +606,12 @@ body {
 }
 
 .footer-cta-card {
-  background: var(--color-accent-light);
+  background: transparent;
   border-radius: var(--radius-lg);
-  padding: clamp(1.25rem, 2.5vw, 2rem);
-  min-width: 180px;
-  max-width: 220px;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  min-width: 150px;
+  max-width: 180px;
+  border: 1px solid #0077CC;
 }
 
 /* Row 2 — Nav + Office */
@@ -663,35 +664,19 @@ body {
     gap: 1rem;
   }
 
-  .footer__middle {
-    gap: 1rem;
-  }
-
   .footer-cta-card {
-    min-width: 140px;
-    max-width: 160px;
-    padding: 1rem;
+    min-width: 130px;
+    max-width: 150px;
+    padding: 0.75rem;
   }
 
   .footer-cta-card h3 {
-    font-size: 0.95rem !important;
-    margin-bottom: 0.75rem !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .footer-contact__email {
     font-size: clamp(1rem, 3.5vw, 1.5rem) !important;
-  }
-
-  .footer-nav a {
-    font-size: 0.9rem !important;
-  }
-
-  .footer-office h3 {
-    font-size: 0.9rem !important;
-  }
-
-  .footer-office address span {
-    font-size: 0.8rem !important;
   }
 
   .footer-bottom-bar__item {
@@ -709,44 +694,30 @@ body {
     margin-bottom: 1.5rem !important;
   }
 
-  .footer__middle {
-    gap: 0.75rem;
-  }
-
   .footer-cta-card {
     min-width: 110px;
-    max-width: 130px;
-    padding: 0.75rem;
+    max-width: 125px;
+    padding: 0.6rem;
   }
 
   .footer-cta-card h3 {
-    font-size: 0.8rem !important;
-    margin-bottom: 0.5rem !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .footer-cta-card a {
+    font-size: 0.6rem !important;
+    padding: 0.25rem 0.45rem !important;
+    gap: 0.3rem !important;
+  }
+
+  .footer-cta-card svg {
+    width: 11px !important;
+    height: 11px !important;
   }
 
   .footer-contact__email {
     font-size: clamp(0.85rem, 3vw, 1.15rem) !important;
-  }
-
-  .footer-contact p {
-    font-size: 0.7rem !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  .footer-nav a {
-    font-size: 0.8rem !important;
-  }
-
-  .footer-nav ul {
-    gap: 0.35rem !important;
-  }
-
-  .footer-office h3 {
-    font-size: 0.8rem !important;
-  }
-
-  .footer-office address span {
-    font-size: 0.7rem !important;
   }
 
   .footer-bottom-bar__item {
