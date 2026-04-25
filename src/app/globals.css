@@ -576,6 +576,191 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.footer {
+  background: #001A4E;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  overflow: hidden;
+}
+
+.footer__inner {
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: 0;
+  max-width: 100%;
+}
+
+/* Row 1 — Contact + CTA */
+.footer__top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* CTA card wrapper */
+.footer__cta-wrapper {
+  justify-self: end;
+}
+
+.footer-cta-card {
+  background: var(--color-accent-light);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  min-width: 180px;
+  max-width: 220px;
+}
+
+/* Row 2 — Nav + Office */
+.footer__middle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.footer-office {
+  text-align: right;
+}
+
+/* Nav link hover */
+.footer-nav a:hover {
+  color: var(--color-text-muted) !important;
+}
+
+/* Contact email — no hover effect */
+
+/* Bottom bar */
+.footer-bottom-bar {
+  background: var(--color-accent);
+  width: 100%;
+}
+
+.footer-bottom-bar__item {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #fff;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+
+.footer-bottom-bar__link {
+  color: #fff !important;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.footer-bottom-bar__link:hover {
+  opacity: 0.7;
+}
+
+/* ----- Footer responsive ----- */
+
+@media (max-width: 768px) {
+  .footer__top {
+    gap: 1rem;
+  }
+
+  .footer__middle {
+    gap: 1rem;
+  }
+
+  .footer-cta-card {
+    min-width: 140px;
+    max-width: 160px;
+    padding: 1rem;
+  }
+
+  .footer-cta-card h3 {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .footer-contact__email {
+    font-size: clamp(1rem, 3.5vw, 1.5rem) !important;
+  }
+
+  .footer-nav a {
+    font-size: 0.9rem !important;
+  }
+
+  .footer-office h3 {
+    font-size: 0.9rem !important;
+  }
+
+  .footer-office address span {
+    font-size: 0.8rem !important;
+  }
+
+  .footer-bottom-bar__item {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer__inner {
+    padding-top: 2rem;
+  }
+
+  .footer__top {
+    gap: 0.75rem;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .footer__middle {
+    gap: 0.75rem;
+  }
+
+  .footer-cta-card {
+    min-width: 110px;
+    max-width: 130px;
+    padding: 0.75rem;
+  }
+
+  .footer-cta-card h3 {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .footer-contact__email {
+    font-size: clamp(0.85rem, 3vw, 1.15rem) !important;
+  }
+
+  .footer-contact p {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .footer-nav a {
+    font-size: 0.8rem !important;
+  }
+
+  .footer-nav ul {
+    gap: 0.35rem !important;
+  }
+
+  .footer-office h3 {
+    font-size: 0.8rem !important;
+  }
+
+  .footer-office address span {
+    font-size: 0.7rem !important;
+  }
+
+  .footer-bottom-bar__item {
+    font-size: 0.55rem;
+  }
+
+  .footer-bottom-bar .section-container {
+    gap: 0.5rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
    Reduced motion
    --------------------------------------------------------------------------- */
 
