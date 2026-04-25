@@ -1,21 +1,17 @@
 /**
  * Footer — site-wide footer orchestrator.
  *
- * Composes six sub-components into the full footer layout:
- *   1. FooterContact  — email label + divider (top-left)
+ * Composes sub-components into the full footer layout:
+ *   1. FooterContact  — email label (top-left)
  *   2. FooterCtaCard   — accent CTA card (top-right)
- *   3. FooterNav       — navigation links (middle-left)
- *   4. FooterOffice    — office address (middle-right)
- *   5. FooterWordmark  — oversized brand name (full-width)
- *   6. FooterBottomBar — copyright / location / socials strip
+ *   3. FooterWordmark  — oversized brand name (full-width)
+ *   4. FooterBottomBar — logo / copyright / socials strip
  *
  * Server Component — no interactivity needed in the shell.
  */
 
 import FooterContact from "./footer/FooterContact";
 import FooterCtaCard from "./footer/FooterCtaCard";
-import FooterNav from "./footer/FooterNav";
-import FooterOffice from "./footer/FooterOffice";
 import FooterWordmark from "./footer/FooterWordmark";
 import FooterBottomBar from "./footer/FooterBottomBar";
 
@@ -31,18 +27,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Row 2: Nav + Office */}
-        <div className="footer__middle">
-          <FooterNav />
-          <FooterOffice />
-        </div>
-
-        {/* Row 3: Giant wordmark */}
+        {/* Row 2: Giant wordmark */}
         <FooterWordmark />
       </div>
 
-      {/* Row 4: Full-bleed bottom bar */}
+      {/* Row 3: Full-bleed bottom bar */}
       <FooterBottomBar />
     </footer>
   );
 }
+

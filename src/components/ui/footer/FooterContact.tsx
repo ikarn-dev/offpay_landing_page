@@ -62,21 +62,12 @@ export default function FooterContact() {
           fontFamily: "var(--font-heading)",
           letterSpacing: "-0.02em",
           lineHeight: 1.1,
-          margin: "0 0 1.5rem",
+          margin: 0,
+          cursor: "default",
         }}
       >
         {FOOTER_EMAIL}
       </a>
-
-      {/* Divider — spans full available width, no max-width cap */}
-      <div
-        aria-hidden="true"
-        style={{
-          height: "1px",
-          background: "var(--color-border)",
-          width: "100%",
-        }}
-      />
     </div>
   );
 }

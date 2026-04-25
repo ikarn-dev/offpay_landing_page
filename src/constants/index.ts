@@ -125,8 +125,7 @@ export const FOOTER_OFFICE_ADDRESS = [
   "hello@offpay.app",
   "offpay.com",
 ] as const;
-export const FOOTER_LOCATION = "Remote-first" as const;
-export const FOOTER_SOCIAL_LABELS = ["Twitter / X", "GitHub", "Discord"] as const;
+export const FOOTER_SOCIAL_LABELS = ["Twitter / X", "GitHub"] as const;
 
 // ---------------------------------------------------------------------------
 // Animation defaults (consumed by the animation utility — do not use directly)

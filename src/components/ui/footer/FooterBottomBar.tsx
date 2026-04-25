@@ -1,14 +1,14 @@
 /**
- * FooterBottomBar — full-width accent strip with copyright,
- * location, and social links.
+ * FooterBottomBar — full-width accent strip with app logo,
+ * copyright, and social links.
  *
  * Uses --color-accent as background to match the project palette.
  */
 
+import Image from "next/image";
 import {
   FOOTER_COPYRIGHT_YEAR,
   SITE_NAME,
-  FOOTER_LOCATION,
   FOOTER_SOCIAL_LABELS,
 } from "@/constants";
 
@@ -21,42 +21,44 @@ export default function FooterBottomBar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          flexWrap: "wrap",
           gap: "1rem",
-          padding: "1rem var(--section-px)",
+          padding: "0.75rem var(--section-px)",
+          maxWidth: "100%",
         }}
       >
-        {/* Copyright */}
-        <span className="footer-bottom-bar__item">
-          Copyright &copy; {SITE_NAME.replace(" Wallet", "")}{" "}
-          {FOOTER_COPYRIGHT_YEAR}
-        </span>
-
-        {/* Location */}
+        {/* Logo + brand name */}
         <span
           className="footer-bottom-bar__item"
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "4px",
+            gap: "0.4rem",
           }}
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ flexShrink: 0 }}
+          <Image
+            src="/app-icons/64x64.png"
+            alt="OffPay logo"
+            width={24}
+            height={24}
+            style={{ borderRadius: "4px", flexShrink: 0 }}
+          />
+          <span
+            style={{
+              fontWeight: 700,
+              fontSize: "0.85rem",
+              fontFamily: "var(--font-heading)",
+              letterSpacing: "-0.02em",
+            }}
           >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="2" y1="12" x2="22" y2="12" />
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-          </svg>
-          {FOOTER_LOCATION}
+            <span style={{ fontWeight: 400 }}>Off</span>
+            <span style={{ fontWeight: 700 }}>Pay</span>
+          </span>
+        </span>
+
+        {/* Copyright */}
+        <span className="footer-bottom-bar__item">
+          Copyright &copy; {SITE_NAME.replace(" Wallet", "")}{" "}
+          {FOOTER_COPYRIGHT_YEAR}
         </span>
 
         {/* Social links */}
