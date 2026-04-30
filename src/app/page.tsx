@@ -16,8 +16,7 @@ import Security from "@/components/sections/Security";
 import Cta from "@/components/sections/Cta";
 import Faq from "@/components/sections/Faq";
 import GlowButton from "@/components/ui/GlowButton";
-import type { Feature } from "@/types";
-import type { HowItWorksStep, SecurityFeature } from "@/types";
+import type { Feature, HowItWorksStep, SecurityFeature } from "@/types";
 
 import {
   HERO_HEADLINE_LINE1,
@@ -162,21 +161,6 @@ export default function Home() {
         headline={FEATURES_HEADLINE}
         subheadline={FEATURES_SUBHEADLINE}
         features={FEATURES}
-        mockupImage="/mockups/mockup.png"
-        ctas={
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <a href="#waitlist" className="btn btn-primary btn-sm">
-              Download app now
-            </a>
-            <a href="#waitlist" className="btn btn-secondary btn-sm">
-              Access from web
-            </a>
-          </div>
-        }
-        ratings={[
-          { value: "4.8", label: "App Store ratings" },
-          { value: "4.7", label: "Google Play ratings" },
-        ]}
       />
 
       <HowItWorks
