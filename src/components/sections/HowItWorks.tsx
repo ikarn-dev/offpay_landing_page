@@ -8,7 +8,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { HowItWorksStep } from "@/types";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface HowItWorksProps {
   headline: string;
@@ -26,8 +30,34 @@ export default function HowItWorks({
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    el.style.opacity = "1";
-    el.style.transform = "translateY(0)";
+
+    // Animate the header
+    const header = el.querySelector<HTMLElement>("[data-hiw-header]");
+    if (header) {
+      gsap.fromTo(header,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: header, start: "top 85%", toggleActions: "play none none none" }
+        }
+      );
+    }
+
+    // Animate each step card
+    const cards = el.querySelectorAll<HTMLElement>("[data-hiw-step]");
+    cards.forEach((card, i) => {
+      gsap.fromTo(card,
+        { opacity: 0, y: 40, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.08, ease: "power2.out",
+          scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" }
+        }
+      );
+    });
+
+    return () => {
+      ScrollTrigger.getAll()
+        .filter(st => st.trigger && el.contains(st.trigger))
+        .forEach(st => st.kill());
+    };
   }, []);
 
   return (
@@ -38,13 +68,10 @@ export default function HowItWorks({
         padding: "6rem 1.5rem",
         maxWidth: "1100px",
         margin: "0 auto",
-        opacity: 0,
-        transform: "translateY(30px)",
-        transition: "opacity 0.7s ease, transform 0.7s ease",
       }}
     >
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+      <div data-hiw-header style={{ textAlign: "center", marginBottom: "4rem", opacity: 0 }}>
         <h2
           style={{
             fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
@@ -76,10 +103,12 @@ export default function HowItWorks({
           gap: "2rem",
         }}
       >
-        {steps.map((step, idx) => (
+        {steps.map((step) => (
           <div
             key={step.step}
+            data-hiw-step
             style={{
+              opacity: 0,
               display: "grid",
               gridTemplateColumns: "60px 1fr",
               gap: "1.5rem",
@@ -89,7 +118,6 @@ export default function HowItWorks({
               background: "rgba(255,255,255,0.04)",
               border: "1px solid rgba(255,255,255,0.08)",
               transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
-              animation: `fadeSlideIn 0.6s ease ${idx * 0.12}s both`,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "rgba(255,255,255,0.07)";
@@ -158,13 +186,6 @@ export default function HowItWorks({
           </div>
         ))}
       </div>
-
-      <style>{`
-        @keyframes fadeSlideIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </section>
   );
 }

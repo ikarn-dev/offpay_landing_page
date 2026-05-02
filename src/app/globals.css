@@ -374,16 +374,13 @@ body {
    --------------------------------------------------------------------------- */
 
 .accordion-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              opacity 0.3s ease;
-  opacity: 0;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .accordion-panel[data-open="true"] {
-  max-height: 300px;
-  opacity: 1;
+  grid-template-rows: 1fr;
 }
 
 .accordion-panel-inner {
@@ -460,11 +457,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.25rem;
+  padding: clamp(1rem, 2.5vw, 1.25rem);
   background: none;
   border: none;
   color: #fff;
-  font-size: 1rem;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
   font-weight: 600;
   cursor: pointer;
   text-align: left;
@@ -481,17 +478,19 @@ body {
 /* Icon circle */
 .faq-row__icon {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: clamp(28px, 4vw, 32px);
+  height: clamp(28px, 4vw, 32px);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 1.2rem;
-  font-weight: 300;
-  line-height: 1;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  line-height: 0;
+  padding-bottom: 2px; /* Optical adjustment for + and × characters */
+  font-family: system-ui, -apple-system, sans-serif;
   color: rgba(255, 255, 255, 0.8);
   transition: background 0.2s ease, transform 0.2s ease;
 }
@@ -504,28 +503,20 @@ body {
 /* Answer text */
 .faq-row__answer {
   margin: 0;
-  padding: 0 1.25rem 1.25rem;
-  font-size: 0.92rem;
+  padding: 0 clamp(1rem, 2.5vw, 1.25rem) clamp(1rem, 2.5vw, 1.25rem);
+  font-size: clamp(0.9rem, 2vw, 1rem);
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.65);
 }
 
-/* Mobile adjustments */
+/* Mobile adjustments (reduced since clamp handles most scaling now) */
 @media (max-width: 640px) {
   .faq-row__trigger {
     padding: 0.85rem 1rem;
-    font-size: 0.9rem;
   }
 
   .faq-row__answer {
     padding: 0 1rem 1rem;
-    font-size: 0.85rem;
-  }
-
-  .faq-row__icon {
-    width: 28px;
-    height: 28px;
-    font-size: 1.1rem;
   }
 
   .faq-card {

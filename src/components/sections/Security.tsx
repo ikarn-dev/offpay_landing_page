@@ -8,7 +8,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { SecurityFeature } from "@/types";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface SecurityProps {
   headline: string;
@@ -26,8 +30,34 @@ export default function Security({
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    el.style.opacity = "1";
-    el.style.transform = "translateY(0)";
+
+    // Animate the header
+    const header = el.querySelector<HTMLElement>("[data-sec-header]");
+    if (header) {
+      gsap.fromTo(header,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: header, start: "top 85%", toggleActions: "play none none none" }
+        }
+      );
+    }
+
+    // Animate each security card
+    const cards = el.querySelectorAll<HTMLElement>("[data-sec-card]");
+    cards.forEach((card, i) => {
+      gsap.fromTo(card,
+        { opacity: 0, y: 35, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.06, ease: "power2.out",
+          scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" }
+        }
+      );
+    });
+
+    return () => {
+      ScrollTrigger.getAll()
+        .filter(st => st.trigger && el.contains(st.trigger))
+        .forEach(st => st.kill());
+    };
   }, []);
 
   return (
@@ -38,13 +68,10 @@ export default function Security({
         padding: "6rem 1.5rem",
         maxWidth: "1100px",
         margin: "0 auto",
-        opacity: 0,
-        transform: "translateY(30px)",
-        transition: "opacity 0.7s ease, transform 0.7s ease",
       }}
     >
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+      <div data-sec-header style={{ textAlign: "center", marginBottom: "4rem", opacity: 0 }}>
         <h2
           style={{
             fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
@@ -77,16 +104,17 @@ export default function Security({
           gap: "1.5rem",
         }}
       >
-        {features.map((feature, idx) => (
+        {features.map((feature) => (
           <div
             key={String(feature.title)}
+            data-sec-card
             style={{
+              opacity: 0,
               padding: "2rem",
               borderRadius: "20px",
               background: "rgba(255,255,255,0.04)",
               border: "1px solid rgba(255,255,255,0.08)",
               transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
-              animation: `secFadeIn 0.6s ease ${idx * 0.1}s both`,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "rgba(255,255,255,0.07)";
@@ -140,13 +168,6 @@ export default function Security({
           </div>
         ))}
       </div>
-
-      <style>{`
-        @keyframes secFadeIn {
-          from { opacity: 0; transform: translateY(16px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </section>
   );
 }

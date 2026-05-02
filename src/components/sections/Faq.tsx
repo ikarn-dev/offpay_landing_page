@@ -80,7 +80,9 @@ export default function Faq({ headline, items }: FaqProps) {
     faqItems.forEach((el, i) => {
       tweenRef.current = animateScrollFadeIn(el, {
         triggerElement: el,
-        delay: i * 0.05,
+        delay: i * 0.03,
+        duration: 0.4,
+        y: 20,
       });
     });
 

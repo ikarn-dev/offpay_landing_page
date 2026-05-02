@@ -4,9 +4,12 @@
 
 import { useRef, useEffect } from "react";
 import Image from "next/image";
-import { animateScrollStaggerIn } from "@/utils/animation";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HalftoneDots } from "@paper-design/shaders-react";
 import type { Feature } from "@/types";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface FeaturesProps {
   sectionLabel?: string;
@@ -22,20 +25,43 @@ export default function Features({
   features,
 }: FeaturesProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const triggersRef = useRef<ScrollTrigger[]>([]);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const cards = section.querySelectorAll<HTMLElement>("[data-feature-card]");
-    tlRef.current = animateScrollStaggerIn(cards, {
-      triggerElement: section,
-      stagger: 0.15,
+
+    cards.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        {
+          opacity: 0,
+          y: 40,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 90%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
     });
 
     return () => {
-      tlRef.current?.kill();
+      triggersRef.current.forEach((st) => st.kill());
+      ScrollTrigger.getAll()
+        .filter((st) => {
+          const trigger = st.trigger;
+          return trigger && section.contains(trigger);
+        })
+        .forEach((st) => st.kill());
     };
   }, []);
 
