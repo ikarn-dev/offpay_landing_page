@@ -1,7 +1,7 @@
 /**
  * Hero — the above-the-fold section.
  *
- * Clean layout: headline, subheadline, single CTA.
+ * Clean layout: headline, subheadline, single CTA, and phone mockup.
  * Background: static gradient with HalftoneDots texture.
  */
 
@@ -49,6 +49,7 @@ export default function Hero({
         position: "relative",
         minHeight: "100vh",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
@@ -74,8 +75,13 @@ export default function Hero({
           textAlign: "center",
           maxWidth: "var(--container-max)",
           padding: "0 var(--section-px)",
-          margin: "0 auto",
+          margin: "12vh auto 0",
           width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          flex: "1",
         }}
       >
         {/* Powered By Badge */}
@@ -93,9 +99,8 @@ export default function Hero({
 
         {/* Headline */}
         <h1
-          data-hero-item
+          className="hero-headline anim-soft-blur-in"
           style={{
-            opacity: 0,
             fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
             fontFamily: "var(--font-display)",
             fontWeight: 800,
@@ -114,10 +119,8 @@ export default function Hero({
 
         {/* Subheadline */}
         <p
-          className="hero-subheadline"
-          data-hero-item
+          className="hero-subheadline anim-micro-scale-fade"
           style={{
-            opacity: 0,
             fontSize: "clamp(0.85rem, 1.2vw, 0.95rem)",
             fontFamily: "var(--font-heading)",
             background: "linear-gradient(135deg, #B0EFFF 0%, #00DFFF 100%)",
@@ -138,10 +141,12 @@ export default function Hero({
         {/* CTA */}
         <div
           data-hero-item
+          className="anim-micro-scale-fade"
           style={{
-            opacity: 0,
             display: "flex",
             justifyContent: "center",
+            marginBottom: "2rem",
+            animationDelay: "0.6s",
           }}
         >
           {ctaPrimary}

@@ -188,7 +188,7 @@ export default function Home() {
 
       <Cta
         headline="Ready to pay without internet?"
-        supporting="OffPay is in pre-development. Join the waitlist to be first in line for the private beta."
+        supporting="OffPay is in early development. Join the waitlist to get early access to the private beta."
         action={
           <a href="#waitlist" className="btn btn-primary">
             {HERO_CTA_PRIMARY}

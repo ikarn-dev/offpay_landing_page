@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
+import ContentProtection from "@/components/ui/ContentProtection";
 import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, HERO_CTA_PRIMARY } from "@/constants";
 import { allFontVariables } from "./fonts";
 
@@ -68,6 +69,8 @@ export default function RootLayout({
       className={allFontVariables}
     >
       <body>
+        <ContentProtection />
+
         <Navbar
           logo={LOGO_STUB}
           links={NAV_LINKS}

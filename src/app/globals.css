@@ -192,6 +192,46 @@ body {
   padding-bottom: var(--section-py);
 }
 
+/* ---------------------------------------------------------------------------
+   Text animations — soft-blur-in + micro-scale-fade
+   --------------------------------------------------------------------------- */
+
+@keyframes soft-blur-in {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes micro-scale-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.anim-soft-blur-in {
+  animation: soft-blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+
+.anim-micro-scale-fade {
+  animation: micro-scale-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
 /* Glass card — NO backdrop-filter to avoid stacking GPU blur layers */
 .glass-card {
   background: rgba(12, 12, 18, 0.7);
@@ -510,6 +550,28 @@ body {
     text-wrap: balance;
     line-height: 1.5 !important;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Content protection — prevent save/copy/drag on images and mockups
+   --------------------------------------------------------------------------- */
+
+.protected-image,
+.cta-card__mockup-image {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* Prevent right-click context menu on the entire page */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 /* ---------------------------------------------------------------------------
@@ -1070,6 +1132,177 @@ body {
     gap: 0.5rem;
     padding-top: 0.6rem;
     padding-bottom: 0.6rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   CTA Section — vertical dual-tone (grey left + blue right)
+   --------------------------------------------------------------------------- */
+
+.cta-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin: 0 clamp(0.75rem, 2vw, 2rem);
+  min-height: 520px;
+}
+
+/* Grey left background — covers full card */
+.cta-card__grey {
+  position: absolute;
+  inset: 0;
+  background: #141418;
+}
+
+.cta-card__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  filter: url(#cta-grain);
+  pointer-events: none;
+}
+
+/* Blue right background — only covers the mockup side */
+.cta-card__blue {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 45%;
+  background: linear-gradient(135deg, #001A4E 0%, #002D6B 40%, #0077CC 100%);
+}
+
+.cta-card__blue-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Content layout — text left, mockup right */
+.cta-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 520px;
+}
+
+/* Text column */
+.cta-card__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 4rem);
+  max-width: 55%;
+}
+
+.cta-card__headline {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  color: #fff;
+  font-family: var(--font-heading);
+}
+
+.cta-card__supporting {
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  margin: 0 0 1.75rem;
+  font-family: var(--font-body);
+}
+
+.cta-card__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+/* Store buttons row */
+.cta-card__stores {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Mockup column — flush to bottom */
+.cta-card__mockup {
+  flex: 0 0 45%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+
+.cta-card__mockup-image {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+/* ── CTA responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .cta-card {
+    min-height: auto;
+  }
+
+  .cta-card__content {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .cta-card__text {
+    max-width: 100%;
+    text-align: center;
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2rem) 1.5rem;
+  }
+
+  .cta-card__actions {
+    justify-content: center;
+  }
+
+  .cta-card__stores {
+    justify-content: center;
+  }
+
+  /* Blue bg covers bottom half on mobile */
+  .cta-card__blue {
+    width: 100%;
+    height: 50%;
+    top: auto;
+    bottom: 0;
+  }
+
+  .cta-card__mockup {
+    flex: 0 0 auto;
+    padding-top: 1rem;
+  }
+
+  .cta-card__mockup-image {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-card {
+    margin: 0 0.5rem;
+  }
+
+  .cta-card__mockup-image {
+    max-height: 320px;
   }
 }
 
