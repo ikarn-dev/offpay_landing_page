@@ -24,6 +24,7 @@ import {
   HERO_SUBHEADLINE,
   HERO_CTA_PRIMARY,
   FEATURES_HEADLINE,
+  FEATURES_HEADLINE_ITALIC,
   FEATURES_SUBHEADLINE,
   HOW_IT_WORKS_HEADLINE,
   HOW_IT_WORKS_SUBHEADLINE,
@@ -42,22 +43,29 @@ const FEATURES: Feature[] = [
     icon: "📡",
     title: "Offline Payments",
     description:
-      "Pay anyone within BLE or WiFi Hotspot range — zero internet required. Solana durable nonces make it cryptographically trustless.",
+      "USDC/USDT transfers signed offline using Solana durable nonces. QR-based exchange after a one-time on-chain setup.",
     image: "/3d-assets/no-internet.png",
   },
   {
     icon: "🔐",
     title: "ZK-Shielded Transfers",
     description:
-      "Umbra Protocol hides sender, receiver, and amount on-chain. On-chain observers see only encrypted bytes.",
+      "USDC/USDT private transfers via Umbra Protocol. Sender, receiver, and amount hidden with zero-knowledge proofs.",
     image: "/3d-assets/privacy.png",
   },
   {
-    icon: "🔄",
-    title: "Best-Price Swaps",
+    icon: "🔒",
+    title: "Private Settlement",
     description:
-      "Jupiter Swap V2 routes across all Solana DEXs. One-tap Swap & Shield sends output directly into Umbra's private pool.",
+      "MagicBlock settles online and offline transactions as encrypted commitments on-chain. No metadata exposed.",
     image: "/3d-assets/swap.png",
+  },
+  {
+    icon: "💲",
+    title: "Multi-Currency Portfolio",
+    description:
+      "Portfolio values displayed in your preferred local fiat currency.",
+    image: "/3d-assets/money.png",
   },
 ];
 
@@ -83,9 +91,9 @@ const STEPS: HowItWorksStep[] = [
   {
     step: 3,
     icon: "📲",
-    title: "Transmit via BLE or Hotspot",
+    title: "Exchange via QR code",
     description:
-      "The signed transaction blob (~400 bytes) is sent to the receiver over Bluetooth LE or WiFi Hotspot. Instant Ed25519 verification on their device.",
+      "The receiver scans a QR code containing the payment request. Instant Ed25519 signature verification confirms authenticity on their device — no internet needed.",
   },
   {
     step: 4,
@@ -159,6 +167,7 @@ export default function Home() {
 
       <Features
         headline={FEATURES_HEADLINE}
+        headlineItalic={FEATURES_HEADLINE_ITALIC}
         subheadline={FEATURES_SUBHEADLINE}
         features={FEATURES}
       />

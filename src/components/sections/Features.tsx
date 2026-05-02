@@ -1,15 +1,18 @@
 /**
- * Features — showcases the 3 core product pillars.
+ * Features — showcases the 4 core product pillars + app mockup.
  *
- * Layout:
+ * Layout (reference: Finzora-style bento):
  *   • Header row: headline (left) + subheadline (right)
- *   • Content: 2-column grid — left col = 3 square-ish gradient cards,
- *              right col = mockup card with subtle bg
+ *   • Content: 2-column split —
+ *       left  = 2×2 grid of sharp-edged gradient cards
+ *       right = tall mockup card (spans full height)
  *
  * Each card includes:
  *   • Mesh gradient background (#000000 → #001A4E → #0077CC)
  *   • HalftoneDots paper texture (@paper-design/shaders-react)
  *   • 3D asset image from public/3d-assets/
+ *
+ * Card style: sharp edges, no border-radius, no outer glow border.
  *
  * Props: all content injected from page.tsx.
  */
@@ -24,12 +27,14 @@ import type { Feature } from "@/types";
 
 export interface FeaturesProps {
   headline: string;
+  headlineItalic?: string;
   subheadline: string;
   features: Feature[];
 }
 
 export default function Features({
   headline,
+  headlineItalic,
   subheadline,
   features,
 }: FeaturesProps) {
@@ -62,14 +67,17 @@ export default function Features({
         {/* ── Header row: headline left, subtext right ───────────── */}
         <div className="features-header">
           <h2 id="features-heading" className="features-header__title">
-            {headline}
+            {headline}{" "}
+            {headlineItalic && (
+              <em className="features-header__title-italic">{headlineItalic}</em>
+            )}
           </h2>
           <p className="features-header__sub">{subheadline}</p>
         </div>
 
-        {/* ── Content: cards left + mockup right ─────────────────── */}
+        {/* ── Content: 2×2 cards left + mockup right ─────────────── */}
         <div className="features-layout">
-          {/* Left — grid of square-ish gradient cards */}
+          {/* Left — 2×2 grid of sharp-edged cards */}
           <div className="features-cards">
             {features.map((feature, i) => (
               <div
