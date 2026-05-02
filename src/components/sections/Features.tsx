@@ -1,21 +1,4 @@
-/**
- * Features — showcases the 4 core product pillars + app mockup.
- *
- * Layout (reference: Finzora-style bento):
- *   • Header row: headline (left) + subheadline (right)
- *   • Content: 2-column split —
- *       left  = 2×2 grid of sharp-edged gradient cards
- *       right = tall mockup card (spans full height)
- *
- * Each card includes:
- *   • Mesh gradient background (#000000 → #001A4E → #0077CC)
- *   • HalftoneDots paper texture (@paper-design/shaders-react)
- *   • 3D asset image from public/3d-assets/
- *
- * Card style: sharp edges, no border-radius, no outer glow border.
- *
- * Props: all content injected from page.tsx.
- */
+
 
 "use client";
 
@@ -26,6 +9,7 @@ import { HalftoneDots } from "@paper-design/shaders-react";
 import type { Feature } from "@/types";
 
 export interface FeaturesProps {
+  sectionLabel?: string;
   headline: string;
   headlineItalic?: string;
   subheadline: string;
@@ -33,6 +17,7 @@ export interface FeaturesProps {
 }
 
 export default function Features({
+  sectionLabel,
   headline,
   headlineItalic,
   subheadline,
@@ -64,6 +49,19 @@ export default function Features({
       className="section-spacing"
     >
       <div className="section-container">
+        {/* ── Centered section main title ─────────────────────────────── */}
+        {sectionLabel && (
+          <div className="section-header" style={{ marginBottom: "2.5rem" }}>
+            <h2 style={{
+              whiteSpace: "nowrap",
+              fontSize: "clamp(1.1rem, 2.5vw, 1.75rem)",
+              margin: "0 auto",
+            }}>
+              {sectionLabel}
+            </h2>
+          </div>
+        )}
+
         {/* ── Header row: headline left, subtext right ───────────── */}
         <div className="features-header">
           <h2 id="features-heading" className="features-header__title">

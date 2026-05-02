@@ -23,6 +23,7 @@ import {
   HERO_HEADLINE_LINE2,
   HERO_SUBHEADLINE,
   HERO_CTA_PRIMARY,
+  FEATURES_LABEL,
   FEATURES_HEADLINE,
   FEATURES_HEADLINE_ITALIC,
   FEATURES_SUBHEADLINE,
@@ -166,6 +167,7 @@ export default function Home() {
       <LayersProviders />
 
       <Features
+        sectionLabel={FEATURES_LABEL}
         headline={FEATURES_HEADLINE}
         headlineItalic={FEATURES_HEADLINE_ITALIC}
         subheadline={FEATURES_SUBHEADLINE}

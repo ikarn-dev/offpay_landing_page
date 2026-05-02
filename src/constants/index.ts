@@ -42,10 +42,11 @@ export const HERO_CTA_PRIMARY = "Join the waitlist" as const;
 // Features
 // ---------------------------------------------------------------------------
 
+export const FEATURES_LABEL = "Features" as const;
 export const FEATURES_HEADLINE = "Built different," as const;
 export const FEATURES_HEADLINE_ITALIC = "by design." as const;
 export const FEATURES_SUBHEADLINE =
-  "Every feature is free, forever. No subscriptions. No premium tiers." as const;
+  "Solana wallet with Dual-mode P2P payments and zero-knowledge privacy." as const;
 
 // ---------------------------------------------------------------------------
 // How It Works
