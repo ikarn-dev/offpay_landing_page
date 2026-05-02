@@ -127,9 +127,15 @@ export default function Features({
             className="features-mockup"
             style={{ opacity: 0 }}
           >
-            {/* Placeholder — add mockup image here */}
             <div className="features-mockup__inner">
-              <p className="features-mockup__label">App Preview</p>
+              <Image
+                src="/mockups/feat-mock.png"
+                alt="OffPay app preview"
+                width={360}
+                height={780}
+                className="features-mockup__image"
+                priority
+              />
             </div>
           </div>
         </div>
