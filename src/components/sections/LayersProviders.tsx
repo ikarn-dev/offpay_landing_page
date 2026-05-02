@@ -11,10 +11,12 @@
 import { LogoSlider } from "@/components/ui/logo-slider";
 
 const providers = [
-  { name: "Solana", src: "/providers/solana.png" },
-  { name: "Jupiter", src: "/providers/jup.png" },
-  { name: "MagicBlock", src: "/providers/magicblock.png" },
-  { name: "Umbra", src: "/providers/umbra.png" },
+  { name: "Solana", src: "/logo/solanaLogo.svg" },
+  { name: "Jupiter", src: "/logo/logowithtext-dark.svg" },
+  { name: "MagicBlock", src: "/logo/MagicBlock-Logo-White.svg" },
+  { name: "Umbra", src: "/logo/umbra.svg" },
+  { name: "Helius", src: "/logo/Helius-Horizontal-Logo-White.svg" },
+  { name: "QuickNode", src: "/logo/quicknode.svg" },
 ];
 
 const sliderLogos = providers.map((p) => (
@@ -22,19 +24,16 @@ const sliderLogos = providers.map((p) => (
     <img
       src={p.src}
       alt={p.name}
-      width={28}
-      height={28}
       style={{
-        width: "28px",
-        height: "auto",
+        height: "24px",
+        width: "auto",
         margin: 0,
         padding: 0,
-        borderRadius: "6px",
         objectFit: "contain",
+        filter: "brightness(0.9)",
       }}
       className="shrink-0"
     />
-    <span className="provider-cell__name translate-y-[1px]">{p.name}</span>
   </div>
 ));
 
