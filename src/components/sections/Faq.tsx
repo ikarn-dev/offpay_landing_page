@@ -1,22 +1,16 @@
 /**
  * Faq — Frequently Asked Questions accordion section.
  *
- * Responsibilities (this pass):
- *   • Renders headline.
- *   • Renders an accordion list of FaqItem entries.
- *   • Open/close state is managed locally per item.
- *   • Height animation uses CSS `grid-template-rows: 0fr ↔ 1fr` —
- *     compositor-safe, no layout properties animated.
- *
- * Props: all content injected.
- *
- * @product-input  Final FAQ copy, and whether multiple items can be open
- *                 simultaneously (currently single-open).
+ * Each row is a liquid-glass pill card with glassmorphism.
+ * Uses × (close) and + (open) icons in circular buttons.
+ * HalftoneDots paper texture on the outer card.
  */
 
 "use client";
 
 import { useState, useRef, useEffect, useId } from "react";
+import { HalftoneDots } from "@paper-design/shaders-react";
+import ClickSpark from "@/components/ui/ClickSpark";
 import { animateScrollFadeIn } from "@/utils/animation";
 import type { FaqItem } from "@/types";
 
@@ -25,7 +19,6 @@ export interface FaqProps {
   items: FaqItem[];
 }
 
-/** Individual accordion item — its own component to keep Faq clean. */
 interface AccordionItemProps {
   item: FaqItem;
   isOpen: boolean;
@@ -40,10 +33,8 @@ function AccordionItem({ item, isOpen, onToggle }: AccordionItemProps) {
   return (
     <div
       data-faq-item
-      style={{
-        opacity: 0,
-        borderBottom: "1px solid var(--color-border)",
-      }}
+      className={`faq-row ${isOpen ? "faq-row--open" : ""}`}
+      style={{ opacity: 0 }}
     >
       <h3 style={{ margin: 0 }}>
         <button
@@ -52,36 +43,15 @@ function AccordionItem({ item, isOpen, onToggle }: AccordionItemProps) {
           aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={onToggle}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "1.25rem 0",
-            background: "none",
-            border: "none",
-            color: "var(--color-text)",
-            fontSize: "1.05rem",
-            fontWeight: 500,
-            cursor: "pointer",
-            textAlign: "left",
-            gap: "1rem",
-            fontFamily: "inherit",
-          }}
+          className="faq-row__trigger"
         >
-          {item.question}
-          {/* Chevron icon */}
-          <span
-            className="accordion-chevron"
-            aria-hidden="true"
-            data-open={isOpen ? "true" : "false"}
-          >
-            ▾
+          <span className="faq-row__question">{item.question}</span>
+          <span className="faq-row__icon" aria-hidden="true">
+            {isOpen ? "×" : "+"}
           </span>
         </button>
       </h3>
 
-      {/* CSS grid trick: grid-template-rows transition */}
       <div
         id={panelId}
         role="region"
@@ -90,17 +60,7 @@ function AccordionItem({ item, isOpen, onToggle }: AccordionItemProps) {
         data-open={isOpen ? "true" : "false"}
       >
         <div className="accordion-panel-inner">
-          <p
-            style={{
-              margin: 0,
-              padding: "0 0 1.25rem",
-              fontSize: "0.95rem",
-              lineHeight: 1.7,
-              color: "var(--color-text-muted)",
-            }}
-          >
-            {item.answer}
-          </p>
+          <p className="faq-row__answer">{item.answer}</p>
         </div>
       </div>
     </div>
@@ -117,7 +77,6 @@ export default function Faq({ headline, items }: FaqProps) {
     if (!section) return;
 
     const faqItems = section.querySelectorAll<HTMLElement>("[data-faq-item]");
-    // Stagger via scroll trigger
     faqItems.forEach((el, i) => {
       tweenRef.current = animateScrollFadeIn(el, {
         triggerElement: el,
@@ -141,22 +100,52 @@ export default function Faq({ headline, items }: FaqProps) {
       aria-labelledby="faq-heading"
       className="section-spacing"
     >
-      <div className="section-container section-container--narrow">
-        <div className="section-header">
-          <h2 id="faq-heading">{headline}</h2>
-        </div>
-
-        <div>
-          {items.map((item, i) => (
-            <AccordionItem
-              key={i}
-              item={item}
-              isOpen={openIndex === i}
-              onToggle={() => handleToggle(i)}
+      <ClickSpark
+        sparkColor="#4d9eff"
+        sparkSize={10}
+        sparkRadius={15}
+        sparkCount={8}
+        duration={400}
+      >
+        <div className="faq-card">
+          {/* HalftoneDots paper texture overlay */}
+          <div className="faq-card__texture" aria-hidden="true">
+            <HalftoneDots
+              style={{ width: "100%", height: "100%" }}
+              colorBack="#000000"
+              colorFront="#0077CC"
+              originalColors={false}
+              type="gooey"
+              grid="hex"
+              inverted={false}
+              size={0.4}
+              radius={1.2}
+              contrast={0.3}
+              grainMixer={0.15}
+              grainOverlay={0.15}
+              grainSize={0.4}
             />
-          ))}
+          </div>
+
+          {/* Content */}
+          <div className="faq-card__content">
+            <div className="section-header">
+              <h2 id="faq-heading">{headline}</h2>
+            </div>
+
+            <div className="faq-list">
+              {items.map((item, i) => (
+                <AccordionItem
+                  key={i}
+                  item={item}
+                  isOpen={openIndex === i}
+                  onToggle={() => handleToggle(i)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </ClickSpark>
     </section>
   );
 }

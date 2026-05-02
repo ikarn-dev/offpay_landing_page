@@ -10,17 +10,15 @@ import type { Feature } from "@/types";
 
 export interface FeaturesProps {
   sectionLabel?: string;
-  headline: string;
-  headlineItalic?: string;
-  subheadline: string;
+  taglineBold?: string;
+  taglineItalic?: string;
   features: Feature[];
 }
 
 export default function Features({
   sectionLabel,
-  headline,
-  headlineItalic,
-  subheadline,
+  taglineBold,
+  taglineItalic,
   features,
 }: FeaturesProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -49,28 +47,24 @@ export default function Features({
       className="section-spacing"
     >
       <div className="section-container">
-        {/* ── Centered section main title ─────────────────────────────── */}
-        {sectionLabel && (
-          <div className="section-header" style={{ marginBottom: "2.5rem" }}>
-            <h2 style={{
-              whiteSpace: "nowrap",
-              fontSize: "clamp(1.1rem, 2.5vw, 1.75rem)",
-              margin: "0 auto",
-            }}>
+        {/* ── Centered section title + tagline ─────────────────────── */}
+        <div className="section-header" style={{ marginBottom: "2.5rem" }}>
+          {sectionLabel && (
+            <h2
+              id="features-heading"
+              style={{
+                whiteSpace: "nowrap",
+                fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
+                margin: "0 auto 1rem",
+              }}
+            >
               {sectionLabel}
             </h2>
-          </div>
-        )}
-
-        {/* ── Header row: headline left, subtext right ───────────── */}
-        <div className="features-header">
-          <h2 id="features-heading" className="features-header__title">
-            {headline}{" "}
-            {headlineItalic && (
-              <em className="features-header__title-italic">{headlineItalic}</em>
-            )}
-          </h2>
-          <p className="features-header__sub">{subheadline}</p>
+          )}
+          <p className="features-tagline">
+            {taglineBold && <strong className="features-tagline__bold">{taglineBold}</strong>}{" "}
+            {taglineItalic && <em className="features-tagline__italic">{taglineItalic}</em>}
+          </p>
         </div>
 
         {/* ── Content: 2×2 cards left + mockup right ─────────────── */}

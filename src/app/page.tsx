@@ -24,9 +24,8 @@ import {
   HERO_SUBHEADLINE,
   HERO_CTA_PRIMARY,
   FEATURES_LABEL,
-  FEATURES_HEADLINE,
-  FEATURES_HEADLINE_ITALIC,
-  FEATURES_SUBHEADLINE,
+  FEATURES_TAGLINE_BOLD,
+  FEATURES_TAGLINE_ITALIC,
   HOW_IT_WORKS_HEADLINE,
   HOW_IT_WORKS_SUBHEADLINE,
   SECURITY_HEADLINE,
@@ -168,9 +167,8 @@ export default function Home() {
 
       <Features
         sectionLabel={FEATURES_LABEL}
-        headline={FEATURES_HEADLINE}
-        headlineItalic={FEATURES_HEADLINE_ITALIC}
-        subheadline={FEATURES_SUBHEADLINE}
+        taglineBold={FEATURES_TAGLINE_BOLD}
+        taglineItalic={FEATURES_TAGLINE_ITALIC}
         features={FEATURES}
       />
 

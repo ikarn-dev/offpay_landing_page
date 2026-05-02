@@ -43,10 +43,8 @@ export const HERO_CTA_PRIMARY = "Join the waitlist" as const;
 // ---------------------------------------------------------------------------
 
 export const FEATURES_LABEL = "Features" as const;
-export const FEATURES_HEADLINE = "Built different," as const;
-export const FEATURES_HEADLINE_ITALIC = "by design." as const;
-export const FEATURES_SUBHEADLINE =
-  "Solana wallet with Dual-mode P2P payments and zero-knowledge privacy." as const;
+export const FEATURES_TAGLINE_BOLD = "Offline payments," as const;
+export const FEATURES_TAGLINE_ITALIC = "zero-knowledge privacy." as const;
 
 // ---------------------------------------------------------------------------
 // How It Works
@@ -72,34 +70,44 @@ export const FAQ_HEADLINE = "Frequently asked questions" as const;
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "Do I need to sign up or create an account?",
+    question: "How do offline payments work without internet?",
     answer:
-      "No. Connect an existing Solana wallet (Phantom, Solflare) or create one in-app. No email, no phone — your wallet address is your identity.",
-  },
-  {
-    question: "Is OffPay free?",
-    answer:
-      "Yes. All features are permanently free. No subscriptions, no premium tiers, no feature gates. On-chain transactions incur standard Solana network fees (~$0.00025).",
-  },
-  {
-    question: "Does my phone need internet to make an offline payment?",
-    answer:
-      "No. After a one-time setup (requires internet to create the nonce account, ~0.0015 SOL once), all offline payments require zero internet.",
+      "After a one-time on-chain setup (~0.0015 SOL), payments are signed locally using Solana durable nonces. Exchange details via QR code — no internet needed at the point of payment. Settlement happens privately when you reconnect.",
   },
   {
     question: "Can anyone see my private balance?",
     answer:
-      "No. Private balances are stored in encrypted Solana PDAs. Only your device decrypts them locally using your wallet key. No on-chain observer — including OffPay — sees a number.",
-  },
-  {
-    question: "Who holds my funds?",
-    answer:
-      "You do. USDC lives in your on-chain token account controlled exclusively by your private key. Shielded USDC lives in Umbra's encrypted PDAs. OffPay holds nothing.",
+      "No. Private balances are stored in encrypted Solana PDAs. Only your device can decrypt them locally. No on-chain observer — including OffPay — sees your balance.",
   },
   {
     question: "Can the same offline payment be spent twice?",
     answer:
-      "No. The durable nonce mechanism makes this architecturally impossible. Once the nonce advances on first broadcast, any second transaction using the same nonce is rejected by the Solana network.",
+      "No. The durable nonce mechanism makes double-spend architecturally impossible. Once the nonce advances on first broadcast, any duplicate is rejected by the Solana network.",
+  },
+  {
+    question: "Who holds my funds?",
+    answer:
+      "You do. Private keys live in Secure Enclave (iOS) or Android Keystore. OffPay never has access to your funds or keys.",
+  },
+  {
+    question: "What does the safety badge check?",
+    answer:
+      "Wallet age, transaction count, funding quality, token quality, and spam patterns. It's a pure on-chain signal — no off-chain identity lookup.",
+  },
+  {
+    question: "Do I need to sign up or create an account?",
+    answer:
+      "No. Connect an existing Solana wallet or create one in-app. No email, no phone — your wallet address is your identity.",
+  },
+  {
+    question: "Is OffPay free?",
+    answer:
+      "Yes. All features are permanently free. No subscriptions, no premium tiers. Standard Solana network fees apply (~$0.00025 per transaction).",
+  },
+  {
+    question: "Is OffPay open source?",
+    answer:
+      "Yes. The nonce module, transport module, and core app are MIT-licensed.",
   },
 ];
 
