@@ -33,7 +33,7 @@ export default function Features({
 
     const cards = section.querySelectorAll<HTMLElement>("[data-feature-card]");
 
-    cards.forEach((card, i) => {
+    cards.forEach((card) => {
       gsap.fromTo(
         card,
         {
