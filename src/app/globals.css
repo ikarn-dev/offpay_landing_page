@@ -457,15 +457,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: clamp(1rem, 2.5vw, 1.25rem);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
   background: none;
   border: none;
   color: #fff;
-  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-size: clamp(0.75rem, 3.5vw, 1.15rem);
   font-weight: 600;
   cursor: pointer;
   text-align: left;
-  gap: 1rem;
+  gap: clamp(0.5rem, 2vw, 1rem);
   font-family: inherit;
   letter-spacing: -0.01em;
 }
@@ -478,15 +478,15 @@ body {
 /* Icon circle */
 .faq-row__icon {
   flex-shrink: 0;
-  width: clamp(28px, 4vw, 32px);
-  height: clamp(28px, 4vw, 32px);
+  width: clamp(24px, 5vw, 32px);
+  height: clamp(24px, 5vw, 32px);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-size: clamp(0.9rem, 3vw, 1.3rem);
   font-weight: 400;
   line-height: 0;
   padding-bottom: 2px; /* Optical adjustment for + and × characters */
