@@ -1,8 +1,8 @@
 /**
- * HowItWorks — visual step-by-step walkthrough of the offline payment flow.
+ * HowItWorks — animated node/flow diagram showing the offline payment flow.
  *
  * Content sourced from PRD §5.1 (Durable Nonce Architecture).
- * Client Component — uses scroll-triggered stagger animation.
+ * Uses ui-layouts AnimatedBeam for connection beam animations.
  */
 
 "use client";
@@ -10,53 +10,103 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { HowItWorksStep } from "@/types";
+import { SetupIcon, SignIcon, QrCodeIcon, SettleIcon } from "@/components/ui/flow-nodes";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/* ── Flow data ──────────────────────────────────────────────────────────── */
+
+const FLOW_NODES = [
+  {
+    icon: <SetupIcon />,
+    label: "Setup",
+    description: "One-time nonce account creation on-chain (~0.0015 SOL)",
+  },
+  {
+    icon: <SignIcon />,
+    label: "Sign Offline",
+    description: "Build & sign USDC transfer using cached durable nonce",
+  },
+  {
+    icon: <QrCodeIcon />,
+    label: "QR Exchange",
+    description: "Receiver scans QR — Ed25519 verified instantly, no internet",
+  },
+  {
+    icon: <SettleIcon />,
+    label: "Settle Privately",
+    description: "MagicBlock settles as encrypted commitment on reconnect",
+  },
+];
+
+/* ── Component ──────────────────────────────────────────────────────────── */
 
 export interface HowItWorksProps {
   headline: string;
   subheadline: string;
-  steps: HowItWorksStep[];
 }
 
-export default function HowItWorks({
-  headline,
-  subheadline,
-  steps,
-}: HowItWorksProps) {
+export default function HowItWorks({ headline, subheadline }: HowItWorksProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Refs for each node circle
+  const node1Ref = useRef<HTMLDivElement>(null);
+  const node2Ref = useRef<HTMLDivElement>(null);
+  const node3Ref = useRef<HTMLDivElement>(null);
+  const node4Ref = useRef<HTMLDivElement>(null);
+
+  const nodeRefs = [node1Ref, node2Ref, node3Ref, node4Ref];
+
+  // Scroll-triggered entrance animation
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
 
-    // Animate the header
     const header = el.querySelector<HTMLElement>("[data-hiw-header]");
     if (header) {
-      gsap.fromTo(header,
+      gsap.fromTo(
+        header,
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
-          scrollTrigger: { trigger: header, start: "top 85%", toggleActions: "play none none none" }
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: header,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
         }
       );
     }
 
-    // Animate each step card
-    const cards = el.querySelectorAll<HTMLElement>("[data-hiw-step]");
-    cards.forEach((card, i) => {
-      gsap.fromTo(card,
-        { opacity: 0, y: 40, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, delay: i * 0.08, ease: "power2.out",
-          scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" }
+    const nodes = el.querySelectorAll<HTMLElement>("[data-flow-node]");
+    nodes.forEach((node, i) => {
+      gsap.fromTo(
+        node,
+        { opacity: 0, y: 30, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          delay: i * 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el.querySelector("[data-hiw-flow]"),
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
         }
       );
     });
 
     return () => {
       ScrollTrigger.getAll()
-        .filter(st => st.trigger && el.contains(st.trigger))
-        .forEach(st => st.kill());
+        .filter((st) => st.trigger && el.contains(st.trigger))
+        .forEach((st) => st.kill());
     };
   }, []);
 
@@ -71,7 +121,10 @@ export default function HowItWorks({
       }}
     >
       {/* Header */}
-      <div data-hiw-header style={{ textAlign: "center", marginBottom: "4rem", opacity: 0 }}>
+      <div
+        data-hiw-header
+        style={{ textAlign: "center", marginBottom: "4rem", opacity: 0 }}
+      >
         <h2
           style={{
             fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
@@ -85,7 +138,7 @@ export default function HowItWorks({
         </h2>
         <p
           style={{
-            fontSize: "1.1rem",
+            fontSize: "clamp(0.95rem, 2vw, 1.1rem)",
             color: "rgba(255,255,255,0.6)",
             maxWidth: "600px",
             margin: "0 auto",
@@ -96,96 +149,42 @@ export default function HowItWorks({
         </p>
       </div>
 
-      {/* Steps */}
+      {/* Flow diagram */}
       <div
-        style={{
-          display: "grid",
-          gap: "2rem",
-        }}
+        ref={containerRef}
+        data-hiw-flow
+        className="hiw-flow-container"
       >
-        {steps.map((step) => (
+        {/* Nodes */}
+        {FLOW_NODES.map((node, i) => (
           <div
-            key={step.step}
-            data-hiw-step
-            style={{
-              opacity: 0,
-              display: "grid",
-              gridTemplateColumns: "60px 1fr",
-              gap: "1.5rem",
-              alignItems: "start",
-              padding: "2rem",
-              borderRadius: "20px",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-            }}
+            key={node.label}
+            data-flow-node
+            className="hiw-flow-node"
+            style={{ opacity: 0 }}
           >
-            {/* Step number + icon */}
+            {/* Node icon */}
             <div
-              style={{
-                width: "56px",
-                height: "56px",
-                borderRadius: "16px",
-                background:
-                  "linear-gradient(135deg, rgba(0,119,204,0.25), rgba(0,26,78,0.4))",
-                border: "1px solid rgba(0,119,204,0.3)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1.5rem",
-                flexShrink: 0,
-              }}
+              ref={nodeRefs[i]}
+              className="hiw-flow-node__icon-wrap"
             >
-              {step.icon}
+              {node.icon}
             </div>
 
-            {/* Content */}
-            <div>
-              <div
-                style={{
-                  fontSize: "0.7rem",
-                  fontWeight: 600,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.12em",
-                  color: "rgba(0,223,255,0.9)",
-                  marginBottom: "0.4rem",
-                }}
-              >
-                Step {step.step}
-              </div>
-              <h3
-                style={{
-                  fontSize: "1.2rem",
-                  fontWeight: 600,
-                  color: "#fff",
-                  margin: "0 0 0.5rem",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {step.title}
-              </h3>
-              <p
-                style={{
-                  fontSize: "0.95rem",
-                  color: "rgba(255,255,255,0.55)",
-                  lineHeight: 1.65,
-                  margin: 0,
-                }}
-              >
-                {step.description}
-              </p>
-            </div>
+            {/* Step badge */}
+            <div className="hiw-flow-node__step">Step {i + 1}</div>
+
+            {/* Label */}
+            <h3 className="hiw-flow-node__label">{node.label}</h3>
+
+            {/* Description */}
+            <p className="hiw-flow-node__desc">{node.description}</p>
           </div>
         ))}
+
       </div>
     </section>
   );
 }
+
+

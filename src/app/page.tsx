@@ -16,7 +16,7 @@ import Security from "@/components/sections/Security";
 import Cta from "@/components/sections/Cta";
 import Faq from "@/components/sections/Faq";
 import GlowButton from "@/components/ui/GlowButton";
-import type { Feature, HowItWorksStep, SecurityFeature } from "@/types";
+import type { Feature, SecurityFeature } from "@/types";
 
 import {
   HERO_HEADLINE_LINE1,
@@ -69,40 +69,7 @@ const FEATURES: Feature[] = [
   },
 ];
 
-// ---------------------------------------------------------------------------
-// How It Works — offline payment flow from PRD §5.1
-// ---------------------------------------------------------------------------
 
-const STEPS: HowItWorksStep[] = [
-  {
-    step: 1,
-    icon: "🔧",
-    title: "One-time online setup",
-    description:
-      "Create a nonce account on-chain (~0.0015 SOL, once). The nonce value and authority key are cached securely on your device.",
-  },
-  {
-    step: 2,
-    icon: "✍️",
-    title: "Sign offline",
-    description:
-      "Build and sign a USDC transfer using the cached durable nonce — no internet, no blockhash expiry. Optionally embed a ZK proof for full privacy.",
-  },
-  {
-    step: 3,
-    icon: "📲",
-    title: "Exchange via QR code",
-    description:
-      "The receiver scans a QR code containing the payment request. Instant Ed25519 signature verification confirms authenticity on their device — no internet needed.",
-  },
-  {
-    step: 4,
-    icon: "✅",
-    title: "Settle privately on reconnect",
-    description:
-      "When internet returns, pending transactions are routed through MagicBlock PER — settling as a single encrypted commitment on-chain.",
-  },
-];
 
 // ---------------------------------------------------------------------------
 // Security features — from PRD §3 and §7
@@ -175,7 +142,6 @@ export default function Home() {
       <HowItWorks
         headline={HOW_IT_WORKS_HEADLINE}
         subheadline={HOW_IT_WORKS_SUBHEADLINE}
-        steps={STEPS}
       />
 
       <Security

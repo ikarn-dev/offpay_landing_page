@@ -202,6 +202,7 @@ body {
     filter: blur(12px);
     transform: translateY(16px);
   }
+
   100% {
     opacity: 1;
     filter: blur(0);
@@ -214,6 +215,7 @@ body {
     opacity: 0;
     transform: scale(0.95);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -489,7 +491,8 @@ body {
   font-size: clamp(0.9rem, 3vw, 1.3rem);
   font-weight: 400;
   line-height: 0;
-  padding-bottom: 2px; /* Optical adjustment for + and × characters */
+  padding-bottom: 2px;
+  /* Optical adjustment for + and × characters */
   font-family: system-ui, -apple-system, sans-serif;
   color: rgba(255, 255, 255, 0.8);
   transition: background 0.2s ease, transform 0.2s ease;
@@ -523,6 +526,109 @@ body {
     margin: 0 0.5rem;
     padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2vw, 2rem);
   }
+}
+
+/* ---------------------------------------------------------------------------
+   How It Works — Animated Node Flow Diagram
+   --------------------------------------------------------------------------- */
+
+.hiw-flow-container {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.hiw-flow-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  z-index: 1;
+  min-width: 0;
+}
+
+/* Node icon wrapper — glassmorphic frost UI */
+.hiw-flow-node__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  width: clamp(72px, 11vw, 88px);
+  height: clamp(72px, 11vw, 88px);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 0 16px rgba(255, 255, 255, 0.02);
+}
+
+.hiw-flow-node__icon-wrap svg {
+  width: clamp(36px, 5vw, 44px);
+  height: clamp(36px, 5vw, 44px);
+}
+
+.hiw-flow-node__step {
+  margin-top: 1rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 223, 255, 0.8);
+}
+
+.hiw-flow-node__label {
+  margin: 0.35rem 0 0;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.hiw-flow-node__desc {
+  margin: 0.4rem 0 0;
+  font-size: clamp(0.75rem, 1.5vw, 0.88rem);
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.55;
+  max-width: 180px;
+}
+
+/* Mobile: vertical flow */
+@media (max-width: 768px) {
+  .hiw-flow-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .hiw-flow-node {
+    flex: none;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .hiw-flow-node__desc {
+    max-width: 260px;
+  }
+}
+
+/* Custom connection beam animation */
+@keyframes hiw-beam-travel {
+  0% {
+    stroke-dashoffset: calc(var(--path-length) * 2);
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hiw-beam-animate {
+  animation: hiw-beam-travel 6s linear infinite;
 }
 
 /* ---------------------------------------------------------------------------
@@ -820,9 +926,12 @@ img {
 }
 
 @keyframes float3D {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -841,10 +950,21 @@ img {
 }
 
 /* Stagger the floating animations so they look organic */
-.feature-card:nth-child(1) .feature-card__image { animation-delay: 0s; }
-.feature-card:nth-child(2) .feature-card__image { animation-delay: -1.5s; }
-.feature-card:nth-child(3) .feature-card__image { animation-delay: -4.5s; }
-.feature-card:nth-child(4) .feature-card__image { animation-delay: -3s; }
+.feature-card:nth-child(1) .feature-card__image {
+  animation-delay: 0s;
+}
+
+.feature-card:nth-child(2) .feature-card__image {
+  animation-delay: -1.5s;
+}
+
+.feature-card:nth-child(3) .feature-card__image {
+  animation-delay: -4.5s;
+}
+
+.feature-card:nth-child(4) .feature-card__image {
+  animation-delay: -3s;
+}
 
 .feature-card__title {
   font-size: 1.1rem;
@@ -857,7 +977,8 @@ img {
 
 .feature-card__desc {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85); /* Lighter for visibility */
+  color: rgba(255, 255, 255, 0.85);
+  /* Lighter for visibility */
   line-height: 1.6;
   margin: 0;
   font-family: var(--font-body);
@@ -900,7 +1021,8 @@ img {
     max-width: 480px;
     margin: 0.5rem auto 0;
     text-wrap: balance;
-    white-space: normal; /* Override desktop nowrap */
+    white-space: normal;
+    /* Override desktop nowrap */
   }
 }
 
@@ -928,17 +1050,21 @@ img {
     font-size: 0.85rem;
     line-height: 1.5;
     max-width: 380px;
-    white-space: normal; /* Override desktop nowrap */
+    white-space: normal;
+    /* Override desktop nowrap */
   }
 
   .features-cards {
     display: grid;
-    grid-template-columns: 1fr; /* Single column on mobile */
-    gap: 2rem !important; /* Significantly increased gap so they don't touch */
+    grid-template-columns: 1fr;
+    /* Single column on mobile */
+    gap: 2rem !important;
+    /* Significantly increased gap so they don't touch */
   }
 
   .feature-card {
-    min-height: 320px; /* Taller cards on mobile to fix the squished look */
+    min-height: 320px;
+    /* Taller cards on mobile to fix the squished look */
   }
 
   .feature-card__content {
@@ -959,7 +1085,8 @@ img {
   .feature-card__desc {
     font-size: 0.85rem;
     line-height: 1.6;
-    max-width: 280px; /* Constrain text width so it doesn't stretch */
+    max-width: 280px;
+    /* Constrain text width so it doesn't stretch */
     margin: 0 auto;
   }
 
