@@ -53,6 +53,7 @@ export const FEATURES_TAGLINE_ITALIC = "offline and private." as const;
 export const HOW_IT_WORKS_HEADLINE = "How offline payments work" as const;
 export const HOW_IT_WORKS_SUBHEADLINE =
   "Prepare durable nonce slots online, sign USDC/USDT transfers locally, share receipts over QR or nearby BLE, then settle on reconnect." as const;
+export const PRIVATE_P2P_HEADLINE = "Private P2P through MagicBlock" as const;
 
 // ---------------------------------------------------------------------------
 // Security

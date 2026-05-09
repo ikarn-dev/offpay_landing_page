@@ -29,6 +29,7 @@ import {
   FEATURES_TAGLINE_ITALIC,
   HOW_IT_WORKS_HEADLINE,
   HOW_IT_WORKS_SUBHEADLINE,
+  PRIVATE_P2P_HEADLINE,
   SECURITY_HEADLINE,
   SECURITY_SUBHEADLINE,
   FAQ_HEADLINE,
@@ -137,6 +138,7 @@ export default function Home() {
 
       <HowItWorks
         headline={HOW_IT_WORKS_HEADLINE}
+        privateHeadline={PRIVATE_P2P_HEADLINE}
         subheadline={HOW_IT_WORKS_SUBHEADLINE}
       />
 

@@ -576,6 +576,28 @@ body {
    How It Works — React Flow node explanation + app mockup
    --------------------------------------------------------------------------- */
 
+.hiw-scroll-section {
+  position: relative;
+  min-height: 320svh;
+  overflow: clip;
+  background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
+}
+
+.hiw-scroll-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  padding: clamp(5.25rem, 8svh, 6.5rem) var(--section-px) clamp(2.25rem, 5svh, 3.5rem);
+  background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
+}
+
+.hiw-scroll-frame {
+  width: 100%;
+}
+
 .hiw-section {
   position: relative;
   z-index: 3;
@@ -597,6 +619,28 @@ body {
   text-wrap: balance;
 }
 
+.hiw-title-layer {
+  position: relative;
+  height: clamp(3.25rem, 5.4vw, 5.2rem);
+  margin-bottom: clamp(1.4rem, 3.2vw, 2.4rem);
+}
+
+.hiw-title--scene {
+  position: absolute;
+  inset: 0 auto auto 0;
+  margin: 0;
+}
+
+.hiw-title--scene-next {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12%);
+}
+
+.hiw-title--mobile {
+  display: none;
+}
+
 .hiw-layout {
   display: grid;
   width: 100%;
@@ -607,23 +651,22 @@ body {
 
 .hiw-slide-stage {
   position: relative;
-  z-index: 1;
   width: 100%;
   overflow: hidden;
 }
 
-.hiw-slide {
-  position: relative;
-  width: 100%;
-  will-change: opacity, transform;
+.hiw-slide-track {
+  display: grid;
+  width: 200%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  will-change: transform;
 }
 
-.hiw-slide--private {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(108%);
+.hiw-flow-slide {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  will-change: opacity, transform;
 }
 
 .hiw-flow-panel {
@@ -633,14 +676,17 @@ body {
   border: 1px solid rgba(252, 252, 255, 0.62);
   border-radius: var(--radius-xl);
   background: rgba(197, 243, 250, 0.78);
-  box-shadow:
-    0 22px 56px rgba(14, 42, 53, 0.16),
-    inset 1px 1px 0 rgba(252, 252, 255, 0.78),
-    inset -1px -1px 0 rgba(91, 200, 232, 0.2);
+  box-shadow: none;
 }
 
 .hiw-flow-panel .react-flow {
   background: transparent;
+}
+
+@media (min-width: 901px) {
+  .hiw-scroll-frame .hiw-flow-panel {
+    height: clamp(360px, 37vw, 490px);
+  }
 }
 
 .hiw-flow-panel .react-flow__node {
@@ -819,10 +865,7 @@ body {
   border-radius: var(--radius-xl);
   background: rgba(197, 243, 250, 0.78);
   color: var(--color-text);
-  box-shadow:
-    0 22px 56px rgba(14, 42, 53, 0.16),
-    inset 1px 1px 0 rgba(252, 252, 255, 0.78),
-    inset -1px -1px 0 rgba(91, 200, 232, 0.2);
+  box-shadow: none;
 }
 
 .hiw-mockup-card__placeholder {
@@ -873,6 +916,57 @@ body {
 
   .hiw-mockup-card {
     min-height: 500px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hiw-flow-panel .react-flow__edge.hiw-edge .react-flow__edge-path {
+    animation: none;
+    opacity: 0.62;
+    stroke-dasharray: none;
+  }
+}
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .hiw-scroll-section {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .hiw-scroll-sticky {
+    position: relative;
+    min-height: auto;
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+  }
+
+  .hiw-slide-stage {
+    overflow: visible;
+  }
+
+  .hiw-slide-track {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: clamp(4rem, 12vw, 6rem);
+    transform: none;
+  }
+
+  .hiw-title-layer {
+    display: none;
+  }
+
+  .hiw-title--mobile {
+    display: block;
+  }
+
+  .hiw-flow-slide,
+  .hiw-flow-slide--private {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
   }
 }
 
