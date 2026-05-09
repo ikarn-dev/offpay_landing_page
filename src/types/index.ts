@@ -34,12 +34,6 @@ export interface HowItWorksStep {
   icon: React.ReactNode;
 }
 
-/** A single security feature card. */
-export interface SecurityFeature {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
 
 /** A single FAQ item. */
 export interface FaqItem {

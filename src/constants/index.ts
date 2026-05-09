@@ -24,7 +24,6 @@ export const SITE_URL = "https://offpay.com" as const;
 export const NAV_LINKS: NavLink[] = [
   { label: "Features", href: "#features" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "Security", href: "#security" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -36,7 +35,7 @@ export const HERO_HEADLINE_LINE1 = "OffPay" as const;
 export const HERO_HEADLINE_LINE2 = "Private stablecoins. Offline Solana." as const;
 export const HERO_SUBHEADLINE =
   "The Solana wallet built for private payments, offline USDC/USDT handoff, in-app swaps, and Umbra shielded balances." as const;
-export const HERO_CTA_PRIMARY = "Get early access" as const;
+export const HERO_CTA_PRIMARY = "Download now" as const;
 
 // ---------------------------------------------------------------------------
 // Features
@@ -54,14 +53,9 @@ export const HOW_IT_WORKS_HEADLINE = "How offline payments work" as const;
 export const HOW_IT_WORKS_SUBHEADLINE =
   "Prepare durable nonce slots online, sign USDC/USDT transfers locally, share receipts over QR or nearby BLE, then settle on reconnect." as const;
 export const PRIVATE_P2P_HEADLINE = "Private P2P through MagicBlock" as const;
-
-// ---------------------------------------------------------------------------
-// Security
-// ---------------------------------------------------------------------------
-
-export const SECURITY_HEADLINE = "Self-custody with server-side provider boundaries." as const;
-export const SECURITY_SUBHEADLINE =
-  "Keys stay on-device, private and offline transactions are verified locally before signing, and provider traffic routes through api.offpay.app." as const;
+export const UMBRA_HEADLINE = "ZK privacy with Umbra" as const;
+export const PRIVATE_SWAP_HEADLINE = "Private swaps via Jupiter + MagicBlock" as const;
+export const JUPITER_SWAP_HEADLINE = "In-app swaps powered by Jupiter" as const;
 
 // ---------------------------------------------------------------------------
 // FAQ
@@ -119,7 +113,7 @@ export const FAQ_ITEMS: FaqItem[] = [
 export const FOOTER_COPYRIGHT_YEAR = 2026 as const;
 
 export const FOOTER_EMAIL = "hello@offpay.app" as const;
-export const FOOTER_CTA_HEADING = "Early access" as const;
+export const FOOTER_CTA_HEADING = "Download" as const;
 
 export const FOOTER_SOCIAL_LABELS = ["Twitter / X", "GitHub"] as const;
 

@@ -5,17 +5,26 @@ import PaymentFlowDiagram, {
   type PaymentFlowDefinition,
 } from "@/components/sections/PaymentFlowDiagram";
 import PrivateP2PFlow from "@/components/sections/PrivateP2PFlow";
-import { animateHorizontalTrackSwap } from "@/utils/animation";
+import UmbraPrivacyFlow from "@/components/sections/UmbraPrivacyFlow";
+import PrivateSwapFlow from "@/components/sections/PrivateSwapFlow";
+import JupiterSwapFlow from "@/components/sections/JupiterSwapFlow";
+import { animateHorizontalTrackSwapN } from "@/utils/animation";
 
 export interface HowItWorksProps {
   headline: string;
   privateHeadline: string;
+  umbraHeadline: string;
+  swapHeadline: string;
+  jupiterHeadline: string;
   subheadline: string;
 }
 
 const offlineFlow: PaymentFlowDefinition = {
   ariaLabel: "Offline payment flow",
-  mockupLabel: "Offline mockup image will appear here",
+  mockupLabel: "OffPay nearby wallets discovery screen",
+  mockupSrc: "/mockups/offline.webp",
+  mockupCaption: "Discover nearby,",
+  mockupCaptionAccent: "pay without internet.",
   nodes: [
     {
       id: "prepare",
@@ -85,31 +94,45 @@ const offlineFlow: PaymentFlowDefinition = {
 export default function HowItWorks({
   headline,
   privateHeadline,
+  umbraHeadline,
+  swapHeadline,
+  jupiterHeadline,
 }: HowItWorksProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const offlineTitleRef = useRef<HTMLHeadingElement | null>(null);
   const privateTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const umbraTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const swapTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const jupiterTitleRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
     const offlineTitle = offlineTitleRef.current;
     const privateTitle = privateTitleRef.current;
-    if (!section || !track || !offlineTitle || !privateTitle) {
+    const umbraTitle = umbraTitleRef.current;
+    const swapTitle = swapTitleRef.current;
+    const jupiterTitle = jupiterTitleRef.current;
+    if (
+      !section ||
+      !track ||
+      !offlineTitle ||
+      !privateTitle ||
+      !umbraTitle ||
+      !swapTitle ||
+      !jupiterTitle
+    ) {
       return;
     }
 
-    return animateHorizontalTrackSwap({
+    return animateHorizontalTrackSwapN({
       triggerElement: section,
       track,
-      previousTitle: offlineTitle,
-      nextTitle: privateTitle,
+      titles: [offlineTitle, privateTitle, umbraTitle, swapTitle, jupiterTitle],
       start: "top top",
       end: "bottom bottom",
       scrub: 0.6,
-      transitionStart: 0.38,
-      transitionDuration: 0.34,
     });
   }, []);
 
@@ -127,6 +150,24 @@ export default function HowItWorks({
             >
               {privateHeadline}
             </h2>
+            <h2
+              ref={umbraTitleRef}
+              className="hiw-title hiw-title--scene hiw-title--scene-next"
+            >
+              {umbraHeadline}
+            </h2>
+            <h2
+              ref={swapTitleRef}
+              className="hiw-title hiw-title--scene hiw-title--scene-next"
+            >
+              {swapHeadline}
+            </h2>
+            <h2
+              ref={jupiterTitleRef}
+              className="hiw-title hiw-title--scene hiw-title--scene-next"
+            >
+              {jupiterHeadline}
+            </h2>
           </div>
 
           <div className="hiw-slide-stage">
@@ -138,6 +179,18 @@ export default function HowItWorks({
 
               <div className="hiw-flow-slide hiw-flow-slide--private">
                 <PrivateP2PFlow headline={privateHeadline} />
+              </div>
+
+              <div className="hiw-flow-slide hiw-flow-slide--umbra">
+                <UmbraPrivacyFlow headline={umbraHeadline} />
+              </div>
+
+              <div className="hiw-flow-slide hiw-flow-slide--swap">
+                <PrivateSwapFlow headline={swapHeadline} />
+              </div>
+
+              <div className="hiw-flow-slide hiw-flow-slide--jupiter">
+                <JupiterSwapFlow headline={jupiterHeadline} />
               </div>
             </div>
           </div>

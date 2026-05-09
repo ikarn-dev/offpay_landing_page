@@ -13,11 +13,10 @@ import LayersProviders from "@/components/sections/LayersProviders";
 import DemoVideo from "@/components/sections/DemoVideo";
 import Features from "@/components/sections/Features";
 import HowItWorks from "@/components/sections/HowItWorks";
-import Security from "@/components/sections/Security";
 import Cta from "@/components/sections/Cta";
 import Faq from "@/components/sections/Faq";
 import GlowButton from "@/components/ui/GlowButton";
-import type { Feature, SecurityFeature } from "@/types";
+import type { Feature } from "@/types";
 
 import {
   HERO_HEADLINE_LINE1,
@@ -30,8 +29,9 @@ import {
   HOW_IT_WORKS_HEADLINE,
   HOW_IT_WORKS_SUBHEADLINE,
   PRIVATE_P2P_HEADLINE,
-  SECURITY_HEADLINE,
-  SECURITY_SUBHEADLINE,
+  UMBRA_HEADLINE,
+  PRIVATE_SWAP_HEADLINE,
+  JUPITER_SWAP_HEADLINE,
   FAQ_HEADLINE,
   FAQ_ITEMS,
 } from "@/constants";
@@ -74,49 +74,6 @@ const FEATURES: Feature[] = [
 
 
 // ---------------------------------------------------------------------------
-// Security features — from PRD §3 and §7
-// ---------------------------------------------------------------------------
-
-const SECURITY_FEATURES: SecurityFeature[] = [
-  {
-    icon: "🔑",
-    title: "Non-Custodial Wallet",
-    description:
-      "Wallet secrets stay on-device through secure local storage. OffPay never gets custody of funds or private keys.",
-  },
-  {
-    icon: "🧾",
-    title: "Local Transaction Checks",
-    description:
-      "Private and offline transactions are checked for signer, recipient, mint, amount, nonce ordering, and route expectations before signing.",
-  },
-  {
-    icon: "🔐",
-    title: "Signed Device Session",
-    description:
-      "Protected API requests include wallet, timestamp, signature, app HMAC, device id, network, and bootstrap version headers.",
-  },
-  {
-    icon: "🧊",
-    title: "Capability-Gated Features",
-    description:
-      "The app reads backend capabilities first and fails closed when private payment, swap, nonce, or Umbra surfaces are unavailable.",
-  },
-  {
-    icon: "🔁",
-    title: "Encrypted Pending Queue",
-    description:
-      "When submission fails, signed payment blobs are encrypted locally and retried by the settlement engine on reconnect.",
-  },
-  {
-    icon: "🌐",
-    title: "Backend Provider Boundary",
-    description:
-      "The client talks to api.offpay.app. Helius, Jupiter, MagicBlock, QuickNode, and RPC credentials stay behind OffPay's backend.",
-  },
-];
-
-// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
@@ -139,14 +96,12 @@ export default function Home() {
       <HowItWorks
         headline={HOW_IT_WORKS_HEADLINE}
         privateHeadline={PRIVATE_P2P_HEADLINE}
+        umbraHeadline={UMBRA_HEADLINE}
+        swapHeadline={PRIVATE_SWAP_HEADLINE}
+        jupiterHeadline={JUPITER_SWAP_HEADLINE}
         subheadline={HOW_IT_WORKS_SUBHEADLINE}
       />
 
-      <Security
-        headline={SECURITY_HEADLINE}
-        subheadline={SECURITY_SUBHEADLINE}
-        features={SECURITY_FEATURES}
-      />
 
       <Faq headline={FAQ_HEADLINE} items={FAQ_ITEMS} />
 
@@ -158,7 +113,7 @@ export default function Home() {
       />
 
       <Cta
-        headline="Get early access to OffPay."
+        headline="Download OffPay."
         supporting="Join the private beta for the mobile Solana wallet with private stablecoin payments, offline-ready handoff, swaps, and Umbra shielded balances."
         action={
           <a href="#waitlist" className="btn btn-primary">

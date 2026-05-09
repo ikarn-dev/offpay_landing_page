@@ -53,6 +53,9 @@ export type FlowEdgeSource = {
 export type PaymentFlowDefinition = {
   ariaLabel: string;
   mockupLabel: string;
+  mockupSrc?: string;
+  mockupCaption?: string;
+  mockupCaptionAccent?: string;
   nodes: PaymentStepSourceData[];
   desktopPositions: FlowPositionMap;
   compactPositions: FlowPositionMap;
@@ -233,14 +236,44 @@ export default function PaymentFlowDiagram({
 }: {
   definition: PaymentFlowDefinition;
 }) {
+  const hasCaption = definition.mockupCaption || definition.mockupCaptionAccent;
+
   return (
     <div className="hiw-layout">
       <FlowCanvas definition={definition} />
 
       <div className="hiw-mockup-card" aria-label={definition.mockupLabel}>
-        <div className="hiw-mockup-card__placeholder">
-          {definition.mockupLabel}
-        </div>
+        {definition.mockupSrc ? (
+          <div className="hiw-mockup-card__content">
+            {hasCaption && (
+              <p className="hiw-mockup-card__caption">
+                {definition.mockupCaption && (
+                  <span className="hiw-mockup-card__caption-main">
+                    {definition.mockupCaption}
+                  </span>
+                )}
+                {definition.mockupCaptionAccent && (
+                  <span className="hiw-mockup-card__caption-accent">
+                    {definition.mockupCaptionAccent}
+                  </span>
+                )}
+              </p>
+            )}
+            <Image
+              src={definition.mockupSrc}
+              alt={definition.mockupLabel}
+              width={390}
+              height={844}
+              style={{ width: "100%", height: "auto" }}
+              className="hiw-mockup-card__image"
+              priority
+            />
+          </div>
+        ) : (
+          <div className="hiw-mockup-card__placeholder">
+            {definition.mockupLabel}
+          </div>
+        )}
       </div>
     </div>
   );

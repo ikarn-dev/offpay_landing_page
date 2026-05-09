@@ -578,7 +578,7 @@ body {
 
 .hiw-scroll-section {
   position: relative;
-  min-height: 320svh;
+  min-height: 750svh;
   overflow: clip;
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
 }
@@ -588,14 +588,20 @@ body {
   top: 0;
   z-index: 3;
   display: flex;
-  min-height: 100svh;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100svh;
   padding: clamp(5.25rem, 8svh, 6.5rem) var(--section-px) clamp(2.25rem, 5svh, 3.5rem);
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
 }
 
 .hiw-scroll-frame {
   width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .hiw-section {
@@ -603,6 +609,10 @@ body {
   z-index: 3;
   isolation: isolate;
   max-width: min(100%, 1280px);
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
 }
 
@@ -641,37 +651,45 @@ body {
   display: none;
 }
 
-.hiw-layout {
-  display: grid;
-  width: 100%;
-  grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
-  align-items: stretch;
-  gap: clamp(1.5rem, 4vw, 4rem);
-}
-
 .hiw-slide-stage {
   position: relative;
   width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
   overflow: hidden;
 }
 
 .hiw-slide-track {
   display: grid;
-  width: 200%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 500%;
+  height: 100%;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   will-change: transform;
 }
 
 .hiw-flow-slide {
   position: relative;
   width: 100%;
+  height: 100%;
   min-width: 0;
+  min-height: 0;
   will-change: opacity, transform;
+}
+
+.hiw-layout {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: minmax(0, 1.12fr) minmax(260px, 0.88fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(1.5rem, 4vw, 4rem);
 }
 
 .hiw-flow-panel {
   width: 100%;
-  height: clamp(390px, 44vw, 520px);
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid rgba(252, 252, 255, 0.62);
   border-radius: var(--radius-xl);
@@ -681,12 +699,6 @@ body {
 
 .hiw-flow-panel .react-flow {
   background: transparent;
-}
-
-@media (min-width: 901px) {
-  .hiw-scroll-frame .hiw-flow-panel {
-    height: clamp(360px, 37vw, 490px);
-  }
 }
 
 .hiw-flow-panel .react-flow__node {
@@ -858,6 +870,7 @@ body {
 .hiw-mockup-card {
   display: flex;
   min-height: 0;
+  height: 100%;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -866,6 +879,18 @@ body {
   background: rgba(197, 243, 250, 0.78);
   color: var(--color-text);
   box-shadow: none;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.hiw-mockup-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 1.4vw, 1rem);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 .hiw-mockup-card__placeholder {
@@ -879,9 +904,54 @@ body {
   text-align: center;
 }
 
+.hiw-mockup-card__image {
+  display: block;
+  width: auto;
+  height: 0;
+  flex: 1 1 0;
+  min-height: 0;
+  max-width: 100%;
+  object-fit: contain;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.hiw-mockup-card__caption {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05em;
+  text-align: center;
+  line-height: 1.15;
+  flex-shrink: 0;
+}
+
+.hiw-mockup-card__caption-main {
+  font-family: var(--font-heading);
+  font-size: clamp(0.82rem, 1.4vw, 1.15rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-accent-dark);
+}
+
+.hiw-mockup-card__caption-accent {
+  font-family: var(--font-migra);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(0.82rem, 1.4vw, 1.15rem);
+  letter-spacing: 0;
+  color: var(--color-accent-mid);
+}
+
 @media (max-width: 900px) {
   .hiw-layout {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
   }
 
   .hiw-title {
@@ -895,7 +965,25 @@ body {
 
   .hiw-mockup-card {
     order: 1;
-    min-height: 420px;
+    height: auto;
+    padding: clamp(0.75rem, 2.5vw, 1.25rem);
+  }
+
+  .hiw-mockup-card__content {
+    height: auto;
+  }
+
+  .hiw-mockup-card__image {
+    flex: none;
+    height: auto;
+    width: clamp(200px, 56vw, 320px);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .hiw-mockup-card__caption-main,
+  .hiw-mockup-card__caption-accent {
+    font-size: clamp(0.85rem, 3.5vw, 1.05rem);
   }
 }
 
@@ -914,8 +1002,8 @@ body {
     font-size: 0.6rem;
   }
 
-  .hiw-mockup-card {
-    min-height: 500px;
+  .hiw-mockup-card__image {
+    width: clamp(180px, 52vw, 280px);
   }
 }
 
@@ -935,18 +1023,29 @@ body {
 
   .hiw-scroll-sticky {
     position: relative;
+    height: auto;
     min-height: auto;
     padding-top: var(--section-py);
     padding-bottom: var(--section-py);
   }
 
+  .hiw-scroll-frame {
+    flex: none;
+  }
+
+  .hiw-section {
+    flex: none;
+  }
+
   .hiw-slide-stage {
+    flex: none;
     overflow: visible;
   }
 
   .hiw-slide-track {
     display: grid;
     width: 100%;
+    height: auto;
     grid-template-columns: 1fr;
     gap: clamp(4rem, 12vw, 6rem);
     transform: none;
@@ -964,6 +1063,7 @@ body {
   .hiw-flow-slide--private {
     position: relative;
     inset: auto;
+    height: auto;
     opacity: 1;
     visibility: visible;
     transform: none;
@@ -1603,6 +1703,7 @@ img {
   }
 }
 
+
 /* ---------------------------------------------------------------------------
    Footer
    --------------------------------------------------------------------------- */
@@ -1794,42 +1895,42 @@ img {
   border-radius: var(--radius-xl);
   overflow: hidden;
   margin: 0 clamp(0.75rem, 2vw, 2rem);
-  min-height: 520px;
+  min-height: 540px;
 }
 
-/* White left background — covers full card */
+/* Dark left background — solid deep teal, no gradient */
 .cta-card__white {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(252, 252, 255, 0.94) 0%, rgba(252, 252, 255, 0) 36%),
-    linear-gradient(180deg, rgba(252, 252, 255, 0.92) 0%, rgba(223, 247, 250, 0.72) 100%);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #0E2A35;
 }
 
 .cta-card__grain {
   position: absolute;
   inset: 0;
-  opacity: 0.06;
+  opacity: 0.04;
   filter: url(#cta-grain);
   pointer-events: none;
 }
 
-/* Cyan right background — only covers the mockup side */
+/* Cyan right background — solid ice, no gradient */
 .cta-card__blue {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   width: 45%;
-  background:
-    radial-gradient(circle at 30% 10%, rgba(252, 252, 255, 0.72) 0%, rgba(252, 252, 255, 0) 32%),
-    linear-gradient(135deg, #DFF7FA 0%, #BDEFF7 42%, #5BC8E8 100%);
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  overflow: hidden;
+  background: #DFF7FA;
 }
 
 .cta-card__blue-texture {
   position: absolute;
   inset: 0;
-  opacity: 0.18;
+  opacity: 0.12;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
@@ -1840,10 +1941,10 @@ img {
   z-index: 1;
   display: flex;
   align-items: stretch;
-  min-height: 520px;
+  min-height: 540px;
 }
 
-/* Text column */
+/* Text column — white text on dark bg */
 .cta-card__text {
   flex: 1;
   display: flex;
@@ -1854,21 +1955,45 @@ img {
 }
 
 .cta-card__headline {
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 0 1rem;
-  color: var(--color-text);
+  line-height: 1.1;
+  margin: 0 0 1.25rem;
+  color: var(--color-text-inverse);
   font-family: var(--font-heading);
 }
 
 .cta-card__supporting {
-  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
-  color: var(--color-text-muted);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: rgba(252, 252, 255, 0.65);
   line-height: 1.7;
-  margin: 0 0 1.75rem;
+  margin: 0 0 2rem;
   font-family: var(--font-body);
+}
+
+/* Tagline pills */
+.cta-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.cta-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  background: rgba(91, 200, 232, 0.12);
+  border: 1px solid rgba(91, 200, 232, 0.25);
+  color: var(--color-accent-ice);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .cta-card__actions {
@@ -1878,32 +2003,41 @@ img {
   margin-bottom: 1.5rem;
 }
 
-/* Store buttons row */
+/* Store buttons row — inverted for dark bg */
 .cta-card__stores {
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
 }
 
-/* Mockup column — flush to bottom */
+.cta-card__stores a {
+  background: rgba(252, 252, 255, 0.1) !important;
+  border-color: rgba(252, 252, 255, 0.2) !important;
+  color: var(--color-text-inverse) !important;
+  box-shadow: none !important;
+}
+
+.cta-card__stores a:hover {
+  background: rgba(252, 252, 255, 0.18) !important;
+}
+
+/* Mockup column — pushed to the right edge */
 .cta-card__mockup {
   flex: 0 0 45%;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
-  padding-top: clamp(2rem, 4vw, 3rem);
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 0;
+  justify-content: flex-end;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 0 0;
+  overflow: hidden;
 }
 
 .cta-card__mockup-image {
   display: block;
-  width: auto;
-  height: 100%;
-  max-height: 560px;
+  width: 100%;
+  height: auto;
+  max-width: 440px;
   object-fit: contain;
-  object-position: bottom;
+  object-position: bottom center;
 }
 
 /* ── CTA responsive ─────────────────────────────────────────────────── */
@@ -1938,15 +2072,16 @@ img {
     height: 50%;
     top: auto;
     bottom: 0;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
   }
 
   .cta-card__mockup {
     flex: 0 0 auto;
-    padding-top: 1rem;
+    padding: 1.5rem 1rem 0;
   }
 
   .cta-card__mockup-image {
-    max-height: 400px;
+    max-width: 320px;
   }
 }
 
@@ -1956,7 +2091,7 @@ img {
   }
 
   .cta-card__mockup-image {
-    max-height: 320px;
+    max-width: 280px;
   }
 }
 

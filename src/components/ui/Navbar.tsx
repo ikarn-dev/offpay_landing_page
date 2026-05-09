@@ -267,7 +267,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
             }}
           >
             <NavCtaButton
-              label="Get early access"
+              label="Download now"
               variant="primary"
               href="#waitlist"
               onClick={() => setMobileOpen(false)}

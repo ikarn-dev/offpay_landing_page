@@ -8,7 +8,10 @@ export interface PrivateP2PFlowProps {
 
 const privateP2pFlow: PaymentFlowDefinition = {
   ariaLabel: "Private P2P payment flow",
-  mockupLabel: "Private P2P mockup image will appear here",
+  mockupLabel: "OffPay private payment summary screen",
+  mockupSrc: "/mockups/p2p.webp",
+  mockupCaption: "Send privately,",
+  mockupCaptionAccent: "powered by MagicBlock.",
   nodes: [
     {
       id: "capabilities",

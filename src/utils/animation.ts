@@ -380,6 +380,85 @@ export function animateHorizontalTrackSwap({
 }
 
 /**
+ * Generic N-slide horizontal track swap — scroll-driven.
+ * Evenly divides the scroll distance into (N-1) transitions.
+ * Track translates: 0% → -(100/N)% → -(200/N)% → … → -((N-1)*100/N)%
+ */
+export function animateHorizontalTrackSwapN({
+  triggerElement,
+  track,
+  titles,
+  start = "top top",
+  end = "bottom bottom",
+  scrub = 0.6,
+}: {
+  triggerElement: Element;
+  track: gsap.TweenTarget;
+  titles: gsap.TweenTarget[];
+  start?: string;
+  end?: string;
+  scrub?: number;
+}): () => void {
+  const media = gsap.matchMedia();
+  const slideCount = titles.length;
+  const transitionCount = slideCount - 1;
+
+  media.add("(min-width: 901px) and (prefers-reduced-motion: no-preference)", () => {
+    const progress = { value: 0 };
+
+    // Each transition gets an equal share of scroll, with breathing room at edges
+    const edgePad = 0.12;
+    const usable = 1 - edgePad * 2;
+    const slideDuration = usable / (transitionCount + 0.5);
+    const titleDuration = slideDuration * 0.28;
+    const stepPercent = 100 / slideCount;
+
+    gsap.set(track, { xPercent: 0 });
+    titles.forEach((title, i) => {
+      gsap.set(title, { autoAlpha: i === 0 ? 1 : 0, yPercent: i === 0 ? 0 : 12 });
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: triggerElement,
+        start,
+        end,
+        scrub,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    timeline.to(progress, { value: 1, duration: 1, ease: "none" }, 0);
+
+    for (let i = 0; i < transitionCount; i++) {
+      const tStart = edgePad + i * slideDuration + i * (slideDuration * 0.15);
+      const tTitleOut = tStart + slideDuration * 0.48;
+      const tTitleIn = tTitleOut + titleDuration;
+      const targetX = -(i + 1) * stepPercent;
+
+      timeline
+        .to(track, { xPercent: targetX, duration: slideDuration, ease: "none" }, tStart)
+        .to(titles[i], { autoAlpha: 0, yPercent: -12, duration: titleDuration, ease: "none" }, tTitleOut)
+        .to(titles[i + 1], { autoAlpha: 1, yPercent: 0, duration: titleDuration, ease: "none" }, tTitleIn);
+    }
+
+    return () => {
+      timeline.kill();
+    };
+  });
+
+  media.add("(max-width: 900px), (prefers-reduced-motion: reduce)", () => {
+    gsap.set([track, ...titles], { clearProps: "all" });
+
+    return () => {
+      gsap.set([track, ...titles], { clearProps: "all" });
+    };
+  });
+
+  return () => media.revert();
+}
+
+/**
  * Stagger-fade children as the container scrolls into view.
  * Returns a Timeline linked to a ScrollTrigger.
  */

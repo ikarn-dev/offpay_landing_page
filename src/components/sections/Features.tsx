@@ -155,7 +155,7 @@ export default function Features({
           >
             <div className="features-mockup__inner">
               <Image
-                src="/mockups/feat-mock.png"
+                src="/mockups/feat-mock.webp"
                 alt="OffPay app preview"
                 width={360}
                 height={780}
