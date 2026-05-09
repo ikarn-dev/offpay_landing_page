@@ -147,8 +147,8 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
             <Image
               src="/mockups/cta-mock.webp"
               alt="OffPay wallet app preview"
-              width={440}
-              height={900}
+              width={817}
+              height={1025}
               style={{ width: "100%", height: "auto" }}
               className="cta-card__mockup-image protected-image"
               priority

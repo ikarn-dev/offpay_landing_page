@@ -25,7 +25,6 @@ export default function Features({
   features,
 }: FeaturesProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const triggersRef = useRef<ScrollTrigger[]>([]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -55,7 +54,6 @@ export default function Features({
     });
 
     return () => {
-      triggersRef.current.forEach((st) => st.kill());
       ScrollTrigger.getAll()
         .filter((st) => {
           const trigger = st.trigger;

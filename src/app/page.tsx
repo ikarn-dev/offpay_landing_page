@@ -43,30 +43,30 @@ import {
 const FEATURES: Feature[] = [
   {
     icon: "📡",
-    title: "Offline USDC/USDT",
+    title: "Offline stablecoin slots",
     description:
-      "Prepare durable nonce slots online, sign stablecoin transfers offline, move receipts over QR or nearby BLE, then settle on reconnect.",
+      "Prepare 10-50 durable nonce payment slots online, sign USDC/USDT transfers locally offline, and settle queued signed blobs when the app reconnects.",
     image: "/3d-assets/no-internet.png",
   },
   {
     icon: "🔐",
-    title: "Private Stablecoin Sends",
+    title: "MagicBlock private sends",
     description:
-      "USDC and USDT private routes are capability-gated, verified locally before signing, and retried through an encrypted fallback queue.",
+      "Private USDC/USDT sends initialize mint state when needed, fetch MagicBlock unsigned transactions, verify route details locally, then sign on-device.",
     image: "/3d-assets/privacy.png",
   },
   {
     icon: "🔒",
-    title: "Umbra Private Vault",
+    title: "Umbra mainnet vault",
     description:
-      "Shield and unshield supported mainnet balances from the same mobile wallet using Umbra SDK-powered vault flows.",
+      "Register encrypted balances, query shielded token balances, shield public funds, and withdraw through Umbra SDK flows with backend RPC adapters.",
     image: "/3d-assets/swap.png",
   },
   {
     icon: "💲",
-    title: "Swaps And Wallet UX",
+    title: "Jupiter swap stack",
     description:
-      "Jupiter-backed swap routes, target and recurring modes, SNS lookup, QR scan, live activity, and local-cache warm starts.",
+      "Fetch verified tokens and prices, quote and execute normal swaps, and gate target, recurring, and privacy-envelope swap modes through backend capabilities.",
     image: "/3d-assets/money.png",
   },
 ];
@@ -103,8 +103,6 @@ export default function Home() {
       />
 
 
-      <Faq headline={FAQ_HEADLINE} items={FAQ_ITEMS} />
-
       <Features
         sectionLabel={FEATURES_LABEL}
         taglineBold={FEATURES_TAGLINE_BOLD}
@@ -112,9 +110,11 @@ export default function Home() {
         features={FEATURES}
       />
 
+      <Faq headline={FAQ_HEADLINE} items={FAQ_ITEMS} />
+
       <Cta
         headline="Download OffPay."
-        supporting="Join the private beta for the mobile Solana wallet with private stablecoin payments, offline-ready handoff, swaps, and Umbra shielded balances."
+        supporting="Join the private beta for the self-custody Solana wallet that keeps provider keys server-side, signs locally, queues offline payments, and gates every advanced flow through live backend capabilities."
         action={
           <a href="#waitlist" className="btn btn-primary">
             {HERO_CTA_PRIMARY}

@@ -31,8 +31,8 @@ type PaymentStepData = {
   description: string;
   tone: PaymentFlowTone;
   compact: boolean;
+  size?: "standard" | "wide" | "compact" | "tall";
   iconSrc?: string;
-  iconAlt?: string;
 };
 
 export type PaymentStepSourceData = Omit<PaymentStepData, "compact"> & {
@@ -54,6 +54,8 @@ export type PaymentFlowDefinition = {
   ariaLabel: string;
   mockupLabel: string;
   mockupSrc?: string;
+  mockupWidth?: number;
+  mockupHeight?: number;
   mockupCaption?: string;
   mockupCaptionAccent?: string;
   nodes: PaymentStepSourceData[];
@@ -102,7 +104,9 @@ function PaymentStepNode({ data }: NodeProps<PaymentStepNode>) {
   const sourcePosition = data.compact ? Position.Bottom : Position.Right;
 
   return (
-    <article className={`hiw-node-card hiw-node-card--${data.tone}`}>
+    <article
+      className={`hiw-node-card hiw-node-card--${data.tone} hiw-node-card--${data.size ?? "standard"}`}
+    >
       <Handle
         type="target"
         position={targetPosition}
@@ -114,15 +118,14 @@ function PaymentStepNode({ data }: NodeProps<PaymentStepNode>) {
       <div>
         <div className="hiw-node-card__title-row">
           {data.iconSrc && (
-            <span className="hiw-node-card__icon-wrap" aria-hidden="true">
-              <Image
-                src={data.iconSrc}
-                alt={data.iconAlt ?? ""}
-                width={18}
-                height={18}
-                className="hiw-node-card__icon"
-              />
-            </span>
+            <Image
+              src={data.iconSrc}
+              alt=""
+              aria-hidden="true"
+              width={18}
+              height={18}
+              className="hiw-node-card__icon"
+            />
           )}
           <h3 className="hiw-node-card__title">{data.title}</h3>
         </div>
@@ -262,8 +265,8 @@ export default function PaymentFlowDiagram({
             <Image
               src={definition.mockupSrc}
               alt={definition.mockupLabel}
-              width={390}
-              height={844}
+              width={definition.mockupWidth ?? 390}
+              height={definition.mockupHeight ?? 844}
               style={{ width: "100%", height: "auto" }}
               className="hiw-mockup-card__image"
               priority

@@ -11,9 +11,9 @@ import type { NavLink, FaqItem } from "@/types";
 // ---------------------------------------------------------------------------
 
 export const SITE_NAME = "OffPay Wallet" as const;
-export const SITE_TAGLINE = "Private payments. Offline resilience." as const;
+export const SITE_TAGLINE = "Self-custody payments for online and offline Solana." as const;
 export const SITE_DESCRIPTION =
-  "OffPay is a self-custody Solana wallet for private stablecoin payments, offline durable nonce handoff, in-app swaps, and Umbra shielded balances." as const;
+  "OffPay is a non-custodial Solana wallet for offline USDC/USDT durable-nonce payments, MagicBlock private sends, Jupiter swaps, Umbra mainnet vault actions, and backend-gated wallet data." as const;
 export const SITE_EMAIL = "hello@offpay.app" as const;
 export const SITE_URL = "https://offpay.com" as const;
 
@@ -32,9 +32,9 @@ export const NAV_LINKS: NavLink[] = [
 // ---------------------------------------------------------------------------
 
 export const HERO_HEADLINE_LINE1 = "OffPay" as const;
-export const HERO_HEADLINE_LINE2 = "Private stablecoins. Offline Solana." as const;
+export const HERO_HEADLINE_LINE2 = "Self-custody Solana, online or offline." as const;
 export const HERO_SUBHEADLINE =
-  "The Solana wallet built for private payments, offline USDC/USDT handoff, in-app swaps, and Umbra shielded balances." as const;
+  "A mobile wallet that prepares durable nonce slots online, signs USDC/USDT payments locally when offline, routes private sends through MagicBlock, executes Jupiter swaps, and keeps provider keys behind the OffPay backend." as const;
 export const HERO_CTA_PRIMARY = "Download now" as const;
 
 // ---------------------------------------------------------------------------
@@ -42,20 +42,20 @@ export const HERO_CTA_PRIMARY = "Download now" as const;
 // ---------------------------------------------------------------------------
 
 export const FEATURES_LABEL = "Features" as const;
-export const FEATURES_TAGLINE_BOLD = "Stablecoin payments," as const;
-export const FEATURES_TAGLINE_ITALIC = "offline and private." as const;
+export const FEATURES_TAGLINE_BOLD = "What the app actually does," as const;
+export const FEATURES_TAGLINE_ITALIC = "from wallet to backend." as const;
 
 // ---------------------------------------------------------------------------
 // How It Works
 // ---------------------------------------------------------------------------
 
-export const HOW_IT_WORKS_HEADLINE = "How offline payments work" as const;
+export const HOW_IT_WORKS_HEADLINE = "Offline USDC/USDT payment flow" as const;
 export const HOW_IT_WORKS_SUBHEADLINE =
-  "Prepare durable nonce slots online, sign USDC/USDT transfers locally, share receipts over QR or nearby BLE, then settle on reconnect." as const;
-export const PRIVATE_P2P_HEADLINE = "Private P2P through MagicBlock" as const;
-export const UMBRA_HEADLINE = "ZK privacy with Umbra" as const;
-export const PRIVATE_SWAP_HEADLINE = "Private swaps via Jupiter + MagicBlock" as const;
-export const JUPITER_SWAP_HEADLINE = "In-app swaps powered by Jupiter" as const;
+  "OffPay separates online setup, local signing, QR/BLE handoff, encrypted pending backups, and reconnect settlement." as const;
+export const PRIVATE_P2P_HEADLINE = "Private stablecoin sends" as const;
+export const UMBRA_HEADLINE = "Umbra mainnet vault" as const;
+export const PRIVATE_SWAP_HEADLINE = "Privacy-envelope swaps" as const;
+export const JUPITER_SWAP_HEADLINE = "Jupiter swap and order flows" as const;
 
 // ---------------------------------------------------------------------------
 // FAQ
@@ -67,17 +67,17 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "How do offline payments work without internet?",
     answer:
-      "You prepare durable nonce slots while online, then sign USDC or USDT transfers locally when offline. The signed receipt can move by QR or nearby BLE and settles through OffPay when connectivity returns.",
+      "The app prepares durable nonce payment slots while online. In offline mode it builds and signs a stablecoin transfer locally, shares the request or signed payload by QR or nearby BLE, encrypts the pending transaction, and settles it when connectivity returns.",
   },
   {
     question: "Do offline and private payments work with every token?",
     answer:
-      "No. Private and offline P2P payments are stablecoin-first: USDC or USDT. SOL is still used for network fees, and normal online transfers can support other wallet tokens when available.",
+      "No. The implemented private and offline P2P layer is stablecoin-only: USDC or USDT. SOL is reserved for network fees. Jupiter swaps can use supported swap tokens when the swap capability is available.",
   },
   {
     question: "What does OffPay verify before signing?",
     answer:
-      "The client checks signer, recipient, mint, amount, nonce ordering, account indexes, and expected route details before private or offline transactions are approved for signing.",
+      "The client verifies route-specific transaction details before signing. Offline payments verify nonceAdvance first, signer, recipient, amount, token, and signatures. Private sends verify signer, mint, amount, recipient, and private-route metadata.",
   },
   {
     question: "Who holds my funds?",
@@ -87,22 +87,22 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Does the mobile app call Helius, Jupiter, MagicBlock, or QuickNode directly?",
     answer:
-      "No. The client uses https://api.offpay.app for protected API calls, RPC proxying, swaps, capabilities, private payments, and settlement. Provider keys stay server-side.",
+      "No. The client uses https://api.offpay.app for authenticated API calls, RPC proxying, wallet data, risk, swaps, private payments, pending backups, capabilities, and settlement. Provider credentials stay server-side.",
   },
   {
     question: "What happens if a private or offline payment cannot submit right away?",
     answer:
-      "The signed transaction blob is encrypted into a local pending backup queue. On launch, reconnect, foreground, or retry backoff, the settlement engine submits queued payments and clears confirmed items.",
+      "The signed transaction blob is encrypted into the pending backup queue. Private-send retryable failures can upload the backup immediately; offline handoffs keep the queue local until reconnect. The settlement engine retries and clears confirmed items.",
   },
   {
     question: "Where does Umbra fit?",
     answer:
-      "Umbra powers the private vault flow for shielded balances. In the current client, Umbra vault actions are mainnet-only and feature visibility is capability-gated.",
+      "Umbra powers mainnet vault actions in the client: register the encrypted-balance account, query supported shielded balances, shield public balances, and withdraw back to a public wallet. Signing, key material, and proof/decryption state stay client-side.",
   },
   {
     question: "Can OffPay work manually offline forever?",
     answer:
-      "No. Offline payment setup requires an online preparation step, and settlement happens when the app reconnects. Manual offline mode intentionally blocks backend and network requests.",
+      "No. Offline payment setup requires an online preparation step, and settlement requires reconnecting. Manual offline mode intentionally blocks backend and network requests.",
   },
 ];
 
