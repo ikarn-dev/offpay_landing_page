@@ -3,7 +3,7 @@
  *
  * Composes sub-components into the full footer layout:
  *   1. FooterContact  — email label (top-left)
- *   2. FooterCtaCard   — accent CTA card (top-right)
+ *   2. FooterCtaCard   — direct download buttons (top-right)
  *   3. FooterWordmark  — oversized brand name (full-width)
  *   4. FooterBottomBar — copyright / socials strip
  *

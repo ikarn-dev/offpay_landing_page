@@ -10,6 +10,7 @@
 
 import Hero from "@/components/sections/Hero";
 import LayersProviders from "@/components/sections/LayersProviders";
+import DemoVideo from "@/components/sections/DemoVideo";
 import Features from "@/components/sections/Features";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Security from "@/components/sections/Security";
@@ -41,30 +42,30 @@ import {
 const FEATURES: Feature[] = [
   {
     icon: "📡",
-    title: "Offline Payments",
+    title: "Offline USDC/USDT",
     description:
-      "USDC/USDT transfers signed offline using Solana durable nonces. QR-based exchange after a one-time on-chain setup.",
+      "Prepare durable nonce slots online, sign stablecoin transfers offline, move receipts over QR or nearby BLE, then settle on reconnect.",
     image: "/3d-assets/no-internet.png",
   },
   {
     icon: "🔐",
-    title: "ZK-Shielded Transfers",
+    title: "Private Stablecoin Sends",
     description:
-      "USDC/USDT private transfers via Umbra Protocol. Sender, receiver, and amount hidden with zero-knowledge proofs.",
+      "USDC and USDT private routes are capability-gated, verified locally before signing, and retried through an encrypted fallback queue.",
     image: "/3d-assets/privacy.png",
   },
   {
     icon: "🔒",
-    title: "Private Settlement",
+    title: "Umbra Private Vault",
     description:
-      "MagicBlock settles online and offline transactions as encrypted commitments on-chain. No metadata exposed.",
+      "Shield and unshield supported mainnet balances from the same mobile wallet using Umbra SDK-powered vault flows.",
     image: "/3d-assets/swap.png",
   },
   {
     icon: "💲",
-    title: "Multi-Currency Portfolio",
+    title: "Swaps And Wallet UX",
     description:
-      "Portfolio values displayed in your preferred local fiat currency.",
+      "Jupiter-backed swap routes, target and recurring modes, SNS lookup, QR scan, live activity, and local-cache warm starts.",
     image: "/3d-assets/money.png",
   },
 ];
@@ -78,39 +79,39 @@ const FEATURES: Feature[] = [
 const SECURITY_FEATURES: SecurityFeature[] = [
   {
     icon: "🔑",
-    title: "Non-Custodial",
+    title: "Non-Custodial Wallet",
     description:
-      "Private keys are stored in Secure Enclave (iOS) or Android Keystore. OffPay never has access to your funds or keys.",
+      "Wallet secrets stay on-device through secure local storage. OffPay never gets custody of funds or private keys.",
   },
   {
-    icon: "👁️‍🗨️",
-    title: "Viewing Keys",
+    icon: "🧾",
+    title: "Local Transaction Checks",
     description:
-      "Selectively disclose transaction history for audits without exposing your full wallet. Share a scoped viewing key, not your secrets.",
+      "Private and offline transactions are checked for signer, recipient, mint, amount, nonce ordering, and route expectations before signing.",
   },
   {
-    icon: "🧮",
-    title: "Client-Side ZK Proofs",
+    icon: "🔐",
+    title: "Signed Device Session",
     description:
-      "Zero-knowledge proofs are generated entirely on your device — no RPC call, no server involvement. Works offline.",
+      "Protected API requests include wallet, timestamp, signature, app HMAC, device id, network, and bootstrap version headers.",
   },
   {
-    icon: "🚫",
-    title: "No Login. No Data Collection.",
+    icon: "🧊",
+    title: "Capability-Gated Features",
     description:
-      "No email, no phone, no identity verification. Your wallet address is your identity. OffPay collects nothing.",
+      "The app reads backend capabilities first and fails closed when private payment, swap, nonce, or Umbra surfaces are unavailable.",
   },
   {
-    icon: "🧱",
-    title: "Spam Token Filter",
+    icon: "🔁",
+    title: "Encrypted Pending Queue",
     description:
-      "Airdropped phishing tokens are auto-hidden using Helius wallet data and Jupiter token verification. Review and restore anytime.",
+      "When submission fails, signed payment blobs are encrypted locally and retried by the settlement engine on reconnect.",
   },
   {
-    icon: "🔒",
-    title: "Encrypted Settlement",
+    icon: "🌐",
+    title: "Backend Provider Boundary",
     description:
-      "On-chain footprint is a single encrypted commitment per session. No amount, no timing, no sequence, no parties visible.",
+      "The client talks to api.offpay.app. Helius, Jupiter, MagicBlock, QuickNode, and RPC credentials stay behind OffPay's backend.",
   },
 ];
 
@@ -132,12 +133,7 @@ export default function Home() {
 
       <LayersProviders />
 
-      <Features
-        sectionLabel={FEATURES_LABEL}
-        taglineBold={FEATURES_TAGLINE_BOLD}
-        taglineItalic={FEATURES_TAGLINE_ITALIC}
-        features={FEATURES}
-      />
+      <DemoVideo />
 
       <HowItWorks
         headline={HOW_IT_WORKS_HEADLINE}
@@ -152,9 +148,16 @@ export default function Home() {
 
       <Faq headline={FAQ_HEADLINE} items={FAQ_ITEMS} />
 
+      <Features
+        sectionLabel={FEATURES_LABEL}
+        taglineBold={FEATURES_TAGLINE_BOLD}
+        taglineItalic={FEATURES_TAGLINE_ITALIC}
+        features={FEATURES}
+      />
+
       <Cta
-        headline="Ready to pay without internet?"
-        supporting="OffPay is in early development. Join the waitlist to get early access to the private beta."
+        headline="Get early access to OffPay."
+        supporting="Join the private beta for the mobile Solana wallet with private stablecoin payments, offline-ready handoff, swaps, and Umbra shielded balances."
         action={
           <a href="#waitlist" className="btn btn-primary">
             {HERO_CTA_PRIMARY}

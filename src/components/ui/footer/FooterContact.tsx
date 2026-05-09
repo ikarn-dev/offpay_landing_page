@@ -21,8 +21,8 @@ export default function FooterContact() {
             fontSize: "1.25rem",
             fontWeight: 400,
             fontFamily: "var(--font-heading)",
-            letterSpacing: "-0.02em",
-            color: "var(--color-text-muted)",
+            letterSpacing: "0",
+            color: "rgba(252, 252, 255, 0.68)",
           }}
         >
           contact
@@ -36,10 +36,10 @@ export default function FooterContact() {
           display: "block",
           fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
           fontWeight: 700,
-          color: "var(--color-text)",
+          color: "var(--color-text-inverse)",
           textDecoration: "none",
           fontFamily: "var(--font-heading)",
-          letterSpacing: "-0.02em",
+          letterSpacing: "0",
           lineHeight: 1.1,
           margin: 0,
           cursor: "default",

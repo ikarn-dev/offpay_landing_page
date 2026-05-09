@@ -1,9 +1,8 @@
 /**
  * MeshGradient — static radial gradient with HalftoneDots shader texture.
  *
- * Gradient: dark center (#000000) radiating outward through deep navy (#001A4E)
- * to azure blue (#0077CC) at the edges — matching the OnRamp reference but in
- * dark mode using the Azure Gradient Palette.
+ * Gradient: Arctic Cyan through frost-white and ice-blue layers, matching the
+ * current OffPay app visual system.
  *
  * Texture: @paper-design/shaders-react HalftoneDots overlay for the dotted
  * pattern visible in the reference.
@@ -14,12 +13,11 @@
 import { HalftoneDots } from "@paper-design/shaders-react";
 
 /* ------------------------------------------------------------------ */
-/* Azure Gradient Palette                                              */
-/*   #000000  — black (center)                                         */
-/*   #001A4E  — deep navy (mid)                                        */
-/*   #0077CC  — azure blue (edges)                                     */
-/*   #00DFFF  — cyan (highlight)                                       */
-/*   #B0EFFF  — light cyan (not used — too bright for dark theme)      */
+/* Arctic Mist Palette                                                 */
+/*   #5BC8E8  — Arctic Cyan                                            */
+/*   #BDEFF7  — soft cyan field                                        */
+/*   #DFF7FA  — frosted glass tint                                     */
+/*   #FCFCFF  — bright glass fill                                      */
 /* ------------------------------------------------------------------ */
 
 export interface MeshGradientProps {
@@ -40,19 +38,15 @@ export default function MeshGradient({ className, style }: MeshGradientProps) {
         ...style,
       }}
     >
-      {/* Static radial gradient — dark center, blue edges */}
+      {/* Static Arctic Mist gradient */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background: `
-            linear-gradient(
-              180deg,
-              #000000 0%,
-              #000000 20%,
-              #001A4E 55%,
-              #0077CC 100%
-            )
+            radial-gradient(circle at 50% 20%, rgba(252, 252, 255, 0.82) 0%, rgba(252, 252, 255, 0) 34%),
+            radial-gradient(circle at 18% 82%, rgba(223, 247, 250, 0.72) 0%, rgba(223, 247, 250, 0) 32%),
+            linear-gradient(180deg, #5BC8E8 0%, #BDEFF7 38%, #FCFCFF 64%, #DFF7FA 84%, #5BC8E8 100%)
           `,
         }}
       />
@@ -64,14 +58,14 @@ export default function MeshGradient({ className, style }: MeshGradientProps) {
         style={{
           position: "absolute",
           inset: 0,
-          opacity: 0.35,
-          mixBlendMode: "screen",
+          opacity: 0.2,
+          mixBlendMode: "multiply",
         }}
       >
         <HalftoneDots
           style={{ width: "100%", height: "100%" }}
-          colorBack="#000000"
-          colorFront="#0077CC"
+          colorBack="#DFF7FA"
+          colorFront="#5BC8E8"
           originalColors={false}
           type="gooey"
           grid="hex"

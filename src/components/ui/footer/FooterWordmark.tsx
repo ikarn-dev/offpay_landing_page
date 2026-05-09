@@ -21,10 +21,10 @@ export default function FooterWordmark() {
         style={{
           display: "block",
           fontSize: "clamp(5rem, 26vw, 30rem)",
-          color: "var(--color-text)",
+          color: "rgba(252, 252, 255, 0.9)",
           fontFamily: "var(--font-migra)",
           fontWeight: 700, // Make entire text bold
-          letterSpacing: "0.03em", // Small gap between each letter
+          letterSpacing: "0",
           whiteSpace: "nowrap",
           userSelect: "none",
           width: "100%",

@@ -70,7 +70,7 @@ export default function Features({
       ref={sectionRef}
       id="features"
       aria-labelledby="features-heading"
-      className="section-spacing"
+      className="section-spacing adaptive-section"
     >
       <div className="section-container">
         {/* ── Centered section title + tagline ─────────────────────── */}
@@ -111,8 +111,8 @@ export default function Features({
                 <div className="feature-card__texture" aria-hidden="true">
                   <HalftoneDots
                     style={{ width: "100%", height: "100%" }}
-                    colorBack="#000000"
-                    colorFront="#0077CC"
+                    colorBack="#DFF7FA"
+                    colorFront="#5BC8E8"
                     originalColors={false}
                     type="gooey"
                     grid="hex"

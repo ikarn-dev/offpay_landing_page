@@ -36,15 +36,15 @@ export default function NavCtaButton({
     cursor: "pointer",
     transition: "all 0.2s ease",
     border: isPrimary
-      ? "1px solid rgba(255, 255, 255, 0.25)"
-      : "1px solid rgba(255, 255, 255, 0.15)",
+      ? "1px solid var(--color-border)"
+      : "1px solid rgba(14, 42, 53, 0.16)",
     background: isPrimary
-      ? "rgba(255, 255, 255, 0.15)"
-      : "rgba(255, 255, 255, 0.06)",
-    color: isPrimary ? "#fff" : "rgba(255, 255, 255, 0.75)",
-    letterSpacing: "-0.01em",
+      ? "var(--color-text-inverse)"
+      : "rgba(252, 252, 255, 0.5)",
+    color: "var(--color-text)",
+    letterSpacing: "0",
     boxShadow: isPrimary
-      ? "0 2px 12px rgba(255, 255, 255, 0.06)"
+      ? "0 12px 30px rgba(14, 42, 53, 0.14), inset 1px 1px 0 rgba(252, 252, 255, 0.78)"
       : "none",
     backdropFilter: "blur(12px)",
     WebkitBackdropFilter: "blur(12px)",

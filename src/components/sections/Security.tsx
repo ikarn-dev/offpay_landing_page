@@ -64,20 +64,24 @@ export default function Security({
     <section
       id="security"
       ref={sectionRef}
-      style={{
-        padding: "6rem 1.5rem",
-        maxWidth: "1100px",
-        margin: "0 auto",
-      }}
+      className="section-spacing adaptive-section section-container"
+      style={{ maxWidth: "1100px" }}
     >
       {/* Header */}
-      <div data-sec-header style={{ textAlign: "center", marginBottom: "4rem", opacity: 0 }}>
+      <div
+        data-sec-header
+        style={{
+          textAlign: "center",
+          marginBottom: "clamp(2rem, 7svh, 4rem)",
+          opacity: 0,
+        }}
+      >
         <h2
           style={{
             fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
             fontWeight: 700,
-            letterSpacing: "-0.03em",
-            color: "#fff",
+            letterSpacing: "0",
+            color: "var(--color-text)",
             margin: "0 0 1rem",
           }}
         >
@@ -86,7 +90,7 @@ export default function Security({
         <p
           style={{
             fontSize: "1.1rem",
-            color: "rgba(255,255,255,0.6)",
+            color: "var(--color-text-muted)",
             maxWidth: "620px",
             margin: "0 auto",
             lineHeight: 1.6,
@@ -100,8 +104,8 @@ export default function Security({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "1.5rem",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
+          gap: "clamp(1rem, 2vw, 1.5rem)",
         }}
       >
         {features.map((feature) => (
@@ -110,20 +114,22 @@ export default function Security({
             data-sec-card
             style={{
               opacity: 0,
-              padding: "2rem",
+              padding: "clamp(1.35rem, 3vw, 2rem)",
               borderRadius: "20px",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "var(--gradient-card)",
+              border: "1px solid var(--color-border)",
+              boxShadow:
+                "0 16px 38px rgba(14, 42, 53, 0.12), inset 1px 1px 0 rgba(252, 252, 255, 0.78)",
               transition: "all 0.35s cubic-bezier(0.16,1,0.3,1)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+              e.currentTarget.style.background = "var(--gradient-card-hover)";
+              e.currentTarget.style.borderColor = "rgba(14, 42, 53, 0.18)";
               e.currentTarget.style.transform = "translateY(-4px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+              e.currentTarget.style.background = "var(--gradient-card)";
+              e.currentTarget.style.borderColor = "var(--color-border)";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
@@ -133,8 +139,8 @@ export default function Security({
                 height: "48px",
                 borderRadius: "14px",
                 background:
-                  "linear-gradient(135deg, rgba(16,185,129,0.2), rgba(6,182,212,0.15))",
-                border: "1px solid rgba(16,185,129,0.3)",
+                  "linear-gradient(135deg, rgba(252,252,255,0.92), rgba(91,200,232,0.24))",
+                border: "1px solid rgba(252,252,255,0.82)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -148,9 +154,9 @@ export default function Security({
               style={{
                 fontSize: "1.1rem",
                 fontWeight: 600,
-                color: "#fff",
+                color: "var(--color-text)",
                 margin: "0 0 0.5rem",
-                letterSpacing: "-0.01em",
+                letterSpacing: "0",
               }}
             >
               {feature.title}
@@ -158,7 +164,7 @@ export default function Security({
             <p
               style={{
                 fontSize: "0.92rem",
-                color: "rgba(255,255,255,0.55)",
+                color: "var(--color-text-muted)",
                 lineHeight: 1.65,
                 margin: 0,
               }}

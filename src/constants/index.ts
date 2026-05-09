@@ -11,9 +11,9 @@ import type { NavLink, FaqItem } from "@/types";
 // ---------------------------------------------------------------------------
 
 export const SITE_NAME = "OffPay Wallet" as const;
-export const SITE_TAGLINE = "Payments that just work." as const;
+export const SITE_TAGLINE = "Private payments. Offline resilience." as const;
 export const SITE_DESCRIPTION =
-  "Build seamless payment experiences. One integration, endless possibilities." as const;
+  "OffPay is a self-custody Solana wallet for private stablecoin payments, offline durable nonce handoff, in-app swaps, and Umbra shielded balances." as const;
 export const SITE_EMAIL = "hello@offpay.app" as const;
 export const SITE_URL = "https://offpay.com" as const;
 
@@ -32,19 +32,19 @@ export const NAV_LINKS: NavLink[] = [
 // Hero
 // ---------------------------------------------------------------------------
 
-export const HERO_HEADLINE_LINE1 = "Solana's first dual-mode," as const;
-export const HERO_HEADLINE_LINE2 = "privacy-first wallet." as const;
+export const HERO_HEADLINE_LINE1 = "OffPay" as const;
+export const HERO_HEADLINE_LINE2 = "Private stablecoins. Offline Solana." as const;
 export const HERO_SUBHEADLINE =
-  "Pay offline, settle on-chain with zero-knowledge privacy and full self-custody." as const;
-export const HERO_CTA_PRIMARY = "Join the waitlist" as const;
+  "The Solana wallet built for private payments, offline USDC/USDT handoff, in-app swaps, and Umbra shielded balances." as const;
+export const HERO_CTA_PRIMARY = "Get early access" as const;
 
 // ---------------------------------------------------------------------------
 // Features
 // ---------------------------------------------------------------------------
 
 export const FEATURES_LABEL = "Features" as const;
-export const FEATURES_TAGLINE_BOLD = "Offline payments," as const;
-export const FEATURES_TAGLINE_ITALIC = "zero-knowledge privacy." as const;
+export const FEATURES_TAGLINE_BOLD = "Stablecoin payments," as const;
+export const FEATURES_TAGLINE_ITALIC = "offline and private." as const;
 
 // ---------------------------------------------------------------------------
 // How It Works
@@ -52,15 +52,15 @@ export const FEATURES_TAGLINE_ITALIC = "zero-knowledge privacy." as const;
 
 export const HOW_IT_WORKS_HEADLINE = "How offline payments work" as const;
 export const HOW_IT_WORKS_SUBHEADLINE =
-  "Cryptographically secure P2P payments with zero internet — powered by Solana durable nonces." as const;
+  "Prepare durable nonce slots online, sign USDC/USDT transfers locally, share receipts over QR or nearby BLE, then settle on reconnect." as const;
 
 // ---------------------------------------------------------------------------
 // Security
 // ---------------------------------------------------------------------------
 
-export const SECURITY_HEADLINE = "Self-custody. Zero knowledge. Zero trust." as const;
+export const SECURITY_HEADLINE = "Self-custody with server-side provider boundaries." as const;
 export const SECURITY_SUBHEADLINE =
-  "Your keys never leave your device. Your transactions are invisible on-chain. OffPay holds nothing." as const;
+  "Keys stay on-device, private and offline transactions are verified locally before signing, and provider traffic routes through api.offpay.app." as const;
 
 // ---------------------------------------------------------------------------
 // FAQ
@@ -72,42 +72,42 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "How do offline payments work without internet?",
     answer:
-      "After a one-time on-chain setup (~0.0015 SOL), payments are signed locally using Solana durable nonces. Exchange details via QR code — no internet needed at the point of payment. Settlement happens privately when you reconnect.",
+      "You prepare durable nonce slots while online, then sign USDC or USDT transfers locally when offline. The signed receipt can move by QR or nearby BLE and settles through OffPay when connectivity returns.",
   },
   {
-    question: "Can anyone see my private balance?",
+    question: "Do offline and private payments work with every token?",
     answer:
-      "No. Private balances are stored in encrypted Solana PDAs. Only your device can decrypt them locally. No on-chain observer — including OffPay — sees your balance.",
+      "No. Private and offline P2P payments are stablecoin-first: USDC or USDT. SOL is still used for network fees, and normal online transfers can support other wallet tokens when available.",
   },
   {
-    question: "Can the same offline payment be spent twice?",
+    question: "What does OffPay verify before signing?",
     answer:
-      "No. The durable nonce mechanism makes double-spend architecturally impossible. Once the nonce advances on first broadcast, any duplicate is rejected by the Solana network.",
+      "The client checks signer, recipient, mint, amount, nonce ordering, account indexes, and expected route details before private or offline transactions are approved for signing.",
   },
   {
     question: "Who holds my funds?",
     answer:
-      "You do. Private keys live in Secure Enclave (iOS) or Android Keystore. OffPay never has access to your funds or keys.",
+      "You do. Wallet secrets stay in device storage and are gated by local passcode or biometrics when enabled. OffPay never has access to your funds or private keys.",
   },
   {
-    question: "What does the safety badge check?",
+    question: "Does the mobile app call Helius, Jupiter, MagicBlock, or QuickNode directly?",
     answer:
-      "Wallet age, transaction count, funding quality, token quality, and spam patterns. It's a pure on-chain signal — no off-chain identity lookup.",
+      "No. The client uses https://api.offpay.app for protected API calls, RPC proxying, swaps, capabilities, private payments, and settlement. Provider keys stay server-side.",
   },
   {
-    question: "Do I need to sign up or create an account?",
+    question: "What happens if a private or offline payment cannot submit right away?",
     answer:
-      "No. Connect an existing Solana wallet or create one in-app. No email, no phone — your wallet address is your identity.",
+      "The signed transaction blob is encrypted into a local pending backup queue. On launch, reconnect, foreground, or retry backoff, the settlement engine submits queued payments and clears confirmed items.",
   },
   {
-    question: "Is OffPay free?",
+    question: "Where does Umbra fit?",
     answer:
-      "Yes. All features are permanently free. No subscriptions, no premium tiers. Standard Solana network fees apply (~$0.00025 per transaction).",
+      "Umbra powers the private vault flow for shielded balances. In the current client, Umbra vault actions are mainnet-only and feature visibility is capability-gated.",
   },
   {
-    question: "Is OffPay open source?",
+    question: "Can OffPay work manually offline forever?",
     answer:
-      "Yes. The nonce module, transport module, and core app are MIT-licensed.",
+      "No. Offline payment setup requires an online preparation step, and settlement happens when the app reconnects. Manual offline mode intentionally blocks backend and network requests.",
   },
 ];
 
@@ -118,7 +118,7 @@ export const FAQ_ITEMS: FaqItem[] = [
 export const FOOTER_COPYRIGHT_YEAR = 2026 as const;
 
 export const FOOTER_EMAIL = "hello@offpay.app" as const;
-export const FOOTER_CTA_HEADING = "Download" as const;
+export const FOOTER_CTA_HEADING = "Early access" as const;
 
 export const FOOTER_SOCIAL_LABELS = ["Twitter / X", "GitHub"] as const;
 

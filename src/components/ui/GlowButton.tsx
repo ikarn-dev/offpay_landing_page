@@ -4,7 +4,7 @@
  * The button stays completely static (no tilt, no zoom, no movement).
  * Only the internal radial gradient glow follows the mouse cursor.
  *
- * Uses only Azure Gradient Palette colors.
+ * Uses the Arctic Mist palette from the current OffPay app.
  */
 
 "use client";
@@ -60,25 +60,27 @@ export default function GlowButton({
     padding: "0.75rem 1.75rem",
     cursor: "pointer",
     textDecoration: "none",
-    border: isPrimary ? "none" : "1px solid rgba(0, 119, 204, 0.3)",
-    color: "#fff",
+    border: isPrimary
+      ? "1px solid var(--color-border)"
+      : "1px solid rgba(14, 42, 53, 0.18)",
+    color: "var(--color-text)",
     lineHeight: 1,
     overflow: "hidden",
     background: isPrimary
       ? hovering
-        ? "linear-gradient(135deg, #001A4E 0%, #0077CC 50%, #00DFFF 100%)"
-        : "#001A4E"
-      : "transparent",
+        ? "var(--gradient-accent-hover)"
+        : "var(--color-text-inverse)"
+      : "rgba(252, 252, 255, 0.34)",
     boxShadow: hovering
-      ? "0 4px 20px rgba(0, 119, 204, 0.25)"
-      : "none",
+      ? "0 16px 38px rgba(14, 42, 53, 0.2), inset 1px 1px 0 rgba(252, 252, 255, 0.9)"
+      : "0 12px 30px rgba(14, 42, 53, 0.14), inset 1px 1px 0 rgba(252, 252, 255, 0.78)",
   };
 
   const glowOverlay: React.CSSProperties = {
     position: "absolute",
     inset: 0,
     borderRadius: "inherit",
-    background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(0, 223, 255, ${hovering ? 0.5 : 0}) 0%, transparent 65%)`,
+    background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(91, 200, 232, ${hovering ? 0.36 : 0}) 0%, transparent 65%)`,
     transition: hovering ? "none" : "background 0.3s ease",
     pointerEvents: "none",
   };

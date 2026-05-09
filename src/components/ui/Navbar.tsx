@@ -85,7 +85,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
           position: "fixed",
           inset: 0,
           zIndex: 49,
-          background: "rgba(0, 0, 0, 0.3)",
+          background: "rgba(14, 42, 53, 0.18)",
           backdropFilter: "blur(6px)",
           WebkitBackdropFilter: "blur(6px)",
           opacity: mobileOpen ? 1 : 0,
@@ -107,10 +107,10 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
           transition: `border-radius 0s ${mobileOpen ? "0s" : "0.65s"}`,
           backdropFilter: "blur(20px) saturate(180%)",
           WebkitBackdropFilter: "blur(20px) saturate(180%)",
-          background: "rgba(255, 255, 255, 0.08)",
-          border: "1px solid rgba(255, 255, 255, 0.12)",
+          background: "rgba(252, 252, 255, 0.64)",
+          border: "1px solid var(--color-border)",
           boxShadow:
-            "0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04)",
+            "0 18px 44px rgba(14, 42, 53, 0.16), inset 1px 1px 0 rgba(252, 252, 255, 0.78)",
           fontFamily:
             "var(--font-nav), system-ui, -apple-system, sans-serif",
           overflow: "hidden",
@@ -183,7 +183,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
                 height="22"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#fff"
+                stroke="var(--color-text)"
                 strokeWidth="2"
                 strokeLinecap="round"
               >
@@ -197,7 +197,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
                 height="22"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#fff"
+                stroke="var(--color-text)"
                 strokeWidth="2"
                 strokeLinecap="round"
               >
@@ -225,7 +225,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
           <div
             style={{
               height: "1px",
-              background: "rgba(255, 255, 255, 0.1)",
+              background: "rgba(14, 42, 53, 0.1)",
               margin: "0 24px",
             }}
           />
@@ -242,13 +242,13 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
                   alignItems: "center",
                   justifyContent: "flex-start",
                   padding: "18px 0",
-                  borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderBottom: "1px solid rgba(14, 42, 53, 0.08)",
                   textDecoration: "none",
-                  color: "#fff",
+                  color: "var(--color-text)",
                   fontSize: "14px",
                   fontFamily: "var(--font-nav)",
                   fontWeight: 600,
-                  letterSpacing: "0.06em",
+                  letterSpacing: "0",
                   textTransform: "uppercase",
                 }}
               >
@@ -267,7 +267,7 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
             }}
           >
             <NavCtaButton
-              label="Join the waitlist"
+              label="Get early access"
               variant="primary"
               href="#waitlist"
               onClick={() => setMobileOpen(false)}
@@ -296,7 +296,7 @@ function NavTextLink({ href, label }: { href: string; label: string }) {
         display: "inline-block",
         padding: "8px 12px",
         textDecoration: "none",
-        color: hovered ? "#fff" : "rgba(255, 255, 255, 0.65)",
+        color: hovered ? "var(--color-text)" : "var(--color-text-muted)",
         fontSize: "14px",
         fontFamily: "var(--font-nav)",
         fontWeight: 500,
@@ -313,7 +313,7 @@ function NavTextLink({ href, label }: { href: string; label: string }) {
           right: "12px",
           bottom: "6px",
           height: "1px",
-          background: "linear-gradient(90deg, #0077CC, #00DFFF)",
+          background: "linear-gradient(90deg, #2EAED2, #5BC8E8)",
           transform: hovered ? "scaleX(1)" : "scaleX(0)",
           transformOrigin: "bottom left",
           transition: "transform 0.4s var(--ease-out)",

@@ -1,8 +1,8 @@
 /**
  * Cta — Dual-tone call-to-action section.
  *
- * Vertical split: grey left (text + store buttons) | blue right (phone mockup).
- * Blue side has HalftoneDots paper texture; grey side has grain noise.
+ * Vertical split: white glass left (text + store buttons) | cyan right (phone mockup).
+ * Cyan side has HalftoneDots paper texture; white side has grain noise.
  * Mockup sits flush to the bottom with no gap.
  */
 
@@ -24,9 +24,9 @@ const storeBtnStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: "0.5rem",
-  background: "rgba(255, 255, 255, 0.06)",
+  background: "rgba(252, 252, 255, 0.78)",
   backdropFilter: "blur(4px)",
-  color: "#fff",
+  color: "var(--color-text)",
   borderRadius: "12px",
   padding: "0.6rem 1.1rem",
   textDecoration: "none",
@@ -36,7 +36,8 @@ const storeBtnStyle: React.CSSProperties = {
   transition: "background 0.2s ease, border-color 0.2s ease",
   whiteSpace: "nowrap" as const,
   lineHeight: 1.3,
-  border: "1px solid rgba(255, 255, 255, 0.12)",
+  border: "1px solid var(--color-border)",
+  boxShadow: "inset 1px 1px 0 rgba(252, 252, 255, 0.78)",
 };
 
 const storeIconStyle: React.CSSProperties = {
@@ -68,12 +69,13 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
   return (
     <section
       ref={sectionRef}
+      id="waitlist"
       aria-labelledby="cta-heading"
-      className="section-spacing"
+      className="section-spacing adaptive-section"
     >
       <div className="cta-card">
-        {/* ── Grey left background ──────────────────────────── */}
-        <div className="cta-card__grey" aria-hidden="true">
+        {/* ── White left background ──────────────────────────── */}
+        <div className="cta-card__white" aria-hidden="true">
           <svg style={{ position: "absolute", width: 0, height: 0 }}>
             <filter id="cta-grain">
               <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
@@ -83,13 +85,13 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
           <div className="cta-card__grain" />
         </div>
 
-        {/* ── Blue right background ─────────────────────────── */}
+        {/* ── Cyan right background ─────────────────────────── */}
         <div className="cta-card__blue" aria-hidden="true">
           <div className="cta-card__blue-texture">
             <HalftoneDots
               style={{ width: "100%", height: "100%" }}
-              colorBack="#000000"
-              colorFront="#0077CC"
+              colorBack="#DFF7FA"
+              colorFront="#5BC8E8"
               originalColors={false}
               type="gooey"
               grid="hex"

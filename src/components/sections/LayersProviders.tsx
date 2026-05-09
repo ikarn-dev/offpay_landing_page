@@ -30,7 +30,6 @@ const sliderLogos = providers.map((p) => (
         margin: 0,
         padding: 0,
         objectFit: "contain",
-        filter: "brightness(0.9)",
       }}
       className="shrink-0"
     />
@@ -41,10 +40,7 @@ export default function LayersProviders() {
   return (
     <section
       id="layers"
-      style={{
-        paddingTop: "var(--section-py)",
-        paddingBottom: "var(--section-py)",
-      }}
+      className="section-spacing adaptive-section layers-section"
     >
       <div className="section-container">
         <div className="section-header" style={{ marginBottom: "2.5rem" }}>

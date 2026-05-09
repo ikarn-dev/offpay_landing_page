@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 
 const LOGO_STUB = (
-  <span style={{ fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-0.04em", color: "#fff", fontFamily: "var(--font-heading)", display: "flex", alignItems: "center" }}>
+  <span style={{ fontSize: "1.5rem", fontWeight: 800, letterSpacing: "0", color: "var(--color-text)", fontFamily: "var(--font-heading)", display: "flex", alignItems: "center" }}>
     OffPay
   </span>
 );
@@ -40,14 +40,15 @@ const NAVBAR_CTA_STUB = (
       fontSize: "14px",
       fontFamily: "var(--font-nav)",
       fontWeight: 500,
-      color: "#fff",
-      background: "rgba(255, 255, 255, 0.1)",
-      border: "1px solid rgba(255, 255, 255, 0.2)",
+      color: "var(--color-text)",
+      background: "var(--color-text-inverse)",
+      border: "1px solid var(--color-border)",
       borderRadius: "9999px",
       textDecoration: "none",
-      letterSpacing: "-0.005em",
+      letterSpacing: "0",
       whiteSpace: "nowrap",
       transition: "all 0.2s ease",
+      boxShadow: "0 10px 24px rgba(14, 42, 53, 0.14), inset 1px 1px 0 rgba(252, 252, 255, 0.78)",
     }}
   >
     {HERO_CTA_PRIMARY}
@@ -84,4 +85,3 @@ export default function RootLayout({
     </html>
   );
 }
-

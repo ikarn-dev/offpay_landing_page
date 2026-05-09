@@ -100,10 +100,10 @@ export default function Faq({ headline, items }: FaqProps) {
       ref={sectionRef}
       id="faq"
       aria-labelledby="faq-heading"
-      className="section-spacing"
+      className="section-spacing adaptive-section"
     >
       <ClickSpark
-        sparkColor="#4d9eff"
+        sparkColor="#5BC8E8"
         sparkSize={10}
         sparkRadius={15}
         sparkCount={8}
@@ -114,8 +114,8 @@ export default function Faq({ headline, items }: FaqProps) {
           <div className="faq-card__texture" aria-hidden="true">
             <HalftoneDots
               style={{ width: "100%", height: "100%" }}
-              colorBack="#000000"
-              colorFront="#0077CC"
+              colorBack="#DFF7FA"
+              colorFront="#5BC8E8"
               originalColors={false}
               type="gooey"
               grid="hex"

@@ -19,7 +19,7 @@
 
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import type { RefObject } from "react";
 
 type GsapInstance = gsap.core.Tween | gsap.core.Timeline;
@@ -30,22 +30,19 @@ export function useGsapRef<T extends Element>(
 ): RefObject<T | null> {
   const elRef = useRef<T | null>(null);
   const instanceRef = useRef<GsapInstance | null>(null);
-
-  // Stable wrapper — setup identity changes are intentionally ignored after
-  // the first mount (standard GSAP pattern).
-  const stableSetup = useCallback(setup, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const setupRef = useRef(setup);
 
   useEffect(() => {
     const el = elRef.current;
     if (!el) return;
 
-    instanceRef.current = stableSetup(el);
+    instanceRef.current = setupRef.current(el);
 
     return () => {
       instanceRef.current?.kill();
       instanceRef.current = null;
     };
-  }, [stableSetup]);
+  }, []);
 
   return elRef;
 }
