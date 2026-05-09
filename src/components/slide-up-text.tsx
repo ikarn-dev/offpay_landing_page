@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimationOptions, motion } from "motion/react";
+import { motion } from "motion/react";
+import type { AnimationOptions } from "motion/react";
 import {
   forwardRef,
   useCallback,
@@ -147,8 +148,9 @@ const SlideUpText = forwardRef<SlideUpTextRef, SlideUpTextProps>(
           split === "lines" && "flex-col",
         )}
         initial="hidden"
-        whileInView={inView ? "visible" : undefined}
-        animate={inView ? undefined : isAnimating ? "visible" : "hidden"}
+        {...(inView
+          ? { whileInView: "visible" }
+          : { animate: isAnimating ? "visible" : "hidden" })}
         viewport={{ once }}
         onAnimationStart={() => {
           if (inView) {
@@ -189,10 +191,11 @@ const SlideUpText = forwardRef<SlideUpTextRef, SlideUpTextProps>(
                       initial="hidden"
                       animate={isAnimating ? "visible" : "hidden"}
                       variants={variants}
-                      onAnimationComplete={wordIndex === array.length - 1 &&
-                          charIndex === wordObj.characters.length - 1
-                        ? onComplete
-                        : undefined}
+                      {...(wordIndex === array.length - 1 &&
+                      charIndex === wordObj.characters.length - 1 &&
+                      onComplete
+                        ? { onAnimationComplete: onComplete }
+                        : {})}
                       className="inline-block"
                     >
                       {char}

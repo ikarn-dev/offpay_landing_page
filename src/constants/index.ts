@@ -43,7 +43,7 @@ export const HERO_CTA_PRIMARY = "Download now" as const;
 
 export const FEATURES_LABEL = "Features" as const;
 export const FEATURES_TAGLINE_BOLD = "What the app actually does," as const;
-export const FEATURES_TAGLINE_ITALIC = "from wallet to backend." as const;
+export const FEATURES_TAGLINE_ITALIC = "" as const;
 
 // ---------------------------------------------------------------------------
 // How It Works
