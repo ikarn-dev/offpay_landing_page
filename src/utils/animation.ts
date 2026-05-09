@@ -391,6 +391,7 @@ export function animateHorizontalTrackSwapN({
   start = "top top",
   end = "bottom bottom",
   scrub = 0.6,
+  onSlideChange,
 }: {
   triggerElement: Element;
   track: gsap.TweenTarget;
@@ -398,6 +399,7 @@ export function animateHorizontalTrackSwapN({
   start?: string;
   end?: string;
   scrub?: number;
+  onSlideChange?: (index: number) => void;
 }): () => void {
   const media = gsap.matchMedia();
   const slideCount = titles.length;
@@ -418,6 +420,8 @@ export function animateHorizontalTrackSwapN({
       gsap.set(title, { autoAlpha: i === 0 ? 1 : 0, yPercent: i === 0 ? 0 : 12 });
     });
 
+    let currentSlide = 0;
+
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: triggerElement,
@@ -425,6 +429,20 @@ export function animateHorizontalTrackSwapN({
         end,
         scrub,
         invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (!onSlideChange) return;
+          const p = self.progress;
+          // Calculate which slide is active based on scroll progress
+          let newSlide = 0;
+          for (let i = 0; i < transitionCount; i++) {
+            const midpoint = edgePad + (i + 0.5) * slideDuration + i * (slideDuration * 0.15);
+            if (p > midpoint) newSlide = i + 1;
+          }
+          if (newSlide !== currentSlide) {
+            currentSlide = newSlide;
+            onSlideChange(newSlide);
+          }
+        },
       },
     });
 

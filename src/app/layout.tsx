@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import ContentProtection from "@/components/ui/ContentProtection";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { LoadingProvider } from "@/context/LoadingContext";
 import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, HERO_CTA_PRIMARY } from "@/constants";
 import { allFontVariables } from "./fonts";
 
@@ -70,17 +72,20 @@ export default function RootLayout({
       className={allFontVariables}
     >
       <body>
-        <ContentProtection />
+        <LoadingProvider>
+          <LoadingScreen />
+          <ContentProtection />
 
-        <Navbar
-          logo={LOGO_STUB}
-          links={NAV_LINKS}
-          cta={NAVBAR_CTA_STUB}
-        />
+          <Navbar
+            logo={LOGO_STUB}
+            links={NAV_LINKS}
+            cta={NAVBAR_CTA_STUB}
+          />
 
-        {children}
+          {children}
 
-        <Footer />
+          <Footer />
+        </LoadingProvider>
       </body>
     </html>
   );

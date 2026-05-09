@@ -5,8 +5,12 @@
  * Background: static gradient with HalftoneDots texture.
  */
 
+"use client";
+
 import MeshGradient from "@/components/ui/MeshGradient";
 import { HeroBadge } from "@/components/ui/HeroBadge";
+import { BlurReveal } from "@/components/blur-reveal";
+import { useLoading } from "@/context/LoadingContext";
 
 export interface HeroProps {
   headlineLine1: string;
@@ -23,9 +27,7 @@ export default function Hero({
   ctaPrimary,
   background,
 }: HeroProps) {
-  const claimLines = headlineLine2
-    .split(". ")
-    .map((line, index, lines) => `${line}${index < lines.length - 1 ? "." : ""}`);
+  const { isLoaded } = useLoading();
 
   return (
     <section
@@ -72,12 +74,18 @@ export default function Hero({
           style={{
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
+            gap: "0.5rem",
+            flexWrap: "wrap",
           }}
         >
           <HeroBadge />
+          <div className="hero-network-pill">
+            <span className="hero-network-pill__label">Mainnet Live</span>
+          </div>
         </div>
 
-        {/* Headline */}
+        {/* Headline — triggers only after loading screen exits */}
         <h1
           className="hero-headline"
           style={{
@@ -91,14 +99,28 @@ export default function Hero({
             textWrap: "balance",
           }}
         >
-          <span className="hero-headline__brand">{headlineLine1}</span>
+          <span className="hero-headline__brand">
+            <BlurReveal
+              as="span"
+              trigger={isLoaded}
+              speedReveal={1.8}
+              speedSegment={0.5}
+            >
+              {headlineLine1}
+            </BlurReveal>
+          </span>
           <span className="hero-headline__claim">
-            {claimLines.map((line, index) => (
-              <span key={line} className="hero-headline__claim-line">
-                {index > 0 && <span className="hero-headline__desktop-space"> </span>}
-                {line}
-              </span>
-            ))}
+            <span className="hero-headline__claim-line">
+              <BlurReveal
+                as="span"
+                trigger={isLoaded}
+                delay={0.3}
+                speedReveal={1.8}
+                speedSegment={0.5}
+              >
+                {headlineLine2}
+              </BlurReveal>
+            </span>
           </span>
         </h1>
 
@@ -130,6 +152,7 @@ export default function Hero({
         >
           {ctaPrimary}
         </div>
+
       </div>
     </section>
   );

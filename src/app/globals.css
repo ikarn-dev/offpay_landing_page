@@ -203,6 +203,55 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
+   Loading Screen
+   --------------------------------------------------------------------------- */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.loading-screen__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.loading-screen__wordmark {
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-screen__text {
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-weight: 800 !important;
+  font-family: var(--font-heading) !important;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  height: auto !important;
+  line-height: 1.1 !important;
+}
+
+.loading-screen__tagline {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(14, 42, 53, 0.35);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
    Reusable utility classes
    --------------------------------------------------------------------------- */
 
@@ -715,12 +764,12 @@ body {
 }
 
 .hiw-flow-panel .react-flow__edges {
-  filter: drop-shadow(0 6px 10px rgba(14, 42, 53, 0.12));
+  filter: drop-shadow(0 7px 12px rgba(255, 46, 136, 0.26));
 }
 
 .hiw-flow-panel .react-flow__edge.hiw-edge .react-flow__edge-path {
-  opacity: 0.36;
-  stroke-dasharray: 12 14;
+  opacity: 0.56;
+  stroke-dasharray: 10 12;
   stroke-linecap: round;
   animation: hiw-edge-beam 4.8s linear infinite;
 }
@@ -739,7 +788,7 @@ body {
 
 @keyframes hiw-edge-beam {
   0% {
-    opacity: 0.36;
+    opacity: 0.46;
     stroke-dashoffset: 104;
   }
 
@@ -749,44 +798,30 @@ body {
   }
 
   50% {
-    opacity: 0.36;
+    opacity: 0.46;
     stroke-dashoffset: 0;
   }
 
   100% {
-    opacity: 0.36;
+    opacity: 0.46;
     stroke-dashoffset: -104;
   }
 }
 
 .hiw-node-card {
-  width: 176px;
-  min-height: 84px;
+  width: 214px;
+  min-height: 96px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.2rem;
-  padding: 0.7rem 0.78rem;
+  padding: 0.78rem 0.9rem;
   border: 1px solid rgba(252, 252, 255, 0.28);
   border-radius: var(--radius-md);
   color: var(--color-text-inverse);
   box-shadow:
     0 14px 32px rgba(14, 42, 53, 0.18),
     inset 1px 1px 0 rgba(252, 252, 255, 0.34);
-}
-
-.hiw-node-card--compact {
-  width: 154px;
-  min-height: 76px;
-}
-
-.hiw-node-card--wide {
-  width: 216px;
-}
-
-.hiw-node-card--tall {
-  width: 168px;
-  min-height: 112px;
 }
 
 .hiw-node-card--setup {
@@ -997,16 +1032,9 @@ body {
   }
 
   .hiw-node-card {
-    width: 156px;
-    min-height: 80px;
-    padding: 0.64rem 0.72rem;
-  }
-
-  .hiw-node-card--compact,
-  .hiw-node-card--wide,
-  .hiw-node-card--tall {
-    width: 156px;
-    min-height: 80px;
+    width: 176px;
+    min-height: 86px;
+    padding: 0.66rem 0.74rem;
   }
 
   .hiw-node-card__description {
@@ -1127,6 +1155,29 @@ body {
   font-size: clamp(2.1rem, min(5.4vw, 11svh, calc((100vw - 2rem) / 22)), 5.5rem);
   line-height: 0.98;
   white-space: nowrap;
+}
+
+/* Network status pill */
+.hero-network-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(252, 252, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(91, 200, 232, 0.4);
+  box-shadow:
+    0 4px 16px rgba(91, 200, 232, 0.12),
+    inset 0 1px 0 rgba(252, 252, 255, 0.6);
+}
+
+.hero-network-pill__label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-accent);
+  letter-spacing: 0.01em;
 }
 
 .hero-subheadline {
@@ -1468,12 +1519,13 @@ img {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
-  flex: 1;
+  flex: 1 1 0%;
+  min-width: 0;
 }
 
 /* Right — floating phone mockup — NO border */
 .features-mockup {
-  flex: 0 0 35%;
+  flex: 0 0 clamp(240px, 30%, 340px);
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -1724,6 +1776,19 @@ img {
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   overflow: hidden;
   color: var(--color-text-inverse);
+}
+
+.footer-wordmark__text {
+  display: flex;
+  justify-content: center;
+  font-size: clamp(5rem, 26vw, 30rem);
+  color: rgba(252, 252, 255, 0.9);
+  font-family: var(--font-migra);
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+  user-select: none;
+  width: 100%;
 }
 
 .footer__inner {

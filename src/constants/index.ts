@@ -31,10 +31,10 @@ export const NAV_LINKS: NavLink[] = [
 // Hero
 // ---------------------------------------------------------------------------
 
-export const HERO_HEADLINE_LINE1 = "OffPay" as const;
-export const HERO_HEADLINE_LINE2 = "Self-custody Solana, online or offline." as const;
+export const HERO_HEADLINE_LINE1 = "Private payments." as const;
+export const HERO_HEADLINE_LINE2 = "Shielded balances. Offline payments." as const;
 export const HERO_SUBHEADLINE =
-  "A mobile wallet that prepares durable nonce slots online, signs USDC/USDT payments locally when offline, routes private sends through MagicBlock, executes Jupiter swaps, and keeps provider keys behind the OffPay backend." as const;
+  "Private payments, offline transfers, Jupiter swaps, and Umbra shielded balances — all in one wallet." as const;
 export const HERO_CTA_PRIMARY = "Download now" as const;
 
 // ---------------------------------------------------------------------------

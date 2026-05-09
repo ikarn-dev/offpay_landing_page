@@ -3,8 +3,12 @@
  *
  * Renders the large "OffPay" text that dominates the bottom
  * portion of the footer. Uses PP Migra at a massive size.
- * "Off" is regular weight, "Pay" is bold.
+ * SlideUpText animation triggers on scroll into view.
  */
+
+"use client";
+
+import { SlideUpText } from "@/components/slide-up-text";
 
 export default function FooterWordmark() {
   return (
@@ -13,25 +17,19 @@ export default function FooterWordmark() {
       aria-hidden="true"
       style={{
         lineHeight: 1.1,
-        padding: "2rem 0 4vw", // Added bottom padding to give the 'y' descender room
+        padding: "2rem 0 4vw",
         textAlign: "center",
       }}
     >
-      <span
-        style={{
-          display: "block",
-          fontSize: "clamp(5rem, 26vw, 30rem)",
-          color: "rgba(252, 252, 255, 0.9)",
-          fontFamily: "var(--font-migra)",
-          fontWeight: 700, // Make entire text bold
-          letterSpacing: "0",
-          whiteSpace: "nowrap",
-          userSelect: "none",
-          width: "100%",
-        }}
+      <SlideUpText
+        split="characters"
+        inView
+        once
+        stagger={0.05}
+        className="footer-wordmark__text"
       >
         OffPay
-      </span>
+      </SlideUpText>
     </div>
   );
 }

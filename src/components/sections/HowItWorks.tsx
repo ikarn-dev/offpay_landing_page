@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import PaymentFlowDiagram, {
   type PaymentFlowDefinition,
 } from "@/components/sections/PaymentFlowDiagram";
@@ -8,6 +8,7 @@ import PrivateP2PFlow from "@/components/sections/PrivateP2PFlow";
 import UmbraPrivacyFlow from "@/components/sections/UmbraPrivacyFlow";
 import PrivateSwapFlow from "@/components/sections/PrivateSwapFlow";
 import JupiterSwapFlow from "@/components/sections/JupiterSwapFlow";
+import { BlurReveal } from "@/components/blur-reveal";
 import { animateHorizontalTrackSwapN } from "@/utils/animation";
 
 export interface HowItWorksProps {
@@ -34,8 +35,7 @@ const offlineFlow: PaymentFlowDefinition = {
       title: "Check capability",
       description: "Load offline stablecoins, rent estimate, and nonce-slot status.",
       tone: "setup",
-      size: "wide",
-      iconSrc: "/node_icons/logo-bright.svg",
+      compactSourcePosition: "right",
     },
     {
       id: "slots",
@@ -43,7 +43,8 @@ const offlineFlow: PaymentFlowDefinition = {
       title: "Prepare slots",
       description: "Backend returns unsigned nonce-account transactions; wallet signs.",
       tone: "send",
-      size: "tall",
+      compactTargetPosition: "left",
+      compactSourcePosition: "bottom",
     },
     {
       id: "sign",
@@ -51,7 +52,9 @@ const offlineFlow: PaymentFlowDefinition = {
       title: "Sign offline",
       description: "Build a durable-nonce USDC/USDT transfer from cached token context.",
       tone: "receive",
-      size: "wide",
+      desktopSourcePosition: "bottom",
+      compactTargetPosition: "top",
+      compactSourcePosition: "left",
     },
     {
       id: "handoff",
@@ -59,7 +62,10 @@ const offlineFlow: PaymentFlowDefinition = {
       title: "QR or BLE handoff",
       description: "Share an OffPay receive request or signed payment payload nearby.",
       tone: "queue",
-      size: "compact",
+      desktopTargetPosition: "top",
+      desktopSourcePosition: "left",
+      compactTargetPosition: "right",
+      compactSourcePosition: "bottom",
     },
     {
       id: "verify",
@@ -67,8 +73,10 @@ const offlineFlow: PaymentFlowDefinition = {
       title: "Verify & encrypt",
       description: "Check nonceAdvance, signer, recipient, amount, token, and signatures.",
       tone: "queue",
-      size: "wide",
-      iconSrc: "/node_icons/logo-bright.svg",
+      desktopTargetPosition: "right",
+      desktopSourcePosition: "left",
+      compactTargetPosition: "top",
+      compactSourcePosition: "right",
     },
     {
       id: "settle",
@@ -76,25 +84,25 @@ const offlineFlow: PaymentFlowDefinition = {
       title: "Settle on reconnect",
       description: "Submit queued signed blobs through /api/payment/settle.",
       tone: "settle",
-      size: "tall",
-      iconSrc: "/node_icons/logo-bright.svg",
+      desktopTargetPosition: "right",
+      compactTargetPosition: "left",
     },
   ],
   desktopPositions: {
-    prepare: { x: 20, y: 32 },
-    slots: { x: 260, y: 28 },
-    sign: { x: 188, y: 220 },
-    handoff: { x: 444, y: 178 },
-    verify: { x: 604, y: 38 },
-    settle: { x: 730, y: 248 },
+    prepare: { x: 0, y: 58 },
+    slots: { x: 370, y: 58 },
+    sign: { x: 740, y: 58 },
+    handoff: { x: 740, y: 330 },
+    verify: { x: 370, y: 330 },
+    settle: { x: 0, y: 330 },
   },
   compactPositions: {
     prepare: { x: 0, y: 0 },
-    slots: { x: 0, y: 112 },
-    sign: { x: 0, y: 224 },
-    handoff: { x: 0, y: 336 },
-    verify: { x: 0, y: 448 },
-    settle: { x: 0, y: 560 },
+    slots: { x: 220, y: 0 },
+    sign: { x: 220, y: 160 },
+    handoff: { x: 0, y: 160 },
+    verify: { x: 0, y: 320 },
+    settle: { x: 220, y: 320 },
   },
   desktopEdges: [
     { id: "prepare-slots", source: "prepare", target: "slots", phase: 1 },
@@ -127,6 +135,12 @@ export default function HowItWorks({
   const swapTitleRef = useRef<HTMLHeadingElement | null>(null);
   const jupiterTitleRef = useRef<HTMLHeadingElement | null>(null);
 
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const handleSlideChange = useCallback((index: number) => {
+    setActiveSlide(index);
+  }, []);
+
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
@@ -154,40 +168,77 @@ export default function HowItWorks({
       start: "top top",
       end: "bottom bottom",
       scrub: 0.6,
+      onSlideChange: handleSlideChange,
     });
-  }, []);
+  }, [handleSlideChange]);
 
   return (
     <section id="how-it-works" ref={sectionRef} className="hiw-scroll-section">
       <div className="hiw-scroll-sticky">
         <div className="section-container hiw-section hiw-scroll-frame">
           <div className="hiw-title-layer" aria-live="polite">
+            {/* GSAP still controls visibility of the h2 wrappers; BlurReveal adds the text animation */}
             <h2 ref={offlineTitleRef} className="hiw-title hiw-title--scene">
-              {headline}
+              <BlurReveal
+                as="span"
+                trigger={activeSlide === 0}
+                speedReveal={2}
+                speedSegment={0.6}
+              >
+                {headline}
+              </BlurReveal>
             </h2>
             <h2
               ref={privateTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
             >
-              {privateHeadline}
+              <BlurReveal
+                as="span"
+                trigger={activeSlide === 1}
+                speedReveal={2}
+                speedSegment={0.6}
+              >
+                {privateHeadline}
+              </BlurReveal>
             </h2>
             <h2
               ref={umbraTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
             >
-              {umbraHeadline}
+              <BlurReveal
+                as="span"
+                trigger={activeSlide === 2}
+                speedReveal={2}
+                speedSegment={0.6}
+              >
+                {umbraHeadline}
+              </BlurReveal>
             </h2>
             <h2
               ref={swapTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
             >
-              {swapHeadline}
+              <BlurReveal
+                as="span"
+                trigger={activeSlide === 3}
+                speedReveal={2}
+                speedSegment={0.6}
+              >
+                {swapHeadline}
+              </BlurReveal>
             </h2>
             <h2
               ref={jupiterTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
             >
-              {jupiterHeadline}
+              <BlurReveal
+                as="span"
+                trigger={activeSlide === 4}
+                speedReveal={2}
+                speedSegment={0.6}
+              >
+                {jupiterHeadline}
+              </BlurReveal>
             </h2>
           </div>
 

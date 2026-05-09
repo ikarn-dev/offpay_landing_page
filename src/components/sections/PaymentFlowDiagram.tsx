@@ -31,15 +31,33 @@ type PaymentStepData = {
   description: string;
   tone: PaymentFlowTone;
   compact: boolean;
-  size?: "standard" | "wide" | "compact" | "tall";
+  desktopTargetPosition?: HandleSide;
+  desktopSourcePosition?: HandleSide;
+  compactTargetPosition?: HandleSide;
+  compactSourcePosition?: HandleSide;
+  hasTargetHandle: boolean;
+  hasSourceHandle: boolean;
   iconSrc?: string;
 };
 
-export type PaymentStepSourceData = Omit<PaymentStepData, "compact"> & {
+export type PaymentStepSourceData = Omit<
+  PaymentStepData,
+  "compact" | "hasTargetHandle" | "hasSourceHandle"
+> & {
   id: string;
 };
 
 type PaymentStepNode = Node<PaymentStepData, "paymentStep">;
+type HandleSide = "top" | "right" | "bottom" | "left";
+
+const handlePositionMap: Record<HandleSide, Position> = {
+  top: Position.Top,
+  right: Position.Right,
+  bottom: Position.Bottom,
+  left: Position.Left,
+};
+
+const edgeBeamColor = "#FF2E88";
 
 export type FlowPositionMap = Record<string, { x: number; y: number }>;
 
@@ -68,8 +86,12 @@ export type PaymentFlowDefinition = {
 function createPaymentNodes(
   nodeData: PaymentStepSourceData[],
   positions: FlowPositionMap,
-  compact: boolean
+  compact: boolean,
+  edgeData: FlowEdgeSource[]
 ): PaymentStepNode[] {
+  const nodesWithIncoming = new Set(edgeData.map((edge) => edge.target));
+  const nodesWithOutgoing = new Set(edgeData.map((edge) => edge.source));
+
   return nodeData.map(({ id, ...data }) => ({
     id,
     type: "paymentStep",
@@ -77,6 +99,8 @@ function createPaymentNodes(
     data: {
       ...data,
       compact,
+      hasTargetHandle: nodesWithIncoming.has(id),
+      hasSourceHandle: nodesWithOutgoing.has(id),
     },
   }));
 }
@@ -88,30 +112,34 @@ function createPaymentEdges(edgeData: FlowEdgeSource[]): Edge[] {
     className: `hiw-edge hiw-edge--phase-${edge.phase}`,
     markerEnd: {
       type: MarkerType.ArrowClosed,
-      color: "#2EAED2",
+      color: edgeBeamColor,
       width: 16,
       height: 16,
     },
     style: {
-      stroke: "#2EAED2",
-      strokeWidth: 2,
+      stroke: edgeBeamColor,
+      strokeWidth: 2.4,
     },
   }));
 }
 
 function PaymentStepNode({ data }: NodeProps<PaymentStepNode>) {
-  const targetPosition = data.compact ? Position.Top : Position.Left;
-  const sourcePosition = data.compact ? Position.Bottom : Position.Right;
+  const targetPosition = data.compact
+    ? handlePositionMap[data.compactTargetPosition ?? "top"]
+    : handlePositionMap[data.desktopTargetPosition ?? "left"];
+  const sourcePosition = data.compact
+    ? handlePositionMap[data.compactSourcePosition ?? "bottom"]
+    : handlePositionMap[data.desktopSourcePosition ?? "right"];
 
   return (
-    <article
-      className={`hiw-node-card hiw-node-card--${data.tone} hiw-node-card--${data.size ?? "standard"}`}
-    >
-      <Handle
-        type="target"
-        position={targetPosition}
-        className="hiw-node-card__handle"
-      />
+    <article className={`hiw-node-card hiw-node-card--${data.tone}`}>
+      {data.hasTargetHandle && (
+        <Handle
+          type="target"
+          position={targetPosition}
+          className="hiw-node-card__handle"
+        />
+      )}
       <div className="hiw-node-card__step" aria-hidden="true">
         {data.step}
       </div>
@@ -131,11 +159,13 @@ function PaymentStepNode({ data }: NodeProps<PaymentStepNode>) {
         </div>
         <p className="hiw-node-card__description">{data.description}</p>
       </div>
-      <Handle
-        type="source"
-        position={sourcePosition}
-        className="hiw-node-card__handle"
-      />
+      {data.hasSourceHandle && (
+        <Handle
+          type="source"
+          position={sourcePosition}
+          className="hiw-node-card__handle"
+        />
+      )}
     </article>
   );
 }
@@ -157,11 +187,11 @@ function FlowCanvas({ definition }: { definition: PaymentFlowDefinition }) {
     ? definition.compactEdges
     : definition.desktopEdges;
   const paymentNodes = useMemo(
-    () => createPaymentNodes(definition.nodes, positions, isCompactFlow),
-    [definition.nodes, isCompactFlow, positions]
+    () => createPaymentNodes(definition.nodes, positions, isCompactFlow, edgeData),
+    [definition.nodes, edgeData, isCompactFlow, positions]
   );
   const paymentEdges = useMemo(() => createPaymentEdges(edgeData), [edgeData]);
-  const fitPadding = isCompactFlow ? 0.18 : 0.2;
+  const fitPadding = isCompactFlow ? 0.08 : 0.12;
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -197,7 +227,7 @@ function FlowCanvas({ definition }: { definition: PaymentFlowDefinition }) {
   return (
     <div
       ref={panelRef}
-      className="hiw-flow-panel"
+      className={`hiw-flow-panel ${isCompactFlow ? "hiw-flow-panel--compact" : "hiw-flow-panel--desktop"}`}
       aria-label={definition.ariaLabel}
     >
       <ReactFlow
