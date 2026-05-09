@@ -45,33 +45,31 @@ const FEATURES: Feature[] = [
     icon: "📡",
     title: "Offline stablecoin slots",
     description:
-      "Prepare 10-50 durable nonce payment slots online, sign USDC/USDT transfers locally offline, and settle queued signed blobs when the app reconnects.",
+      "Offline USDC/USDT is signed on-device and settled when connection returns.",
     image: "/3d-assets/no-internet.png",
   },
   {
     icon: "🔐",
     title: "MagicBlock private sends",
     description:
-      "Private USDC/USDT sends initialize mint state when needed, fetch MagicBlock unsigned transactions, verify route details locally, then sign on-device.",
-    image: "/3d-assets/privacy.png",
+      "MagicBlock prepares private send and settlement transactions for local signing.",
+    image: "/3d-assets/money.png",
   },
   {
     icon: "🔒",
     title: "Umbra mainnet vault",
     description:
-      "Register encrypted balances, query shielded token balances, shield public funds, and withdraw through Umbra SDK flows with backend RPC adapters.",
-    image: "/3d-assets/swap.png",
+      "Umbra shields balances and withdraws through sanitized backend proxies.",
+    image: "/3d-assets/privacy.png",
   },
   {
     icon: "💲",
     title: "Jupiter swap stack",
     description:
-      "Fetch verified tokens and prices, quote and execute normal swaps, and gate target, recurring, and privacy-envelope swap modes through backend capabilities.",
-    image: "/3d-assets/money.png",
+      "Jupiter powers quotes, execution, trigger orders, and recurring swaps.",
+    image: "/3d-assets/swap.png",
   },
 ];
-
-
 
 // ---------------------------------------------------------------------------
 // Page

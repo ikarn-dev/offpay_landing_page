@@ -107,14 +107,14 @@ export function animateScrollFadeIn(
 
   const scrollTriggerConfig = resolvedTrigger
     ? {
-        trigger: resolvedTrigger,
-        start: "top 85%" as const,
-        toggleActions: "play none none none" as const,
-      }
+      trigger: resolvedTrigger,
+      start: "top 85%" as const,
+      toggleActions: "play none none none" as const,
+    }
     : {
-        start: "top 85%" as const,
-        toggleActions: "play none none none" as const,
-      };
+      start: "top 85%" as const,
+      toggleActions: "play none none none" as const,
+    };
 
   return gsap.fromTo(
     target,
@@ -155,14 +155,14 @@ export function animateScrollSlideIn(
 
   const scrollTriggerConfig = triggerElement
     ? {
-        trigger: triggerElement,
-        start,
-        once,
-      }
+      trigger: triggerElement,
+      start,
+      once,
+    }
     : {
-        start,
-        once,
-      };
+      start,
+      once,
+    };
 
   return gsap.fromTo(
     target,
@@ -496,14 +496,14 @@ export function animateScrollStaggerIn(
   // Conditionally include `trigger` to satisfy exactOptionalPropertyTypes.
   const scrollTriggerConfig = triggerElement
     ? {
-        trigger: triggerElement,
-        start: "top 85%" as const,
-        toggleActions: "play none none none" as const,
-      }
+      trigger: triggerElement,
+      start: "top 85%" as const,
+      toggleActions: "play none none none" as const,
+    }
     : {
-        start: "top 85%" as const,
-        toggleActions: "play none none none" as const,
-      };
+      start: "top 85%" as const,
+      toggleActions: "play none none none" as const,
+    };
 
   const tl = gsap.timeline({
     delay,

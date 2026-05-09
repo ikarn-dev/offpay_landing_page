@@ -283,7 +283,7 @@ body {
   align-items: center;
 }
 
-.adaptive-section > .section-container,
+.adaptive-section>.section-container,
 .adaptive-section.section-container {
   width: 100%;
 }
@@ -696,9 +696,17 @@ body {
 
 .hiw-scroll-section {
   position: relative;
+  z-index: 1;
   min-height: 750svh;
   overflow: clip;
+  margin-bottom: clamp(4rem, 8vw, 7rem);
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
+}
+
+/* Sections after the sticky HowItWorks must stack above it */
+.hiw-scroll-section~* {
+  position: relative;
+  z-index: 2;
 }
 
 .hiw-scroll-sticky {
@@ -791,6 +799,8 @@ body {
   height: 100%;
   min-width: 0;
   min-height: 0;
+  box-sizing: border-box;
+  padding-inline: clamp(0.5rem, 1.2vw, 1rem);
   will-change: opacity, transform;
 }
 
@@ -1123,10 +1133,12 @@ body {
   }
 }
 
-@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+@media (max-width: 900px),
+(prefers-reduced-motion: reduce) {
   .hiw-scroll-section {
     min-height: auto;
     overflow: visible;
+    margin-bottom: clamp(3rem, 10vw, 5rem);
   }
 
   .hiw-scroll-sticky {
@@ -1172,6 +1184,7 @@ body {
     position: relative;
     inset: auto;
     height: auto;
+    padding-inline: 0;
     opacity: 1;
     visibility: visible;
     transform: none;
@@ -1490,9 +1503,12 @@ img {
 .demo-video-section {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: clamp(1.25rem, 2.5vw, 2rem);
   margin: clamp(4rem, 7vw, 6rem) 8px clamp(3rem, 6vw, 5rem);
   padding: 0;
+  width: auto;
+  background: var(--color-text-inverse);
 }
 
 .demo-video-section__title {
@@ -1518,35 +1534,77 @@ img {
   overflow: hidden;
   border-radius: var(--radius-xl);
   line-height: 0;
+  aspect-ratio: 16 / 9;
+  background: var(--color-text);
 }
 
 .demo-video-section__video {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 }
 
+@media (max-width: 640px) {
+  .demo-video-section {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0;
+  }
+
+  .demo-video-section__frame {
+    border-radius: var(--radius-lg);
+  }
+
+  .demo-video-section__title {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  }
+}
+
 /* ---------------------------------------------------------------------------
-   Features Section — 2×2 cards left + mockup card right (bento layout)
+   Features Section — full-width mockup + compact feature cards
    --------------------------------------------------------------------------- */
 
 /* Full-width override for features */
-#features .section-container {
-  max-width: 100%;
-  padding-left: clamp(1.25rem, 3vw, 3rem);
-  padding-right: clamp(1.25rem, 3vw, 3rem);
+#features {
+  background: var(--color-text-inverse);
 }
 
-/* Tagline — centered below the "Features" title */
-.features-tagline {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  line-height: 1.25;
+#features .section-container {
+  max-width: 100%;
+  padding-left: clamp(1rem, 3vw, 3rem);
+  padding-right: clamp(1rem, 3vw, 3rem);
+}
+
+.features-card {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #DFF7FA;
+  box-shadow:
+    0 24px 64px rgba(14, 42, 53, 0.16),
+    inset 1px 1px 0 rgba(252, 252, 255, 0.82),
+    inset -1px -1px 0 rgba(91, 200, 232, 0.16);
   margin: 0 auto;
-  max-width: 720px;
-  text-align: center;
-  text-wrap: balance;
-  color: var(--color-text);
+  padding: clamp(1rem, 2.4vw, 2.2rem);
+}
+
+.features-card__texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.features-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.4rem);
 }
 
 .features-tagline__bold {
@@ -1576,33 +1634,87 @@ img {
   border-radius: 2px;
 }
 
-/* Content layout — 2×2 cards left + mockup right */
 .features-layout {
-  display: flex;
-  gap: 1.25rem;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(1rem, 2.4vw, 2rem);
+  align-items: center;
+  width: 100%;
 }
 
-/* Left — 2×2 grid of sharp-edged cards */
+.features-panel {
+  width: min(100%, 760px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+  gap: clamp(1rem, 1.7vw, 1.35rem);
+}
+
+.features-copy {
+  width: 100%;
+  max-width: 720px;
+}
+
+.features-eyebrow {
+  margin: 0 0 0.55rem;
+  color: var(--color-accent-dark);
+  font-family: var(--font-heading);
+  font-size: clamp(0.72rem, 0.9vw, 0.86rem);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.features-heading {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: clamp(2.35rem, 4.8vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.features-summary {
+  max-width: 45rem;
+  margin: clamp(0.85rem, 1.4vw, 1.1rem) 0 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.15vw, 1.08rem);
+  line-height: 1.55;
+}
+
 .features-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-  flex: 1 1 0%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.5vw, 1.15rem);
+  width: 100%;
+  max-width: 620px;
+  margin: 0;
   min-width: 0;
 }
 
-/* Right — floating phone mockup — NO border */
+.features-mockup-shell {
+  min-width: 0;
+  align-self: center;
+}
+
 .features-mockup {
-  flex: 0 0 clamp(240px, 30%, 340px);
   position: relative;
+  min-height: clamp(360px, 36vw, 560px);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  background: var(--gradient-card);
+  border: 1px solid rgba(252, 252, 255, 0.92);
+  background:
+    radial-gradient(circle at 35% 0%, rgba(91, 200, 232, 0.26) 0%, rgba(91, 200, 232, 0) 42%),
+    linear-gradient(180deg, rgba(252, 252, 255, 0.98) 0%, rgba(226, 250, 253, 0.82) 100%);
   box-shadow:
-    0 20px 54px rgba(14, 42, 53, 0.15),
-    inset 1px 1px 0 rgba(252, 252, 255, 0.8);
+    0 22px 58px rgba(14, 42, 53, 0.13),
+    inset 1px 1px 0 rgba(252, 252, 255, 0.95),
+    inset -1px -1px 0 rgba(91, 200, 232, 0.16);
 }
 
 .features-mockup__inner {
@@ -1611,13 +1723,13 @@ img {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 0 0.25rem 0;
+  padding: clamp(0.65rem, 1.2vw, 1rem) clamp(0.5rem, 1vw, 0.85rem) 0;
 }
 
 /* The phone image — full width, shown as is */
 .features-mockup__image {
   display: block;
-  width: 100%;
+  width: min(80%, 300px);
   height: auto;
   object-fit: contain;
   transform: translateY(4px);
@@ -1625,45 +1737,54 @@ img {
 
 /* ── Feature cards (gradient + texture + 3D image) — sharp edges ─────────── */
 
+.feature-card-shell {
+  min-width: 0;
+}
+
 .feature-card {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  min-height: 300px;
+  border: 1px solid rgba(252, 252, 255, 0.94);
+  aspect-ratio: 1;
+  min-height: 0;
   box-shadow:
-    0 18px 42px rgba(14, 42, 53, 0.14),
-    inset 1px 1px 0 rgba(252, 252, 255, 0.78),
-    inset -1px -1px 0 rgba(91, 200, 232, 0.14);
+    0 16px 38px rgba(14, 42, 53, 0.1),
+    inset 1px 1px 0 rgba(252, 252, 255, 0.92),
+    inset -1px -1px 0 rgba(91, 200, 232, 0.18);
+  will-change: transform;
 }
 
 /* Layer 1: Mesh gradient */
 .feature-card__gradient {
   position: absolute;
   inset: 0;
-  background: var(--gradient-card);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(91, 200, 232, 0.32) 0%, rgba(91, 200, 232, 0) 42%),
+    radial-gradient(circle at 100% 100%, rgba(252, 252, 255, 0.98) 0%, rgba(252, 252, 255, 0) 48%),
+    linear-gradient(135deg, rgba(252, 252, 255, 0.98) 0%, rgba(214, 248, 253, 0.92) 100%);
 }
 
 /* Layer 2: Paper texture */
 .feature-card__texture {
   position: absolute;
   inset: 0;
-  opacity: 0.16;
+  opacity: 0.12;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
 
-/* Content — vertical: image top, text bottom */
 .feature-card__content {
   position: relative;
   z-index: 1;
-  padding: 2.25rem 1.5rem;
+  padding: clamp(0.95rem, 1.4vw, 1.25rem);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
+  gap: clamp(0.55rem, 1vw, 0.8rem);
+  align-items: center;
   height: 100%;
+  text-align: center;
 }
 
 @keyframes float3D {
@@ -1680,14 +1801,17 @@ img {
 
 /* 3D image */
 .feature-card__image {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 1rem;
+  width: clamp(62px, 6vw, 86px);
+  height: clamp(62px, 6vw, 86px);
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 10px 24px rgba(14, 42, 53, 0.18));
+  filter: drop-shadow(0 10px 20px rgba(14, 42, 53, 0.16));
   animation: float3D 6s ease-in-out infinite;
+}
+
+.feature-card__copy {
+  min-width: 0;
 }
 
 /* Stagger the floating animations so they look organic */
@@ -1708,130 +1832,119 @@ img {
 }
 
 .feature-card__title {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.35rem;
   color: var(--color-text);
   font-family: var(--font-heading);
 }
 
 .feature-card__desc {
-  font-size: 0.9rem;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: clamp(0.74rem, 0.84vw, 0.82rem);
   color: var(--color-text-muted);
-  line-height: 1.6;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 1.36;
   margin: 0;
+  max-width: 18rem;
   font-family: var(--font-body);
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
+@media (prefers-reduced-motion: reduce) {
+  .feature-card__image {
+    animation: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .features-layout {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
-  /* Mockup appears first on tablet/mobile */
+  .features-panel {
+    max-width: 720px;
+    justify-self: center;
+  }
+
+  .features-copy {
+    max-width: 720px;
+  }
+
   .features-mockup {
-    order: -1;
-    min-height: 350px;
+    min-height: 500px;
   }
 
   .features-cards {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .features-header {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .features-header__title {
-    flex: 1 1 100%;
-    text-align: center;
-  }
-
-  .features-header__sub {
-    text-align: center;
-    flex: 1 1 100%;
-    font-size: 0.95rem;
-    max-width: 480px;
-    margin: 0.5rem auto 0;
-    text-wrap: balance;
-    white-space: normal;
-    /* Override desktop nowrap */
+    max-width: 620px;
   }
 }
 
 @media (max-width: 640px) {
   #features .section-container {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
 
-  .features-label {
-    font-size: 0.75rem;
-    padding: 0.3rem 1rem;
+  .features-card {
+    border-radius: 2rem;
+    padding: 1rem;
   }
 
-  .features-header {
-    gap: 0.75rem;
-    margin-bottom: 2rem;
+  .features-card__content {
+    gap: 1rem;
   }
 
-  .features-header__title {
-    font-size: 1.5rem;
+  .features-layout {
+    gap: 1rem;
   }
 
-  .features-header__sub {
-    font-size: 0.85rem;
-    line-height: 1.5;
-    max-width: 380px;
-    white-space: normal;
-    /* Override desktop nowrap */
+  .features-copy {
+    order: -1;
   }
 
   .features-cards {
     display: grid;
-    grid-template-columns: 1fr;
-    /* Single column on mobile */
-    gap: 2rem !important;
-    /* Significantly increased gap so they don't touch */
-  }
-
-  .feature-card {
-    min-height: 320px;
-    /* Taller cards on mobile to fix the squished look */
-  }
-
-  .feature-card__content {
-    padding: 2rem 1.25rem;
-  }
-
-  .feature-card__image {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 1.25rem;
-  }
-
-  .feature-card__title {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .feature-card__desc {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    max-width: 280px;
-    /* Constrain text width so it doesn't stretch */
-    margin: 0 auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem !important;
   }
 
   .features-mockup {
-    min-height: 280px;
+    min-height: 420px;
+  }
+
+  .features-mockup__image {
+    width: min(82%, 310px);
+  }
+
+  .feature-card {
+    border-radius: 1.5rem;
+  }
+
+  .feature-card__content {
+    gap: 0.55rem;
+    padding: 0.7rem;
+  }
+
+  .feature-card__image {
+    width: 44px;
+    height: 44px;
+  }
+
+  .feature-card__title {
+    font-size: 0.78rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .feature-card__desc {
+    font-size: 0.66rem;
+    line-height: 1.24;
+    max-width: none;
   }
 }
 
