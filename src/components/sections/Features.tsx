@@ -1,5 +1,6 @@
 
 
+
 "use client";
 
 import { useRef, useEffect } from "react";
@@ -54,12 +55,6 @@ export default function Features({
 }: FeaturesProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
-  const mockupMotionProps = shouldReduceMotion
-    ? {}
-    : {
-        animate: { y: [0, -8, 0] },
-        transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
-      };
   const cardInteractionProps = shouldReduceMotion
     ? {}
     : {
@@ -123,6 +118,24 @@ export default function Features({
       className="section-spacing adaptive-section"
     >
       <div className="section-container">
+        {/* Header — only the big title */}
+        <div className="features-header">
+          <h2 id="features-heading" className="features-heading">
+            <BlurReveal
+              as="span"
+              inView
+              once
+              speedReveal={2}
+              speedSegment={0.6}
+            >
+              {`${taglineBold ?? ""}${taglineItalic ? ` ${taglineItalic}` : ""}`.trim() ||
+                sectionLabel ||
+                "Features"}
+            </BlurReveal>
+          </h2>
+        </div>
+
+        {/* Bento card — mockup left + 2×2 feature cards right */}
         <div className="features-card">
           <div className="features-card__texture" aria-hidden="true">
             <HalftoneDots
@@ -144,15 +157,13 @@ export default function Features({
 
           <div className="features-card__content">
             <div className="features-layout">
+              {/* Mockup — left */}
               <div
                 data-feature-mockup
                 className="features-mockup-shell"
                 style={{ opacity: 0 }}
               >
-                <motion.div
-                  className="features-mockup"
-                  {...mockupMotionProps}
-                >
+                <div className="features-mockup">
                   <div className="features-mockup__inner">
                     <Image
                       src="/mockups/feat-mock.webp"
@@ -163,88 +174,66 @@ export default function Features({
                       priority
                     />
                   </div>
-                </motion.div>
+                </div>
               </div>
 
-              <div className="features-panel">
-                <div className="features-copy">
-                  {sectionLabel && <p className="features-eyebrow">{sectionLabel}</p>}
-                  <h2 id="features-heading" className="features-heading">
-                    <BlurReveal
-                      as="span"
-                      inView
-                      once
-                      speedReveal={2}
-                      speedSegment={0.6}
-                    >
-                      {`${taglineBold ?? ""}${taglineItalic ? ` ${taglineItalic}` : ""}`.trim() ||
-                        sectionLabel ||
-                        "Features"}
-                    </BlurReveal>
-                  </h2>
-                  <p className="features-summary">
-                    Local signing stays on the wallet. Backend routes gate provider access,
-                    prepare unsigned transactions, and settle only what the user signs.
-                  </p>
-                </div>
-
-                <div className="features-cards">
-                  {features.map((feature, i) => (
-                    <div
-                      key={feature.title}
-                      data-feature-card
-                      className="feature-card-shell"
-                      style={{ opacity: 0 }}
-                    >
-                      <motion.article
-                        className="feature-card"
-                        initial="rest"
-                        {...cardInteractionProps}
-                        variants={FEATURE_CARD_MOTION}
-                        transition={FEATURE_CARD_TRANSITION}
+              {/* 2×2 feature cards — right */}
+              <div className="features-cards">
+                {features.map((feature, i) => (
+                  <div
+                    key={feature.title}
+                    data-feature-card
+                    className="feature-card-shell"
+                    style={{ opacity: 0 }}
                   >
-                        <div className="feature-card__gradient" aria-hidden="true" />
+                    <motion.article
+                      className="feature-card"
+                      initial="rest"
+                      {...cardInteractionProps}
+                      variants={FEATURE_CARD_MOTION}
+                      transition={FEATURE_CARD_TRANSITION}
+                  >
+                      <div className="feature-card__gradient" aria-hidden="true" />
 
-                        <div className="feature-card__texture" aria-hidden="true">
-                          <HalftoneDots
-                            style={{ width: "100%", height: "100%" }}
-                            colorBack="#F7FEFF"
-                            colorFront="#31C6EA"
-                            originalColors={false}
-                            type="gooey"
-                            grid="hex"
-                            inverted={false}
-                            size={0.34}
-                            radius={1.35}
-                            contrast={0.42}
-                            grainMixer={0.12}
-                            grainOverlay={0.1}
-                            grainSize={0.35}
-                          />
-                        </div>
+                      <div className="feature-card__texture" aria-hidden="true">
+                        <HalftoneDots
+                          style={{ width: "100%", height: "100%" }}
+                          colorBack="#F7FEFF"
+                          colorFront="#31C6EA"
+                          originalColors={false}
+                          type="gooey"
+                          grid="hex"
+                          inverted={false}
+                          size={0.34}
+                          radius={1.35}
+                          contrast={0.42}
+                          grainMixer={0.12}
+                          grainOverlay={0.1}
+                          grainSize={0.35}
+                        />
+                      </div>
 
-                        <div className="feature-card__content">
-                          {feature.image && (
-                            <div className="feature-card__image">
-                              <Image
-                                src={feature.image}
-                                alt={feature.title}
-                                width={112}
-                                height={112}
-                                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                                priority={i === 0}
-                              />
-                            </div>
-                          )}
-                          <div className="feature-card__copy">
-                            <h3 className="feature-card__title">{feature.title}</h3>
-                            <p className="feature-card__desc">{feature.description}</p>
+                      <div className="feature-card__content">
+                        {feature.image && (
+                          <div className="feature-card__image">
+                            <Image
+                              src={feature.image}
+                              alt={feature.title}
+                              width={112}
+                              height={112}
+                              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                              priority={i === 0}
+                            />
                           </div>
+                        )}
+                        <div className="feature-card__copy">
+                          <h3 className="feature-card__title">{feature.title}</h3>
+                          <p className="feature-card__desc">{feature.description}</p>
                         </div>
-                      </motion.article>
-                    </div>
-                  ))}
-                </div>
+                      </div>
+                    </motion.article>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

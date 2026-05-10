@@ -394,7 +394,7 @@ export function animateHorizontalTrackSwapN({
   onSlideChange,
 }: {
   triggerElement: Element;
-  track: gsap.TweenTarget;
+  track: Element;
   titles: gsap.TweenTarget[];
   start?: string;
   end?: string;
@@ -465,7 +465,108 @@ export function animateHorizontalTrackSwapN({
     };
   });
 
-  media.add("(max-width: 900px), (prefers-reduced-motion: reduce)", () => {
+  media.add("(max-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
+    const slides = Array.from(track.children).slice(0, slideCount);
+    const cards = slides.map(
+      (slide) => slide.querySelector(".hiw-mockup-card") ?? slide
+    );
+    const triggers: ScrollTrigger[] = [];
+    const animations: gsap.core.Tween[] = [];
+    let frame = 0;
+    let currentSlide = -1;
+
+    gsap.set(track, { clearProps: "transform" });
+    titles.forEach((title, i) => {
+      gsap.set(title, { autoAlpha: i === 0 ? 1 : 0, yPercent: i === 0 ? 0 : 10 });
+    });
+    slides.forEach((slide, i) => {
+      gsap.set(slide, {
+        autoAlpha: 1,
+        scale: 1,
+        yPercent: 0,
+        zIndex: i + 1,
+        transformOrigin: "center top",
+      });
+    });
+    gsap.set(cards, {
+      autoAlpha: 1,
+      scale: 1,
+      yPercent: 0,
+      transformOrigin: "center top",
+    });
+
+    const activateSlide = (index: number) => {
+      if (index === currentSlide) return;
+      currentSlide = index;
+      onSlideChange?.(index);
+
+      titles.forEach((title, i) => {
+        gsap.to(title, {
+          autoAlpha: i === index ? 1 : 0,
+          yPercent: i === index ? 0 : i < index ? -10 : 10,
+          duration: 0.24,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+    };
+
+    const syncActiveSlide = () => {
+      const pivot = window.innerHeight * 0.46;
+      const nextSlide = slides.reduce((activeIndex, slide, index) => {
+        const top = slide.getBoundingClientRect().top;
+        return top <= pivot ? index : activeIndex;
+      }, 0);
+
+      activateSlide(nextSlide);
+    };
+
+    triggers.push(
+      ScrollTrigger.create({
+        trigger: triggerElement,
+        start: "top bottom",
+        end: "bottom top",
+        invalidateOnRefresh: true,
+        onEnter: syncActiveSlide,
+        onEnterBack: syncActiveSlide,
+        onRefresh: syncActiveSlide,
+        onUpdate: syncActiveSlide,
+      })
+    );
+
+    frame = requestAnimationFrame(syncActiveSlide);
+
+    cards.slice(0, -1).forEach((card, index) => {
+      const nextSlide = slides[index + 1];
+      if (!nextSlide) return;
+
+      animations.push(
+        gsap.to(card, {
+          autoAlpha: 0,
+          scale: Math.max(0.92, 0.97 - index * 0.008),
+          yPercent: -1.8,
+          ease: "none",
+          scrollTrigger: {
+            trigger: nextSlide,
+            start: "top 88%",
+            end: "top 24%",
+            scrub: 0.65,
+            invalidateOnRefresh: true,
+          },
+        })
+      );
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      triggers.forEach((trigger) => trigger.kill());
+      animations.forEach((animation) => animation.kill());
+      gsap.killTweensOf(titles);
+      gsap.set([track, ...slides, ...cards, ...titles], { clearProps: "all" });
+    };
+  });
+
+  media.add("(prefers-reduced-motion: reduce)", () => {
     gsap.set([track, ...titles], { clearProps: "all" });
 
     return () => {
