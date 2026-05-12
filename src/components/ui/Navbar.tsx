@@ -11,6 +11,7 @@
 import { useState, useEffect } from "react";
 import type { NavLink } from "@/types";
 import NavCtaButton from "@/components/ui/NavCtaButton";
+import { DOWNLOAD_APK_URL } from "@/constants";
 
 /* ------------------------------------------------------------------ */
 /* Props                                                               */
@@ -269,7 +270,10 @@ export default function Navbar({ logo, links, cta }: NavbarProps) {
             <NavCtaButton
               label="Download now"
               variant="primary"
-              href="#waitlist"
+              href={DOWNLOAD_APK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
               onClick={() => setMobileOpen(false)}
             />
           </div>

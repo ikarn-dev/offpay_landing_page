@@ -37,6 +37,9 @@ export const HERO_SUBHEADLINE =
   "Private payments, offline transfers, Jupiter swaps, and Umbra shielded balances — all in one wallet." as const;
 export const HERO_CTA_PRIMARY = "Download now" as const;
 
+/** Release/download page. All download CTAs across the site route here. */
+export const DOWNLOAD_APK_URL = "https://github.com/ikarn-dev/offpay/releases/tag/v1.0" as const;
+
 // ---------------------------------------------------------------------------
 // Features
 // ---------------------------------------------------------------------------

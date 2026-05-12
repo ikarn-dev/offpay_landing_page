@@ -14,6 +14,9 @@ export interface NavCtaButtonProps {
   variant: "primary" | "secondary";
   onClick?: () => void;
   href?: string;
+  target?: string;
+  rel?: string;
+  download?: boolean;
 }
 
 export default function NavCtaButton({
@@ -21,6 +24,9 @@ export default function NavCtaButton({
   variant,
   onClick,
   href,
+  target,
+  rel,
+  download,
 }: NavCtaButtonProps) {
   const isPrimary = variant === "primary";
 
@@ -54,7 +60,14 @@ export default function NavCtaButton({
 
   if (href) {
     return (
-      <a href={href} onClick={onClick} style={style}>
+      <a
+        href={href}
+        onClick={onClick}
+        style={style}
+        target={target}
+        rel={rel}
+        {...(download ? { download: "" } : {})}
+      >
         {label}
       </a>
     );

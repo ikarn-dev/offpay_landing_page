@@ -5,6 +5,8 @@
  * compact download action.
  */
 
+import { DOWNLOAD_APK_URL } from "@/constants";
+
 /** Shared button styles */
 const btnStyle: React.CSSProperties = {
   display: "flex",
@@ -39,7 +41,10 @@ export default function FooterCtaCard() {
   return (
     <div className="footer-downloads">
       <a
-        href="#waitlist"
+        href={DOWNLOAD_APK_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        download
         aria-label="Download Android APK"
         className="footer-downloads__button"
         style={btnStyle}

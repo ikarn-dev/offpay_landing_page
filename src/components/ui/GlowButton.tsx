@@ -16,6 +16,9 @@ export interface GlowButtonProps {
   href?: string;
   onClick?: () => void;
   variant?: "primary" | "secondary";
+  target?: string;
+  rel?: string;
+  download?: boolean;
 }
 
 export default function GlowButton({
@@ -23,6 +26,9 @@ export default function GlowButton({
   href,
   onClick,
   variant = "primary",
+  target,
+  rel,
+  download,
 }: GlowButtonProps) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [hovering, setHovering] = useState(false);
@@ -105,6 +111,9 @@ export default function GlowButton({
         ref={ref as React.Ref<HTMLAnchorElement>}
         href={href}
         style={baseStyle}
+        target={target}
+        rel={rel}
+        {...(download ? { download: "" } : {})}
         {...handlers}
       >
         {content}

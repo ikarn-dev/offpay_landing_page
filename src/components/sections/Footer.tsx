@@ -9,7 +9,7 @@
 
 import FooterWordmark from "@/components/ui/footer/FooterWordmark";
 import FooterBottomBar from "@/components/ui/footer/FooterBottomBar";
-import { FOOTER_EMAIL, NAV_LINKS } from "@/constants";
+import { FOOTER_EMAIL, NAV_LINKS, DOWNLOAD_APK_URL } from "@/constants";
 
 export default function Footer() {
   return (
@@ -43,7 +43,10 @@ export default function Footer() {
 
           {/* Right — download */}
           <a
-            href="#waitlist"
+            href={DOWNLOAD_APK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            download
             aria-label="Download Android APK"
             className="footer-download-btn"
           >

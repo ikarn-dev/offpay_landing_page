@@ -5,7 +5,7 @@ import Footer from "@/components/sections/Footer";
 import ContentProtection from "@/components/ui/ContentProtection";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { LoadingProvider } from "@/context/LoadingContext";
-import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, HERO_CTA_PRIMARY } from "@/constants";
+import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, HERO_CTA_PRIMARY, DOWNLOAD_APK_URL } from "@/constants";
 import { allFontVariables } from "./fonts";
 
 
@@ -35,7 +35,10 @@ const LOGO_STUB = (
 
 const NAVBAR_CTA_STUB = (
   <a
-    href="#waitlist"
+    href={DOWNLOAD_APK_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    download
     style={{
       display: "inline-block",
       padding: "8px 20px",
