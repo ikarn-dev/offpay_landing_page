@@ -1270,7 +1270,7 @@ html.lenis-smooth {
     background: transparent;
     box-shadow: none;
     transform-origin: center top;
-    will-change: transform, opacity;
+    will-change: transform, opacity, filter;
   }
 
   .hiw-flow-slide:nth-child(2) {
@@ -1290,7 +1290,12 @@ html.lenis-smooth {
   }
 
   .hiw-flow-slide:last-child {
-    margin-bottom: clamp(18rem, 52svh, 32rem);
+    /* Just enough trailing room for the last card to settle before the
+       next section. Larger values trapped the user in empty scroll while
+       keeping the sticky title pinned at the top — see the bug screenshot.
+       The natural inter-slide gap (`margin-bottom` above) already gives
+       the card a comfortable end. */
+    margin-bottom: clamp(2rem, 10svh, 5rem);
   }
 }
 

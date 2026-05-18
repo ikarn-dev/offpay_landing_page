@@ -559,29 +559,93 @@ export function animateHorizontalTrackSwapN({
       const nextSlide = slides[index + 1];
       if (!nextSlide) return;
 
+      // Parallax "stacked card" out — previous card recedes behind the
+      // incoming one. Industry pattern (Apple/Linear): keep the back card
+      // partially visible for depth; scale + lift; never fully fade.
+      // Each successive card recedes a bit further so the stack reads as
+      // layered z-depth, not a stack of equally-hidden ghosts.
+      const targetScale = Math.max(0.88, 0.95 - index * 0.012);
+      const targetYPercent = -3 - index * 0.6;
+
       animations.push(
         gsap.to(card, {
-          autoAlpha: 0,
-          scale: Math.max(0.92, 0.97 - index * 0.008),
-          yPercent: -1.8,
-          ease: "none",
+          autoAlpha: 0.32,
+          scale: targetScale,
+          yPercent: targetYPercent,
+          filter: "blur(2px)",
+          ease: "power1.out",
           scrollTrigger: {
             trigger: nextSlide,
-            start: "top 88%",
-            end: "top 24%",
-            scrub: 0.65,
+            start: "top 92%",
+            end: "top 30%",
+            scrub: 0.8,
             invalidateOnRefresh: true,
           },
         })
       );
     });
 
+    // Parallax "stacked card" in — incoming card rises from a small
+    // offset and settles. The scrub here is shorter than the receding
+    // tween so the incoming card finishes locking-in slightly before
+    // the previous one is fully recessed (creates a perceptible
+    // "card lands on top" beat).
+    cards.slice(1).forEach((card, idx) => {
+      const slide = slides[idx + 1];
+      if (!slide) return;
+
+      animations.push(
+        gsap.fromTo(
+          card,
+          { yPercent: 6, scale: 0.985, autoAlpha: 0.92 },
+          {
+            yPercent: 0,
+            scale: 1,
+            autoAlpha: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: slide,
+              start: "top 88%",
+              end: "top 55%",
+              scrub: 0.6,
+              invalidateOnRefresh: true,
+            },
+          }
+        )
+      );
+    });
+
+    // Release the sticky title with the last slide. Without this, the
+    // title-layer container has just enough trailing height to remain
+    // pinned for a beat after the last card has scrolled away — visible
+    // as a "title hovering above empty space" glitch on mobile.
+    const titleLayerEl =
+      (titles[0] as HTMLElement | null)?.parentElement ?? null;
+    const lastSlide = slides[slides.length - 1] as HTMLElement | undefined;
+    if (titleLayerEl && lastSlide) {
+      animations.push(
+        gsap.to(titleLayerEl, {
+          autoAlpha: 0,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: lastSlide,
+            start: "bottom 80%",
+            end: "bottom 50%",
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+          },
+        })
+      );
+    }
+
     return () => {
       cancelAnimationFrame(frame);
       triggers.forEach((trigger) => trigger.kill());
       animations.forEach((animation) => animation.kill());
       gsap.killTweensOf(titles);
-      gsap.set([track, ...slides, ...cards, ...titles], { clearProps: "all" });
+      const cleanupTargets: gsap.TweenTarget[] = [track, ...slides, ...cards, ...titles];
+      if (titleLayerEl) cleanupTargets.push(titleLayerEl);
+      gsap.set(cleanupTargets, { clearProps: "all" });
     };
   });
 
