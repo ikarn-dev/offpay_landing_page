@@ -60,7 +60,7 @@ const FEATURES: Feature[] = [
     icon: "🔒",
     title: "Umbra mainnet vault",
     description:
-      "Umbra shields balances and withdraws through sanitized backend proxies.",
+      "Umbra shields balances, withdraws via sanitized backend proxies, and reconciles claimed UTXOs against the on-chain nullifier set.",
     image: "/3d-assets/privacy.png",
   },
   {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, startTransition } from "react";
 import PaymentFlowDiagram, {
   type PaymentFlowDefinition,
 } from "@/components/sections/PaymentFlowDiagram";
@@ -138,7 +138,12 @@ export default function HowItWorks({
   const [activeSlide, setActiveSlide] = useState(0);
 
   const handleSlideChange = useCallback((index: number) => {
-    setActiveSlide(index);
+    // Slide change triggers re-renders of 5 flow diagrams + ReactFlow
+    // canvases. Defer with startTransition so the scroll-driven track
+    // animation never has to share a frame with that work.
+    startTransition(() => {
+      setActiveSlide(index);
+    });
   }, []);
 
   useEffect(() => {

@@ -201,8 +201,16 @@ function FlowCanvas({ definition }: { definition: PaymentFlowDefinition }) {
     const updateLayout = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        setIsCompactFlow(panel.clientWidth < 640);
-        setLayoutVersion((value) => value + 1);
+        const nextCompact = panel.clientWidth < 640;
+        setIsCompactFlow((prev) => {
+          // Bump layoutVersion only when we actually flipped, so we don't
+          // run a fitView pass for every pixel of resize.
+          if (prev !== nextCompact) {
+            setLayoutVersion((value) => value + 1);
+            return nextCompact;
+          }
+          return prev;
+        });
       });
     };
 

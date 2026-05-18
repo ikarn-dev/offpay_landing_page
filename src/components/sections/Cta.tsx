@@ -11,7 +11,7 @@
 import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { HalftoneDots } from "@paper-design/shaders-react";
-import { animateScrollFadeIn } from "@/utils/animation";
+import { animateScrollFadeIn, prefersReducedMotion } from "@/utils/animation";
 
 export interface CtaProps {
   headline: string;
@@ -57,6 +57,13 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
   useEffect(() => {
     const content = contentRef.current;
     if (!content) return;
+
+    // Reduced-motion path: skip the GSAP fade entirely so the content is
+    // visible immediately (also avoids the "stuck at opacity 0" risk).
+    if (prefersReducedMotion()) {
+      content.style.opacity = "1";
+      return;
+    }
 
     tweenRef.current = animateScrollFadeIn(content, {
       triggerElement: sectionRef.current,

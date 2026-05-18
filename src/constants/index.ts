@@ -100,7 +100,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Where does Umbra fit?",
     answer:
-      "Umbra powers mainnet vault actions in the client: register the encrypted-balance account, query supported shielded balances, shield public balances, and withdraw back to a public wallet. Signing, key material, and proof/decryption state stay client-side.",
+      "Umbra powers mainnet vault actions in the client: register the encrypted-balance account, query supported shielded balances, shield, and withdraw. Pending UTXO scans now reconcile against the on-chain Umbra nullifier-set accounts so claimed UTXOs stay hidden even after a cold boot or reinstall. Signing, key material, and proof/decryption state stay client-side.",
   },
   {
     question: "Can OffPay work manually offline forever?",

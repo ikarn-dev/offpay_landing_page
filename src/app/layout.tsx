@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import ContentProtection from "@/components/ui/ContentProtection";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { NAV_LINKS, SITE_NAME, SITE_DESCRIPTION, SITE_URL, HERO_CTA_PRIMARY, DOWNLOAD_APK_URL } from "@/constants";
 import { allFontVariables } from "./fonts";
@@ -85,9 +87,11 @@ export default function RootLayout({
             cta={NAVBAR_CTA_STUB}
           />
 
-          {children}
+          <SmoothScrollProvider>
+            {children}
 
-          <Footer />
+            <Footer />
+          </SmoothScrollProvider>
         </LoadingProvider>
       </body>
     </html>

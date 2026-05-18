@@ -179,7 +179,8 @@ html {
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
   min-height: 100%;
   overscroll-behavior: none;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth removed — Lenis handles smooth scrolling and
+     native smooth scroll fights ScrollTrigger's scrub timing. */
   scrollbar-width: none;
   /* Firefox */
 }
@@ -200,6 +201,18 @@ body {
   overscroll-behavior: none;
   overscroll-behavior-y: none;
   overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Lenis smooth scroll integration
+   - Lenis adds `.lenis` to <html> when active and applies its own height/
+     overflow rules from lenis.css (imported in layout.tsx).
+   - We only override scroll-behavior here so any in-page anchor jumps go
+     through Lenis instead of the native engine.
+   --------------------------------------------------------------------------- */
+
+html.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 /* ---------------------------------------------------------------------------
@@ -701,6 +714,9 @@ body {
   overflow: clip;
   margin-bottom: clamp(4rem, 8vw, 7rem);
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
+  /* Promote to its own compositor layer so the sticky child doesn't repaint
+     its background on every scroll frame. */
+  contain: layout paint;
 }
 
 /* Sections after the sticky HowItWorks must stack above it */
@@ -720,6 +736,10 @@ body {
   height: 100svh;
   padding: clamp(5.25rem, 8svh, 6.5rem) var(--section-px) clamp(2.25rem, 5svh, 3.5rem);
   background: color-mix(in srgb, var(--color-text-inverse) 94%, var(--color-accent-ice) 6%);
+  /* GPU compositing for the slide track translation */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .hiw-scroll-frame {

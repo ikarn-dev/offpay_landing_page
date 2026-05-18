@@ -70,15 +70,25 @@ export default function Features({
     const cards = section.querySelectorAll<HTMLElement>("[data-feature-card]");
 
     const revealItems = [mockup, ...Array.from(cards)].filter(Boolean) as HTMLElement[];
+
+    // Reduced motion: skip the timeline entirely and reveal immediately.
+    if (shouldReduceMotion) {
+      gsap.set(revealItems, { autoAlpha: 1, y: 0, clearProps: "opacity" });
+      return;
+    }
+
     gsap.set(revealItems, {
       autoAlpha: 0,
-      y: shouldReduceMotion ? 0 : FEATURE_REVEAL_TIMING.y,
+      y: FEATURE_REVEAL_TIMING.y,
     });
 
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top 78%",
+        start: "top 85%",
+        // Failsafe: if the user is already past the trigger when the page
+        // mounts (e.g. via in-page anchor), play immediately instead of
+        // staying invisible.
         toggleActions: "play none none none",
       },
     });
@@ -87,7 +97,7 @@ export default function Features({
       timeline.to(mockup, {
         autoAlpha: 1,
         y: 0,
-        duration: shouldReduceMotion ? 0 : FEATURE_REVEAL_TIMING.mockupDuration,
+        duration: FEATURE_REVEAL_TIMING.mockupDuration,
         ease: "power3.out",
       });
     }
@@ -97,8 +107,8 @@ export default function Features({
       {
         autoAlpha: 1,
         y: 0,
-        duration: shouldReduceMotion ? 0 : FEATURE_REVEAL_TIMING.cardDuration,
-        stagger: shouldReduceMotion ? 0 : FEATURE_REVEAL_TIMING.cardStagger,
+        duration: FEATURE_REVEAL_TIMING.cardDuration,
+        stagger: FEATURE_REVEAL_TIMING.cardStagger,
         ease: "power3.out",
       },
       mockup ? FEATURE_REVEAL_TIMING.cardOverlap : 0

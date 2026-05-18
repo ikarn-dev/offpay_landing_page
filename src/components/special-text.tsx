@@ -150,27 +150,18 @@ export function SpecialText({
     };
   }, [currentPhase, animationStep, text, speed, hasStarted, runPhase1, runPhase2]);
 
+  // Cleanup pending timers/intervals on unmount. We deliberately do not
+  // reset internal animation state on every render — the loading splash
+  // text never changes, and forcing a reset caused visible character
+  // glitching when the parent re-rendered.
   useEffect(() => {
-    let resetTimeout: number | null = null;
-
-    if (hasStarted) {
-      resetTimeout = window.setTimeout(() => {
-        setDisplayText(" ".repeat(text.length));
-        setCurrentPhase("phase1");
-        setAnimationStep(0);
-      }, 0);
-    }
-
     return () => {
-      if (resetTimeout !== null) {
-        window.clearTimeout(resetTimeout);
-      }
       clearStartTimeout();
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     };
-  }, [text, hasStarted, clearStartTimeout]);
+  }, [clearStartTimeout]);
 
   return (
     <span

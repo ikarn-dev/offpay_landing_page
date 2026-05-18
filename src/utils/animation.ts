@@ -383,6 +383,11 @@ export function animateHorizontalTrackSwap({
  * Generic N-slide horizontal track swap — scroll-driven.
  * Evenly divides the scroll distance into (N-1) transitions.
  * Track translates: 0% → -(100/N)% → -(200/N)% → … → -((N-1)*100/N)%
+ *
+ * `onSlideChange` is called with the active slide index when it changes.
+ * The callback runs at most once per slide transition (not per scroll
+ * frame), so it's safe to use it to trigger React state updates without
+ * causing scroll jank.
  */
 export function animateHorizontalTrackSwapN({
   triggerElement,
@@ -415,35 +420,49 @@ export function animateHorizontalTrackSwapN({
     const titleDuration = slideDuration * 0.28;
     const stepPercent = 100 / slideCount;
 
-    gsap.set(track, { xPercent: 0 });
+    // Pre-compute the midpoint thresholds for slide-change detection so we
+    // don't recompute them on every scroll frame.
+    const midpoints: number[] = [];
+    for (let i = 0; i < transitionCount; i++) {
+      midpoints.push(edgePad + (i + 0.5) * slideDuration + i * (slideDuration * 0.15));
+    }
+
+    gsap.set(track, { xPercent: 0, force3D: true });
     titles.forEach((title, i) => {
       gsap.set(title, { autoAlpha: i === 0 ? 1 : 0, yPercent: i === 0 ? 0 : 12 });
     });
 
     let currentSlide = 0;
 
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: triggerElement,
-        start,
-        end,
-        scrub,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          if (!onSlideChange) return;
+    const baseScrollTrigger = {
+      trigger: triggerElement,
+      start,
+      end,
+      scrub,
+      invalidateOnRefresh: true,
+      // Ensure ScrollTrigger refreshes when fonts swap or images load
+      // (otherwise pin distances drift and the track jitters at boundaries).
+      anticipatePin: 1,
+    } as const;
+
+    const onUpdateCallback = onSlideChange
+      ? (self: ScrollTrigger) => {
           const p = self.progress;
-          // Calculate which slide is active based on scroll progress
           let newSlide = 0;
           for (let i = 0; i < transitionCount; i++) {
-            const midpoint = edgePad + (i + 0.5) * slideDuration + i * (slideDuration * 0.15);
-            if (p > midpoint) newSlide = i + 1;
+            if (p > midpoints[i]) newSlide = i + 1;
           }
           if (newSlide !== currentSlide) {
             currentSlide = newSlide;
             onSlideChange(newSlide);
           }
-        },
-      },
+        }
+      : null;
+
+    const timeline = gsap.timeline({
+      scrollTrigger: onUpdateCallback
+        ? { ...baseScrollTrigger, onUpdate: onUpdateCallback }
+        : baseScrollTrigger,
     });
 
     timeline.to(progress, { value: 1, duration: 1, ease: "none" }, 0);

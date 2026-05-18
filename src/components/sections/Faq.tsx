@@ -70,24 +70,29 @@ function AccordionItem({ item, isOpen, onToggle }: AccordionItemProps) {
 export default function Faq({ headline, items }: FaqProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const tweensRef = useRef<gsap.core.Tween[]>([]);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const faqItems = section.querySelectorAll<HTMLElement>("[data-faq-item]");
+    const tweens: gsap.core.Tween[] = [];
     faqItems.forEach((el, i) => {
-      tweenRef.current = animateScrollFadeIn(el, {
-        triggerElement: el,
-        delay: i * 0.03,
-        duration: 0.4,
-        y: 20,
-      });
+      tweens.push(
+        animateScrollFadeIn(el, {
+          triggerElement: el,
+          delay: i * 0.03,
+          duration: 0.4,
+          y: 20,
+        })
+      );
     });
+    tweensRef.current = tweens;
 
     return () => {
-      tweenRef.current?.kill();
+      tweensRef.current.forEach((t) => t.kill());
+      tweensRef.current = [];
     };
   }, []);
 
