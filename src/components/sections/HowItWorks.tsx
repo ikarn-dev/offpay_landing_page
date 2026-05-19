@@ -8,7 +8,6 @@ import PrivateP2PFlow from "@/components/sections/PrivateP2PFlow";
 import UmbraPrivacyFlow from "@/components/sections/UmbraPrivacyFlow";
 import PrivateSwapFlow from "@/components/sections/PrivateSwapFlow";
 import JupiterSwapFlow from "@/components/sections/JupiterSwapFlow";
-import { BlurReveal } from "@/components/blur-reveal";
 import { animateHorizontalTrackSwapN } from "@/utils/animation";
 
 export interface HowItWorksProps {
@@ -17,7 +16,6 @@ export interface HowItWorksProps {
   umbraHeadline: string;
   swapHeadline: string;
   jupiterHeadline: string;
-  subheadline: string;
 }
 
 const offlineFlow: PaymentFlowDefinition = {
@@ -182,68 +180,47 @@ export default function HowItWorks({
       <div className="hiw-scroll-sticky">
         <div className="section-container hiw-section hiw-scroll-frame">
           <div className="hiw-title-layer" aria-live="polite">
-            {/* GSAP still controls visibility of the h2 wrappers; BlurReveal adds the text animation */}
-            <h2 ref={offlineTitleRef} className="hiw-title hiw-title--scene">
-              <BlurReveal
-                as="span"
-                trigger={activeSlide === 0}
-                speedReveal={2}
-                speedSegment={0.6}
-              >
-                {headline}
-              </BlurReveal>
+            {/*
+              Title text is a single static <span> per scene. GSAP controls
+              `autoAlpha` + `yPercent` on the <h2> container via the refs
+              below. A small CSS keyframe (driven by `data-active`) adds a
+              one-shot blur reveal when a title becomes the active scene.
+              No per-character motion nodes, no filter animation per frame.
+            */}
+            <h2
+              ref={offlineTitleRef}
+              className="hiw-title hiw-title--scene"
+              data-active={activeSlide === 0 ? "true" : "false"}
+            >
+              <span className="hiw-title__text">{headline}</span>
             </h2>
             <h2
               ref={privateTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
+              data-active={activeSlide === 1 ? "true" : "false"}
             >
-              <BlurReveal
-                as="span"
-                trigger={activeSlide === 1}
-                speedReveal={2}
-                speedSegment={0.6}
-              >
-                {privateHeadline}
-              </BlurReveal>
+              <span className="hiw-title__text">{privateHeadline}</span>
             </h2>
             <h2
               ref={umbraTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
+              data-active={activeSlide === 2 ? "true" : "false"}
             >
-              <BlurReveal
-                as="span"
-                trigger={activeSlide === 2}
-                speedReveal={2}
-                speedSegment={0.6}
-              >
-                {umbraHeadline}
-              </BlurReveal>
+              <span className="hiw-title__text">{umbraHeadline}</span>
             </h2>
             <h2
               ref={swapTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
+              data-active={activeSlide === 3 ? "true" : "false"}
             >
-              <BlurReveal
-                as="span"
-                trigger={activeSlide === 3}
-                speedReveal={2}
-                speedSegment={0.6}
-              >
-                {swapHeadline}
-              </BlurReveal>
+              <span className="hiw-title__text">{swapHeadline}</span>
             </h2>
             <h2
               ref={jupiterTitleRef}
               className="hiw-title hiw-title--scene hiw-title--scene-next"
+              data-active={activeSlide === 4 ? "true" : "false"}
             >
-              <BlurReveal
-                as="span"
-                trigger={activeSlide === 4}
-                speedReveal={2}
-                speedSegment={0.6}
-              >
-                {jupiterHeadline}
-              </BlurReveal>
+              <span className="hiw-title__text">{jupiterHeadline}</span>
             </h2>
           </div>
 

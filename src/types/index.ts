@@ -26,15 +26,6 @@ export interface Feature {
   image?: string;
 }
 
-/** A single step in the How It Works flow. */
-export interface HowItWorksStep {
-  step: number;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-
 /** A single FAQ item. */
 export interface FaqItem {
   question: string;
@@ -50,13 +41,5 @@ export interface FadeInOptions {
   delay?: number;
   duration?: number;
   y?: number;
-  ease?: string;
-}
-
-export interface StaggerContainerOptions {
-  stagger?: number;
-  delay?: number;
-  y?: number;
-  duration?: number;
   ease?: string;
 }

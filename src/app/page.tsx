@@ -27,7 +27,6 @@ import {
   FEATURES_TAGLINE_BOLD,
   FEATURES_TAGLINE_ITALIC,
   HOW_IT_WORKS_HEADLINE,
-  HOW_IT_WORKS_SUBHEADLINE,
   PRIVATE_P2P_HEADLINE,
   UMBRA_HEADLINE,
   PRIVATE_SWAP_HEADLINE,
@@ -58,7 +57,7 @@ const FEATURES: Feature[] = [
   },
   {
     icon: "🔒",
-    title: "Umbra mainnet vault",
+    title: "Umbra shielded stablecoins",
     description:
       "Umbra shields balances, withdraws via sanitized backend proxies, and reconciles claimed UTXOs against the on-chain nullifier set.",
     image: "/3d-assets/privacy.png",
@@ -105,9 +104,7 @@ export default function Home() {
         umbraHeadline={UMBRA_HEADLINE}
         swapHeadline={PRIVATE_SWAP_HEADLINE}
         jupiterHeadline={JUPITER_SWAP_HEADLINE}
-        subheadline={HOW_IT_WORKS_SUBHEADLINE}
       />
-
 
       <Features
         sectionLabel={FEATURES_LABEL}

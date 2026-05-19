@@ -793,6 +793,58 @@ html.lenis-smooth {
   transform: translateY(12%);
 }
 
+/* ---------------------------------------------------------------------------
+   Title text reveal — single, GPU-composited blur animation.
+
+   The previous implementation used a per-character motion-react component
+   that animated `filter: blur()` on every glyph. Filter animation is not
+   composited in any major browser, so each character forced a paint per
+   scroll frame. The result: noticeable jitter and "freeze" moments while
+   GSAP was scrubbing the slide track.
+
+   This replacement runs the blur as a one-shot CSS keyframe, scoped to
+   `[data-active="true"]`, on the whole title text at once. CSS keyframes
+   bypass the React/Framer reconciler entirely and the blur ramp completes
+   in 480ms regardless of scroll speed — so a fast scrub no longer leaves
+   characters frozen mid-blur.
+   --------------------------------------------------------------------------- */
+
+.hiw-title__text {
+  display: inline-block;
+  /* Promote to its own GPU layer so the keyframe doesn't repaint the
+     surrounding title-layer background. */
+  will-change: transform, filter, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@keyframes hiw-title-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translate3d(0, 0.4em, 0);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hiw-title[data-active="true"] .hiw-title__text {
+  animation: hiw-title-reveal 0.48s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hiw-title[data-active="true"] .hiw-title__text {
+    animation: none;
+  }
+}
+
 .hiw-title--mobile {
   display: none;
 }

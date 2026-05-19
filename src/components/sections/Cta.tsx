@@ -129,10 +129,10 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
 
             {/* Store buttons */}
             <div className="cta-card__stores">
-              <span
-                role="img"
+              <button
+                type="button"
+                disabled
                 aria-label="App Store coming soon"
-                aria-disabled="true"
                 style={storeBtnStyle}
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" style={storeIconStyle}>
@@ -142,12 +142,12 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
                   <span style={{ fontSize: "0.55rem", fontWeight: 400, opacity: 0.6 }}>Coming soon</span>
                   <span>App Store</span>
                 </span>
-              </span>
+              </button>
 
-              <span
-                role="img"
+              <button
+                type="button"
+                disabled
                 aria-label="Google Play coming soon"
-                aria-disabled="true"
                 style={storeBtnStyle}
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" style={storeIconStyle}>
@@ -157,7 +157,7 @@ export default function Cta({ headline, supporting, action }: CtaProps) {
                   <span style={{ fontSize: "0.55rem", fontWeight: 400, opacity: 0.6 }}>Coming soon</span>
                   <span>Google Play</span>
                 </span>
-              </span>
+              </button>
             </div>
           </div>
 

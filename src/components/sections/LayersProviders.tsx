@@ -7,7 +7,7 @@
 
 "use client";
 
-/* Using plain <img> to avoid Next.js Image wrapper that breaks flex alignment */
+import Image from "next/image";
 import { LogoSlider } from "@/components/ui/logo-slider";
 
 const providers = [
@@ -21,9 +21,11 @@ const providers = [
 
 const sliderLogos = providers.map((p) => (
   <div key={p.name} className="provider-cell">
-    <img
+    <Image
       src={p.src}
       alt={p.name}
+      width={120}
+      height={24}
       style={{
         height: "24px",
         width: "auto",

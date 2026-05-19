@@ -12,14 +12,14 @@ const umbraFlow: PaymentFlowDefinition = {
   mockupSrc: "/mockups/umbra.webp",
   mockupWidth: 576,
   mockupHeight: 1161,
-  mockupCaption: "Mainnet vault actions,",
+  mockupCaption: "Shielded stablecoin actions,",
   mockupCaptionAccent: "signed on-device.",
   nodes: [
     {
       id: "gate",
       step: "01",
-      title: "Mainnet gate",
-      description: "Umbra actions require mainnet, supported tokens, and execution capability.",
+      title: "Network gate",
+      description: "Umbra actions require a supported network, supported tokens, and execution capability.",
       tone: "setup",
       iconSrc: "/node_icons/umbra-mark.svg",
       desktopSourcePosition: "bottom",

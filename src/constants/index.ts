@@ -13,7 +13,7 @@ import type { NavLink, FaqItem } from "@/types";
 export const SITE_NAME = "OffPay Wallet" as const;
 export const SITE_TAGLINE = "Self-custody payments for online and offline Solana." as const;
 export const SITE_DESCRIPTION =
-  "OffPay is a non-custodial Solana wallet for offline USDC/USDT durable-nonce payments, MagicBlock private sends, Jupiter swaps, Umbra mainnet vault actions, and backend-gated wallet data." as const;
+  "OffPay is a non-custodial Solana wallet for offline USDC/USDT durable-nonce payments, MagicBlock private sends, Jupiter swaps, Umbra shielded stablecoin actions, and backend-gated wallet data." as const;
 export const SITE_EMAIL = "hello@offpay.app" as const;
 export const SITE_URL = "https://offpay.com" as const;
 
@@ -53,10 +53,8 @@ export const FEATURES_TAGLINE_ITALIC = "" as const;
 // ---------------------------------------------------------------------------
 
 export const HOW_IT_WORKS_HEADLINE = "Offline USDC/USDT payment flow" as const;
-export const HOW_IT_WORKS_SUBHEADLINE =
-  "OffPay separates online setup, local signing, QR/BLE handoff, encrypted pending backups, and reconnect settlement." as const;
 export const PRIVATE_P2P_HEADLINE = "Private stablecoin sends" as const;
-export const UMBRA_HEADLINE = "Umbra mainnet vault" as const;
+export const UMBRA_HEADLINE = "Umbra shielded stablecoins" as const;
 export const PRIVATE_SWAP_HEADLINE = "Privacy-envelope swaps" as const;
 export const JUPITER_SWAP_HEADLINE = "Jupiter swap and order flows" as const;
 
@@ -100,7 +98,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Where does Umbra fit?",
     answer:
-      "Umbra powers mainnet vault actions in the client: register the encrypted-balance account, query supported shielded balances, shield, and withdraw. Pending UTXO scans now reconcile against the on-chain Umbra nullifier-set accounts so claimed UTXOs stay hidden even after a cold boot or reinstall. Signing, key material, and proof/decryption state stay client-side.",
+      "Umbra powers supported shielded stablecoin actions in the client: register the encrypted-balance account, query supported shielded balances, shield, and withdraw. Pending UTXO scans now reconcile against the on-chain Umbra nullifier-set accounts so claimed UTXOs stay hidden even after a cold boot or reinstall. Signing, key material, and proof/decryption state stay client-side.",
   },
   {
     question: "Can OffPay work manually offline forever?",

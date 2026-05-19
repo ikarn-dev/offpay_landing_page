@@ -56,8 +56,12 @@ export function BlurReveal({
     },
   }
 
+  // Cheaper blur (6px instead of 12px) — still reads as a blur reveal but
+  // doesn't push the GPU into a heavy multi-pass paint per glyph. Per-char
+  // `willChange` promotes each span to its own composited layer so the
+  // blur animation stays on the GPU thread instead of forcing repaint.
   const itemVariants = {
-    hidden: { opacity: 0, filter: "blur(12px)", y: 10 },
+    hidden: { opacity: 0, filter: "blur(6px)", y: 8 },
     visible: {
       opacity: 1,
       filter: "blur(0px)",
@@ -66,11 +70,20 @@ export function BlurReveal({
         duration: baseDuration,
       },
     },
-    exit: { opacity: 0, filter: "blur(12px)", y: 10 },
+    exit: { opacity: 0, filter: "blur(6px)", y: 8 },
+  }
+
+  const charStyle: MotionProps["style"] = {
+    willChange: "filter, opacity, transform",
+    ...(letterSpacing !== undefined ? { marginRight: letterSpacing } : {}),
   }
 
   return (
-    <AnimatePresence mode="popLayout">
+    // Plain AnimatePresence (no `mode="popLayout"`) — popLayout forces a
+    // layout pass on every child unmount, which compounded with per-char
+    // exit animations is a significant scroll-time cost. The default mode
+    // is enough for our trigger-based use case.
+    <AnimatePresence>
       {trigger && (
         <MotionTag
           initial="hidden"
@@ -92,9 +105,7 @@ export function BlurReveal({
                     key={`char-${wordIndex}-${charIndex}`}
                     variants={itemVariants}
                     className="inline-block"
-                    {...(letterSpacing !== undefined
-                      ? { style: { marginRight: letterSpacing } }
-                      : {})}
+                    style={charStyle}
                   >
                     {char}
                   </motion.span>
@@ -104,6 +115,7 @@ export function BlurReveal({
                     key={`space-${wordIndex}`}
                     variants={itemVariants}
                     className="inline-block"
+                    style={charStyle}
                   >
                     &nbsp;
                   </motion.span>
