@@ -1,15 +1,9 @@
 {
-  "rewrites": [
-    {
-      "source": "/.well-known/:path*",
-      "destination": "/.well-known/:path*"
-    }
-  ],
   "redirects": [
     {
-      "source": "/((?!\\.well-known).*)",
+      "source": "/:path((?!\\.well-known).*)",
       "has": [{ "type": "host", "value": "offpay.app" }],
-      "destination": "https://www.offpay.app/$1",
+      "destination": "https://www.offpay.app/:path*",
       "permanent": false
     }
   ],
